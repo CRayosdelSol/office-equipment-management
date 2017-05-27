@@ -7,19 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EquipmentLibrary;
+
 namespace OfficeEquipMgmtApp
 {
-    public partial class Form1 : Form
+    public partial class Equipment_Edit : Form
     {
-        public Form1()
+        public Equipment_Edit()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
         }
     }
 }
