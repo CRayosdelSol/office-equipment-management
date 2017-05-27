@@ -1,1 +1,2 @@
 E:\Mapua\CS129L\OfficeEquipMgmtApp\OfficeEquipMgmtApp\bin\Debug\OfficeEquipMgmtApp.exe.config
+E:\Mapua\CS129L\office-equipment-management\OfficeEquipMgmtApp\OfficeEquipMgmtApp\bin\Debug\OfficeEquipMgmtApp.exe.config

@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EquipmentLibrary
+﻿namespace EquipmentLibrary
 {
-    internal class Address
+    /// <summary>
+    /// Aggregates address information into individually accessible fields
+    /// </summary>
+    public class Address
     {
         string country, city;
         int zipcode;
 
         /// <summary>
-        /// Agregates address information into individually accessible fields
+        /// Creates an instance of the address class
         /// </summary>
-        /// <param name="ctry">Country code (3 letters at most)</param>
+        /// <param name="ctry">Country code (3 letters at most e.g. PH,US,JP)</param>
         /// <param name="city">City address</param>
         /// <param name="zip">Zipcode</param>
-        internal Address(string ctry, string city, int zip)
+        public Address(string ctry, string city, int zip)
         {
             country = ctry;
             this.city = city;
@@ -61,6 +58,16 @@ namespace EquipmentLibrary
             {
                 zipcode = value;
             }
+        }
+
+        /// <summary>
+        /// Concatenates all address details into a composite string
+        /// </summary>
+        /// <returns>returns the address as a single string</returns>
+        public override string ToString()
+        {
+            string str = string.Format("Address Details \nCountry: {0}\nCity: {1}\n Zip Code: {2}", country, city, zipcode);
+            return str;
         }
     }
 }

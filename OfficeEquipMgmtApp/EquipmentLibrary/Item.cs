@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EquipmentLibrary
 {
-    internal class Item
+    internal class Item : Equipment
     {
-        Decimal price; //use decimal type for anything related to money/currency
-        int quantity;
-        string type, brand;
-        string serial_number;
-        Manufacturer manufacturer;
-        
-        internal Item(Decimal price, int quantity, string type, string brand, string id, Manufacturer manuf)
+        Decimal price; //use decimal type for anything related to money/currency      
+        string name;
+        string serial_model_number;
+
+        internal Item(Decimal price, string name, string id)
         {
             this.price = price;
-            this.quantity = quantity;
-            this.type = type;
-            this.brand = brand;
-            serial_number = id;
-            manufacturer = manuf;
-        }
+            this.name = name;
+            serial_model_number = id;
+        }    
+       
     }
 }
