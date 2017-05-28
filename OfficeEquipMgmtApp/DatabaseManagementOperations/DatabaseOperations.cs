@@ -52,7 +52,7 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table or entity set to be created.</param>
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
-        public static int checkForTableExistance(string tableName)
+        public static int checkForTableExistence(string tableName)
         {
             string checkExistance = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
             connectionString.Open();
@@ -75,7 +75,7 @@ namespace DatabaseManagementOperationsLibrary
         public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB, 
             string attributeC, string dataTypeC)
         {
-            int checkExistance = checkForTableExistance(tableName);
+            int checkExistance = checkForTableExistence(tableName);
 
             if (checkExistance == 0)
             {
@@ -116,7 +116,7 @@ namespace DatabaseManagementOperationsLibrary
             string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH,
             string dataTypeH)
         {
-            int checkExistance = checkForTableExistance(tableName);
+            int checkExistance = checkForTableExistence(tableName);
 
             if (checkExistance == 0)
             {

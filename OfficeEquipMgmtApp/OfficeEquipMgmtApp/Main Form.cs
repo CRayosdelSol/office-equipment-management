@@ -1,7 +1,7 @@
 ﻿/*
  * PLEASE MAKE A BACKUP BEFORE COMMITING!
  * Programmers:
- *  Alavarez, Arvin Kenneth
+ *  Alvarez, Arvin Kenneth
  *  Aguas, Nathaniael Johnn
  *  Lim, Jasmin Rose
  *  Pelipas, Mary Tricia Ann
@@ -11,8 +11,9 @@
  * Data started: Arvin knows. I forgot lol.
  * Submission Date: I don't know. Sorry.
  
- * LAST MODIFIED BY: CARL RAYOS DEL SOL 5/28/2017 3:04 PM
+ * LAST MODIFIED BY: AKCALVAREZ 19:23
  * Please change this when you modify ANYTHING so we know who touched this thing last. :)
+ * P.S. MSVS Shows you who last edited a method/class since it reads github related files AFAIK
  */
 using System;
 using System.Collections.Generic;
