@@ -2,13 +2,23 @@
 
 namespace EquipmentLibrary
 {
-    internal class Item : Equipment
+    ///<summary>
+    ///Defines all properties of an item.
+    ///</summary>
+    public class Item
     {
-        Decimal price; //use decimal type for anything related to money/currency      
+        decimal price; //use decimal type for anything related to money/currency      
         string name;
         string serial_model_number;
 
-        internal Item(Decimal price, string name, string id)
+
+        /// <summary>
+        /// Creates an instance of the item class.
+        /// </summary>
+        /// <param name="price">The price of the item.</param>
+        /// <param name="name">The name of the item.</param>
+        /// <param name="id">The serial number or model number of the item.</param>
+        public Item(decimal price, string name, string id)
         {
             this.price = price;
             this.name = name;
