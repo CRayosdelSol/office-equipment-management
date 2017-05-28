@@ -59,5 +59,11 @@ namespace OfficeEquipMgmtApp
         {
             striplbl.Text = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
         }
+
+        private void windowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FRM_EquipmentView frm = new FRM_EquipmentView();
+            frm.Show();
+        }
     }
 }
