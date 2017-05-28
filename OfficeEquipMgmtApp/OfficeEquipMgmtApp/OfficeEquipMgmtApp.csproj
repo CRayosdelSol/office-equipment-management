@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -71,6 +72,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -86,6 +88,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj">
+      <Project>{31ded398-74ab-40ad-b64e-189e654e341d}</Project>
+      <Name>DatabaseManagementOperationsLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EquipmentLibrary\EquipmentLibrary.csproj">
       <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
       <Name>EquipmentLibrary</Name>
