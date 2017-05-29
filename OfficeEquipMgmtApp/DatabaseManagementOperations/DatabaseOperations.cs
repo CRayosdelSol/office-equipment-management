@@ -54,9 +54,9 @@ namespace DatabaseManagementOperationsLibrary
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
         public static int checkForTableExistence(string tableName)
         {
-            string checkExistance = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
+            string checkExistence = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
             connectionString.Open();
-            SqlCommand sqlCommand = new SqlCommand(checkExistance, connectionString);
+            SqlCommand sqlCommand = new SqlCommand(checkExistence, connectionString);
             int check = Convert.ToInt32(sqlCommand.ExecuteScalar());
             connectionString.Close();
             return check;
@@ -72,15 +72,15 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeB">The datatype of the SECOND attribute.</param>
         /// <param name="attributeC">The THIRD attribute's name.</param>
         /// <param name="dataTypeC">The datatype of the THIRD attribute.</param>
-        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB, 
+        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB,
             string attributeC, string dataTypeC)
         {
-            int checkExistance = checkForTableExistence(tableName);
+            int checkExistence = checkForTableExistence(tableName);
 
-            if (checkExistance == 0)
+            if (checkExistence == 0)
             {
-                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + datatypeB 
-                    + "," + "[" + attributeC + "]" + dataTypeC +")";
+                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + datatypeB
+                    + "," + "[" + attributeC + "]" + dataTypeC + ")";
                 SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
                 connectionString.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -112,16 +112,17 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
-        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB , string attributeC, string dataTypeC, 
+        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
             string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH,
-            string dataTypeH)
+            string dataTypeH, string attributeI, string dataTypeI)
         {
-            int checkExistance = checkForTableExistence(tableName);
 
-            if (checkExistance == 0)
+            int checkExistence = checkForTableExistence(tableName);
+
+            if (checkExistence == 0)
             {
-                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + dataTypeB + "," + "[" + attributeC + "]" + dataTypeC + "," 
-                    + "[" + attributeD + "]" + dataTypeD + "," + "[" + attributeE + "]" + dataTypeE +"," + "[" + attributeF + "]" + dataTypeF + ")";
+                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + dataTypeB + "," + "[" + attributeC + "]" + dataTypeC + ","
+                    + "[" + attributeD + "]" + dataTypeD + "," + "[" + attributeE + "]" + dataTypeE + "," + "[" + attributeF + "]" + dataTypeF + ",[" + attributeG + "]" + dataTypeG + ",[" + attributeH + "]" + dataTypeH + ",[" + attributeI + "]" + dataTypeI + ")";
                 SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
                 connectionString.Open();
                 sqlCommand.ExecuteNonQuery();
@@ -183,14 +184,23 @@ namespace DatabaseManagementOperationsLibrary
         {
             //Once again, chill.
         }
-        public static void deleteFromTable(string tableName)
+
+        /// <summary>
+        /// Delete the selected entity occurence (row) from the database. 
+        /// </summary>
+        /// <param name="tableName">The name of the table.</param>
+        /// <param name="itemToBeDeleted">The entity occurence to be deleted from the databse.</param>
+        public static void deleteFromTable(string tableName, string itemToBeDeleted)
         {
-            //Chill.
+            connectionString.Open();
+            SqlCommand sqlCommand = connectionString.CreateCommand();
+            sqlCommand.CommandType = CommandType.Text;
+            sqlCommand.CommandText = "DELETE FROM [" + tableName + "] where [Serial Number]='" + itemToBeDeleted + "'";
+            sqlCommand.ExecuteNonQuery();
+            connectionString.Close();
         }
-        public static void deleteFromTable(string tableName, string chill)
-        {
-            //calm down.
-        }
+
+
 
 
 
