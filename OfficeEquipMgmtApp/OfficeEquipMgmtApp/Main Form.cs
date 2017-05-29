@@ -60,6 +60,7 @@ namespace OfficeEquipMgmtApp
             striplbl.Text = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
         }
 
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //File_Browser browser = new File_Browser();
@@ -85,6 +86,11 @@ namespace OfficeEquipMgmtApp
             {
                 this.Cursor = new Cursor(save.OpenFile());
             }
+
+        private void windowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FRM_EquipmentView frm = new FRM_EquipmentView();
+            frm.Show();
         }
     }
 }

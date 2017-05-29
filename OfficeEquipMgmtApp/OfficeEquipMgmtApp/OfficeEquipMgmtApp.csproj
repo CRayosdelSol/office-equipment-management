@@ -47,11 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Equipment Edit.cs">
+    <Compile Include="FRM_Equipment Edit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Equipment Edit.Designer.cs">
-      <DependentUpon>Equipment Edit.cs</DependentUpon>
+    <Compile Include="FRM_Equipment Edit.Designer.cs">
+      <DependentUpon>FRM_Equipment Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRM_EquipmentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_EquipmentView.Designer.cs">
+      <DependentUpon>FRM_EquipmentView.cs</DependentUpon>
     </Compile>
     <Compile Include="Main Form.cs">
       <SubType>Form</SubType>
@@ -61,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FRM_EquipmentView.resx">
+      <DependentUpon>FRM_EquipmentView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main Form.resx">
       <DependentUpon>Main Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -96,6 +105,21 @@
       <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
       <Name>EquipmentLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_search_black_18dp_1x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_border_color_black_18dp_1x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_add_black_18dp_1x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_delete_forever_black_18dp_1x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_system_update_alt_black_18dp_1x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
