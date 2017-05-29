@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DatabaseManagementOperationsLibrary;
 
 namespace OfficeEquipMgmtApp
 {
@@ -15,6 +17,7 @@ namespace OfficeEquipMgmtApp
         public frm_EquipmentView()
         {
             InitializeComponent();
+            initializeDefGrid(dtgrd_equipment);
         }
 
         private void manufacturerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,5 +64,28 @@ namespace OfficeEquipMgmtApp
         {
 
         }
+        public void initializeDefGrid(DataGridView grid)
+        {
+            string user = Environment.UserName;
+            string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+            string file = dir + "temp.mdf";
+            DirectoryInfo dirInf = Directory.CreateDirectory(dir);
+            dirInf.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+
+            if (File.Exists(file))
+            {
+                File.Delete(file);
+                File.Delete(dir + "temp_log.ldf");
+            }      
+
+            DatabaseOperations.CreateDatabase(file);
+
+            grid.AllowUserToAddRows = true;
+            grid.AllowUserToDeleteRows = true;
+            grid.AllowUserToResizeColumns = true;
+        }
+
     }
 }
