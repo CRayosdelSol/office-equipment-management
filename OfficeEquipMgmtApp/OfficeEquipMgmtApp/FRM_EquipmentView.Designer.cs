@@ -2,7 +2,7 @@
 
 namespace OfficeEquipMgmtApp
 {
-    partial class FRM_EquipmentView
+    partial class frm_EquipmentView
     {
         /// <summary>
         /// Required designer variable.
@@ -344,12 +344,4 @@ namespace OfficeEquipMgmtApp
         private Button btn_updateEquipemntInfo;
         private ToolTip ttip_optionHints;
     }
-
-
-    //public StatusStrip StatusStripA
-    //{
-    //    { get => statusStripA; }
-    //    { set => statusStripA = value; }
-        
-    //}
 }

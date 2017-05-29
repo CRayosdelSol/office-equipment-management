@@ -24,12 +24,14 @@ namespace DatabaseManagementOperationsLibrary
         public static SqlConnection connectionString = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + AppDomain.CurrentDomain.BaseDirectory + "SystemDatabase.mdf" + "; Integrated Security=True;Connect Timeout=30");
 
         /// <summary>
-        /// Creates the databse needed for the system.
+        /// Creates a databese
         /// </summary>
-        public static void CreateDatabase()
+        /// <param name="filename"></param>
+        /// <param name="savepath"></param>
+        public static void CreateDatabase(string filename)
         {
-            string filename = AppDomain.CurrentDomain.BaseDirectory + "SystemDatabase.mdf"; //Obtains the absolute path to the databse.
-            string databaseName = Path.GetFileNameWithoutExtension(filename); //Derived database name.
+            string path = filename; //Obtains the absolute path to the databse.
+            string databaseName = Path.GetFileNameWithoutExtension(path); //Derived database name.
             using (var connection = new SqlConnection(
             @"Data Source=(LocalDB)\MSSQLLocalDB; Initial Catalog=master; Integrated Security=true;"))
             {
@@ -37,7 +39,7 @@ namespace DatabaseManagementOperationsLibrary
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        string.Format("CREATE DATABASE {0} ON PRIMARY (NAME={0}, FILENAME='{1}')", databaseName, filename);
+                        string.Format("CREATE DATABASE {0} ON PRIMARY (NAME={0}, FILENAME='{1}')", databaseName, path);
                     command.ExecuteNonQuery();
 
                     command.CommandText =

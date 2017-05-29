@@ -48,12 +48,6 @@ namespace OfficeEquipMgmtApp
             tmr.Interval = 1000; // ticks every 1 second
             tmr.Tick += new EventHandler(updateTime);
             tmr.Start();
-            
-            //check if the database exists, if it does, fuck off. Otherwise, create it.
-            if (!File.Exists("SystemDatabase.mdf"))
-            {
-                DatabaseOperations.CreateDatabase();
-            }
         }
 
         private void updateTime(object sender, EventArgs e)
@@ -68,30 +62,37 @@ namespace OfficeEquipMgmtApp
             //browser.ShowDialog();
 
             OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "XML Files|*.xml|Database Files|*.db";           
+            open.Filter = "SQL Server Database Files|*.mdf";
             open.Title = "Open Inventory File";
 
             if (open.ShowDialog() == DialogResult.OK) // if the user pressed OK on the form then read the file
             {
                 this.Cursor = new Cursor(open.OpenFile());
             }
-          
+
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "XML Files|*.xml|Database Files|*.db";
-
+            save.Filter = "SQL Server Database Files|*.mdf";
+            save.Title = "Save Inventory File";
+            save.FileName = "Equipment_Record";
             if (save.ShowDialog() == DialogResult.OK)
+
             {
-                this.Cursor = new Cursor(save.OpenFile());
+                DatabaseOperations.CreateDatabase(save.FileName);
             }
         }
 
         private void windowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FRM_EquipmentView frm = new FRM_EquipmentView();
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frm_EquipmentView frm = new frm_EquipmentView();
+            frm.MdiParent = this;
             frm.Show();
         }
     }

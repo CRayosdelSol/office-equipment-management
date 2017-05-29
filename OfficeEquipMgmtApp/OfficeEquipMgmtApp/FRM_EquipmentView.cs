@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace OfficeEquipMgmtApp
 {
-    public partial class FRM_EquipmentView : Form
+    public partial class frm_EquipmentView : Form
     {
-        public FRM_EquipmentView()
+        public frm_EquipmentView()
         {
             InitializeComponent();
         }
