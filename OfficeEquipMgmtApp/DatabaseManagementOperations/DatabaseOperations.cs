@@ -23,7 +23,7 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="savepath"></param>
-        public static void CreateDatabase(string filename)
+        public void CreateDatabase(string filename)
         {
             string path = filename; //Obtains the absolute path to the databse.
             string databaseName = Path.GetFileNameWithoutExtension(path); //Derived database name.
@@ -49,7 +49,7 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table or entity set to be created.</param>
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
-        public static int checkForTableExistence(string tableName, string connString)
+        public int checkForTableExistence(string tableName, string connString)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
@@ -72,7 +72,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeB">The datatype of the SECOND attribute.</param>
         /// <param name="attributeC">The THIRD attribute's name.</param>
         /// <param name="dataTypeC">The datatype of the THIRD attribute.</param>
-        public static void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string datatypeB,
+        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string datatypeB,
             string attributeC, string dataTypeC)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
@@ -111,7 +111,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
-        public static void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
+        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
             string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH,
             string dataTypeH, string attributeI, string dataTypeI)
         {
@@ -141,7 +141,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="valueD"></param>
         /// <param name="valueE"></param>
         /// <param name="valueF"></param>
-        public static void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, int valueF)
+        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, int valueF)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
@@ -165,7 +165,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="valueF"></param>
         /// <param name="valueG"></param>
         /// <param name="valueH"></param>
-        public static void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, string valueF, string valueG, string valueH)
+        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, string valueF, string valueG, string valueH)
         {
 
             using (SqlConnection connectionString = new SqlConnection(connString))
@@ -178,11 +178,11 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public static void updateTable(string tableName)
+        public void updateTable(string tableName)
         {
             //lol. Chill.
         }
-        public static void updateTable(string tableName, string chill)
+        public void updateTable(string tableName, string chill)
         {
             //Once again, chill.
         }
@@ -192,7 +192,7 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
         /// <param name="itemToBeDeleted">The entity occurence to be deleted from the databse.</param>
-        public static void deleteFromTable(string tableName, string connString, string itemToBeDeleted)
+        public void deleteFromTable(string tableName, string connString, string itemToBeDeleted)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
