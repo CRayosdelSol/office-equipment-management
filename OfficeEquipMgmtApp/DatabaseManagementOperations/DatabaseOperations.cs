@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient; //Imports all needed SQL related syntax.
 using System.IO; //Imports syntax related to file streaming.
 using System.Text.RegularExpressions;
+using Microsoft.Win32.SafeHandles;
 
 namespace DatabaseManagementOperationsLibrary
 {
@@ -18,6 +19,8 @@ namespace DatabaseManagementOperationsLibrary
     /// </summary>
     public class DatabaseOperations
     {
+        bool disposed = false;
+        SafeFileHandle handle = new SafeFileHandle(IntPtr.Zero, true);
         /// <summary>
         /// Creates a databese
         /// </summary>

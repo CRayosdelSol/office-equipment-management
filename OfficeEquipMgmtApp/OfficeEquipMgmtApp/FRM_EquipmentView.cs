@@ -15,12 +15,15 @@ namespace OfficeEquipMgmtApp
 {
     public partial class frm_EquipmentView : Form
     {
-        private SqlCommand selectCommand;
+        string user = Environment.UserName; // Get whatever the current computer's username is
+        Main mainForm;
+        string dir;
+        string file;
+        DatabaseOperations db = new DatabaseOperations();
 
         public frm_EquipmentView()
         {
             InitializeComponent();
-            initializeDefGrid(dtgrd_equipment);
         }
 
         private void manufacturerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,11 +85,13 @@ namespace OfficeEquipMgmtApp
             -Description (like: "Used for writing.")
             */
 
-            string user = Environment.UserName; // Get whatever the current computer's username is
-            string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-            string file = dir + "temp.mdf";
+            mainForm = ((Main)MdiParent);
+            dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
-            DatabaseOperations db = new DatabaseOperations();
+            this.Text = string.Format("New Database {0}", mainForm.fileCounter);
+
+
             string selectCommand = "select * from Equipment";
             SqlDataAdapter dataAdapter;
             SqlCommandBuilder commandBuilder;
@@ -99,33 +104,27 @@ namespace OfficeEquipMgmtApp
 
             string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
 
-            if (File.Exists(file)) // deletes temp files generated along with the mdf in case it exists
-            {
-                File.Delete(file);
-                File.Delete(dir + "temp_log.ldf");
-            }
-
-
             db.CreateDatabase(file);
 
-            db.CreateTable("Equipment", connString, "item_number", "int", "serial_no", "string", "name", "string", "condition", "string", "quantity", "int", "price", "decimal", "department", "string", "manufacturer", "string", "date_of_purchase", "DateTime", "description", "string"); // @RaysOfTHeSun take a look at this
+
+            //db.CreateTable("Equipment", connString, "item_number", "int", "serial_no", "string", "name", "string", "condition", "string", "quantity", "int", "price", "decimal", "department", "string", "manufacturer", "string", "date_of_purchase", "DateTime", "description", "string"); // @RaysOfTHeSun take a look at this
 
             //TODO: Add columns to database and bind it to the grid
 
-            try
-            {
-                dataAdapter = new SqlDataAdapter(selectCommand, connString);
-                commandBuilder = new SqlCommandBuilder(dataAdapter);
-                table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                dataAdapter.Fill(table);
-                bindingSource.DataSource = table;
-            }
-            catch (Exception e)
-            {
+            //try
+            //{
+            //    dataAdapter = new SqlDataAdapter(selectCommand, connString);
+            //    commandBuilder = new SqlCommandBuilder(dataAdapter);
+            //    table = new DataTable();
+            //    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+            //    dataAdapter.Fill(table);
+            //    bindingSource.DataSource = table;
+            //}
+            //catch (Exception e)
+            //{
 
-                MessageBox.Show(e.Message);
-            }
+            //    MessageBox.Show(e.Message);
+            //}
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
@@ -133,5 +132,31 @@ namespace OfficeEquipMgmtApp
             grid.DataSource = bindingSource;
         }
 
+        private void frm_EquipmentView_Load(object sender, EventArgs e)
+        {
+            initializeDefGrid(dtgrd_equipment);
+        }
+
+        private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
+            {
+                var close = MessageBox.Show("Do you want to discard changes?", "Unsaved Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (close == DialogResult.Yes)
+                {
+                    if (File.Exists(file)) // deletes temp files generated along with the mdf in case it exists
+                    {
+                        File.Delete(file);
+                        File.Delete(dir + string.Format("temp_{0}.ldf", mainForm.fileCounter));
+                    }
+                    e.Cancel = false;
+                }
+
+                else
+                    e.Cancel = true;
+            }
+        }
     }
 }

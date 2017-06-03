@@ -319,6 +319,8 @@ namespace OfficeEquipMgmtApp
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frm_EquipmentView";
             this.Text = "FRM_EquipmentView";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_EquipmentView_FormClosing);
+            this.Load += new System.EventHandler(this.frm_EquipmentView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
