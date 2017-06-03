@@ -19,16 +19,11 @@ namespace DatabaseManagementOperationsLibrary
     public class DatabaseOperations
     {
         /// <summary>
-        /// This is the connection string to be used for the system.
-        /// </summary>
-        public static SqlConnection connectionString = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + AppDomain.CurrentDomain.BaseDirectory + "SystemDatabase.mdf" + "; Integrated Security=True;Connect Timeout=30");
-
-        /// <summary>
         /// Creates a databese
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="savepath"></param>
-        public static void CreateDatabase(string filename)
+        public void CreateDatabase(string filename)
         {
             string path = filename; //Obtains the absolute path to the databse.
             string databaseName = Path.GetFileNameWithoutExtension(path); //Derived database name.
@@ -54,14 +49,17 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table or entity set to be created.</param>
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
-        public static int checkForTableExistence(string tableName)
+        public int checkForTableExistence(string tableName, string connString)
         {
-            string checkExistence = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
-            connectionString.Open();
-            SqlCommand sqlCommand = new SqlCommand(checkExistence, connectionString);
-            int check = Convert.ToInt32(sqlCommand.ExecuteScalar());
-            connectionString.Close();
-            return check;
+            using (SqlConnection connectionString = new SqlConnection(connString))
+            {
+                string checkExistence = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
+                connectionString.Open();
+                SqlCommand sqlCommand = new SqlCommand(checkExistence, connectionString);
+                int check = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                connectionString.Close();
+                return check;
+            }
         }
 
         /// <summary>
@@ -74,23 +72,22 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeB">The datatype of the SECOND attribute.</param>
         /// <param name="attributeC">The THIRD attribute's name.</param>
         /// <param name="dataTypeC">The datatype of the THIRD attribute.</param>
-        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB,
+        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string datatypeB,
             string attributeC, string dataTypeC)
         {
-            int checkExistence = checkForTableExistence(tableName);
+            using (SqlConnection connectionString = new SqlConnection(connString))
+            {
+                int checkExistence = checkForTableExistence(tableName, connString);
 
-            if (checkExistence == 0)
-            {
-                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + datatypeB
-                    + "," + "[" + attributeC + "]" + dataTypeC + ")";
-                SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
-                connectionString.Open();
-                sqlCommand.ExecuteNonQuery();
-                connectionString.Close();
-            }
-            else
-            {
-                connectionString.Close();
+                if (checkExistence == 0)
+                {
+                    string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + datatypeB
+                        + "," + "[" + attributeC + "]" + dataTypeC + ")";
+                    SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
+                    connectionString.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    connectionString.Close();
+                }
             }
         }
 
@@ -114,25 +111,23 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
-        public static void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
+        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
             string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH,
             string dataTypeH, string attributeI, string dataTypeI)
         {
-
-            int checkExistence = checkForTableExistence(tableName);
-
-            if (checkExistence == 0)
+            using (SqlConnection connectionString = new SqlConnection(connString))
             {
-                string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + dataTypeB + "," + "[" + attributeC + "]" + dataTypeC + ","
-                    + "[" + attributeD + "]" + dataTypeD + "," + "[" + attributeE + "]" + dataTypeE + "," + "[" + attributeF + "]" + dataTypeF + ",[" + attributeG + "]" + dataTypeG + ",[" + attributeH + "]" + dataTypeH + ",[" + attributeI + "]" + dataTypeI + ")";
-                SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
-                connectionString.Open();
-                sqlCommand.ExecuteNonQuery();
-                connectionString.Close();
-            }
-            else
-            {
-                connectionString.Close();
+                int checkExistence = checkForTableExistence(tableName, connString);
+
+                if (checkExistence == 0)
+                {
+                    string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + dataTypeB + "," + "[" + attributeC + "]" + dataTypeC + ","
+                        + "[" + attributeD + "]" + dataTypeD + "," + "[" + attributeE + "]" + dataTypeE + "," + "[" + attributeF + "]" + dataTypeF + ",[" + attributeG + "]" + dataTypeG + ",[" + attributeH + "]" + dataTypeH + ",[" + attributeI + "]" + dataTypeI + ")";
+                    SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
+                    connectionString.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    connectionString.Close();
+                }
             }
         }
 
@@ -146,14 +141,16 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="valueD"></param>
         /// <param name="valueE"></param>
         /// <param name="valueF"></param>
-        public static void InsertIntoTable(string tableName, string valueA, string valueB, string valueC, string valueD, string valueE, int valueF)
+        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, int valueF)
         {
-            connectionString.Open();
-            SqlCommand sqlCommand = connectionString.CreateCommand();
-            sqlCommand.CommandType = CommandType.Text;
-            sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "'," + valueF + ")";
-            sqlCommand.ExecuteNonQuery();
-            connectionString.Close();
+            using (SqlConnection connectionString = new SqlConnection(connString))
+            {
+                connectionString.Open();
+                SqlCommand sqlCommand = connectionString.CreateCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "'," + valueF + ")";
+                sqlCommand.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
@@ -168,21 +165,24 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="valueF"></param>
         /// <param name="valueG"></param>
         /// <param name="valueH"></param>
-        public static void InsertIntoTable(string tableName, string valueA, string valueB, string valueC, string valueD, string valueE, string valueF, string valueG, string valueH)
+        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, string valueF, string valueG, string valueH)
         {
-            connectionString.Open();
-            SqlCommand sqlCommand = connectionString.CreateCommand();
-            sqlCommand.CommandType = CommandType.Text;
-            sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "','" + valueF + "','" + valueG + "','" + valueH + "')";
-            sqlCommand.ExecuteNonQuery();
-            connectionString.Close();
+
+            using (SqlConnection connectionString = new SqlConnection(connString))
+            {
+                connectionString.Open();
+                SqlCommand sqlCommand = connectionString.CreateCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "','" + valueF + "','" + valueG + "','" + valueH + "')";
+                sqlCommand.ExecuteNonQuery();
+            }
         }
 
-        public static void updateTable(string tableName)
+        public void updateTable(string tableName)
         {
             //lol. Chill.
         }
-        public static void updateTable(string tableName, string chill)
+        public void updateTable(string tableName, string chill)
         {
             //Once again, chill.
         }
@@ -192,22 +192,16 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
         /// <param name="itemToBeDeleted">The entity occurence to be deleted from the databse.</param>
-        public static void deleteFromTable(string tableName, string itemToBeDeleted)
+        public void deleteFromTable(string tableName, string connString, string itemToBeDeleted)
         {
-            connectionString.Open();
-            SqlCommand sqlCommand = connectionString.CreateCommand();
-            sqlCommand.CommandType = CommandType.Text;
-            sqlCommand.CommandText = "DELETE FROM [" + tableName + "] where [Serial Number]='" + itemToBeDeleted + "'";
-            sqlCommand.ExecuteNonQuery();
-            connectionString.Close();
+            using (SqlConnection connectionString = new SqlConnection(connString))
+            {
+                connectionString.Open();
+                SqlCommand sqlCommand = connectionString.CreateCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = "DELETE FROM [" + tableName + "] where [Serial Number]='" + itemToBeDeleted + "'";
+                sqlCommand.ExecuteNonQuery();
+            }
         }
-
-
-
-
-
-
-
-
     }
 }
