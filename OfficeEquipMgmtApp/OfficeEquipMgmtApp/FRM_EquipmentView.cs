@@ -72,25 +72,11 @@ namespace OfficeEquipMgmtApp
         }
         public void initializeDefGrid(DataGridView grid)
         {
-            /*
-            Fields Reference:
-            -Serial No. (like: 1PN)
-            -Name
-            -Condition (Like: Good condition, needs repair, under repair, for replacement, fucked or stupidly lost)
-            -Quantity
-            -Price
-            -Department (Like: HR, IT)
-            -Manufacturer Name
-            -Date Purchased
-            -Description (like: "Used for writing.")
-            */
-
             mainForm = ((Main)MdiParent);
             dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
             file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
             this.Text = string.Format("New Database {0}", mainForm.fileCounter);
-
 
             string selectCommand = "select * from Equipment";
             SqlDataAdapter dataAdapter;
@@ -102,34 +88,33 @@ namespace OfficeEquipMgmtApp
             DirectoryInfo dirInf = Directory.CreateDirectory(dir);
             dirInf.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
-            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
-
             db.CreateDatabase(file);
 
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
 
-            //db.CreateTable("Equipment", connString, "item_number", "int", "serial_no", "string", "name", "string", "condition", "string", "quantity", "int", "price", "decimal", "department", "string", "manufacturer", "string", "date_of_purchase", "DateTime", "description", "string"); // @RaysOfTHeSun take a look at this
+            db.CreateTable("Equipment", connString, "item_number", "int", "name", "varchar(255)", "condition", "varchar(255)", "quantity", "int", "price", "decimal", "department", "varchar(255)", "manufacturer", "varchar(255)", "date_of_purchase", "varchar(255)", "description", "varchar(255)");
 
-            //TODO: Add columns to database and bind it to the grid
-
-            //try
-            //{
-            //    dataAdapter = new SqlDataAdapter(selectCommand, connString);
-            //    commandBuilder = new SqlCommandBuilder(dataAdapter);
-            //    table = new DataTable();
-            //    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-            //    dataAdapter.Fill(table);
-            //    bindingSource.DataSource = table;
-            //}
-            //catch (Exception e)
-            //{
-
-            //    MessageBox.Show(e.Message);
-            //}
+            try
+            {
+                using (dataAdapter = new SqlDataAdapter(selectCommand, connString))
+                {
+                    commandBuilder = new SqlCommandBuilder(dataAdapter);
+                    table = new DataTable();
+                    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                    dataAdapter.Fill(table);
+                    bindingSource.DataSource = table;
+                    grid.DataSource = bindingSource;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
             grid.AllowUserToResizeColumns = true;
-            grid.DataSource = bindingSource;
+
         }
 
         private void frm_EquipmentView_Load(object sender, EventArgs e)

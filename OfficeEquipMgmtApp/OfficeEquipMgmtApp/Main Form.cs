@@ -34,7 +34,7 @@ namespace OfficeEquipMgmtApp
     {
         // this keeps track of how many times the "New" menu item has been pressed 
         public int fileCounter = 0;
-        public bool closeAll = false;
+
         public Main()
         {
             InitializeComponent();
@@ -148,8 +148,8 @@ namespace OfficeEquipMgmtApp
             }
             catch (Exception)
             {
-                
-            }            
+
+            }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
