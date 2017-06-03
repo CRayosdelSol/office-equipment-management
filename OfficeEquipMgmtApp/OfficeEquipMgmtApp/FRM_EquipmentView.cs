@@ -104,6 +104,7 @@ namespace OfficeEquipMgmtApp
                     dataAdapter.Fill(table);
                     bindingSource.DataSource = table;
                     grid.DataSource = bindingSource;
+                    dataAdapter.Dispose();
                 }
             }
             catch (Exception e)
@@ -113,8 +114,8 @@ namespace OfficeEquipMgmtApp
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
-            grid.AllowUserToResizeColumns = true;
-
+            grid.AllowUserToResizeColumns = true;          
+            db.Dispose(true);
         }
 
         private void frm_EquipmentView_Load(object sender, EventArgs e)
