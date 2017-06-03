@@ -73,7 +73,8 @@ namespace OfficeEquipMgmtApp
         public void initializeDefGrid(DataGridView grid)
         {
             mainForm = ((Main)MdiParent);
-            dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+            //dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
             file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
             this.Text = string.Format("New Database {0}", mainForm.fileCounter);
@@ -135,7 +136,7 @@ namespace OfficeEquipMgmtApp
                     if (File.Exists(file)) // deletes temp files generated along with the mdf in case it exists
                     {
                         File.Delete(file);
-                        File.Delete(dir + string.Format("temp_{0}.ldf", mainForm.fileCounter));
+                        File.Delete(dir + string.Format("temp_{0}_log.ldf", mainForm.fileCounter));
                     }
                     e.Cancel = false;
                 }
