@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using DatabaseManagementOperationsLibrary;
 
@@ -20,6 +21,8 @@ namespace OfficeEquipMgmtApp
         string dir;
         string file;
         DatabaseOperations db = new DatabaseOperations();
+        //string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+
 
         public frm_EquipmentView()
         {
@@ -93,7 +96,8 @@ namespace OfficeEquipMgmtApp
 
             string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
 
-            db.CreateTable("Equipment", connString, "item_number", "int", "name", "varchar(255)", "condition", "varchar(255)", "quantity", "int", "price", "decimal", "department", "varchar(255)", "manufacturer", "varchar(255)", "date_of_purchase", "varchar(255)", "description", "varchar(255)");
+            //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
+            db.CreateTable("Equipment", connString, "ID", "int IDENTITY(1,1) not null", "NAME", "varchar(255)", "CONDITION", "varchar(255)", "QUANTITY", "int", "PRICE", "decimal(19,2)", "DEPARTMENT", "varchar(255)", "MANUFACTURER", "varchar(255)", "[DATE OF PURCHASE]", "varchar(255)");
 
             try
             {
@@ -113,15 +117,53 @@ namespace OfficeEquipMgmtApp
                 MessageBox.Show(e.Message);
             }
 
-            grid.AllowUserToAddRows = true;
+            //Adjust the datagrid view to show all the present columns.
+            grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
+                (grid.RowHeadersVisible ? grid.RowHeadersWidth : 0) + 3;
+            grid.AllowUserToAddRows = false;
             grid.AllowUserToDeleteRows = true;
-            grid.AllowUserToResizeColumns = true;          
+            grid.AllowUserToResizeColumns = true;
+            grid.ReadOnly = false;
             db.Dispose(true);
         }
 
+
+        public void refrestDataGrid(DataGridView grid, string conn,string tableName)
+        {
+
+            string selectCommand = "select * from Equipment";
+            SqlDataAdapter dataAdapter;
+            SqlCommandBuilder commandBuilder;
+            DataTable table;
+            BindingSource bindingSource = new BindingSource();
+
+            try
+            {
+                using (dataAdapter = new SqlDataAdapter(selectCommand, conn))
+                {
+                    commandBuilder = new SqlCommandBuilder(dataAdapter);
+                    table = new DataTable();
+                    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                    dataAdapter.Fill(table);
+                    bindingSource.DataSource = table;
+                    grid.DataSource = bindingSource;
+                    dataAdapter.Dispose();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
             initializeDefGrid(dtgrd_equipment);
+            
+           
+            //Scale the form so that all of its contents are shown properly.
+            this.MinimumSize = new Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
@@ -145,5 +187,51 @@ namespace OfficeEquipMgmtApp
                     e.Cancel = true;
             }
         }
+
+        private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+            string a, b, x, f, g;
+            int c;
+            decimal d;
+            //int temp = Convert.ToInt32(dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].ToString());
+
+            a = dtgrd_equipment.Rows[e.RowIndex].Cells[1].Value.ToString();
+            b = dtgrd_equipment.Rows[e.RowIndex].Cells[2].Value.ToString();
+            //c = Convert.ToInt32(dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString());
+            //d = Convert.ToDecimal(dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString());
+            x = dtgrd_equipment.Rows[e.RowIndex].Cells[5].Value.ToString();
+            f = dtgrd_equipment.Rows[e.RowIndex].Cells[6].Value.ToString();
+            g = dtgrd_equipment.Rows[e.RowIndex].Cells[7].Value.ToString();
+
+            if (dtgrd_equipment.RowCount > 0 && e.RowIndex == dtgrd_equipment.RowCount - 1)
+            {
+                foreach (DataGridViewCell cell in dtgrd_equipment.Rows[e.RowIndex].Cells)
+                {
+                    if (cell.Value == null)
+                    {
+                        return;
+                    }
+                }
+                dtgrd_equipment.Rows.Add();
+            }
+
+            if (selectedEquipmentID == string.Empty)
+            {
+                db.InsertIntoTable("Equipment", connString, a, b, 0, 0, x, f, g);
+            }
+            else
+            {
+                db.updateTable("Equipment", connString,"NAME","CONDITION","QUANTITY","PRICE","DEPARTMENT","MANUFACTURER","[DATE OF PURCHASE]",
+                    a,b,"0","0",x,f,g,Convert.ToInt32(selectedEquipmentID));
+            }
+
+            refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+        }
+
+
     }
 }
