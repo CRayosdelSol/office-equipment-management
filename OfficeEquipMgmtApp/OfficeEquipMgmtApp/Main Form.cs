@@ -78,10 +78,12 @@ namespace OfficeEquipMgmtApp
             save.Filter = "SQL Server Database Files|*.mdf";
             save.Title = "Save Inventory File";
             save.FileName = "Equipment_Record";
+
+            DatabaseOperations db = new DatabaseOperations();
             if (save.ShowDialog() == DialogResult.OK)
 
             {
-                DatabaseOperations.CreateDatabase(save.FileName);
+                db.CreateDatabase(save.FileName);
             }
         }
 
