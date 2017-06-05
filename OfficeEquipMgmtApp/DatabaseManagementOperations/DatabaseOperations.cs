@@ -204,7 +204,6 @@ namespace DatabaseManagementOperationsLibrary
 
         public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG)
         {
-
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
                 connectionString.Open();
@@ -223,8 +222,6 @@ namespace DatabaseManagementOperationsLibrary
                 connectionString.Open();
                 SqlCommand sqlCommand = connectionString.CreateCommand();
                 sqlCommand.CommandType = CommandType.Text;
-                //sqlCommand.CommandText = string.Format("UPATE {0} SET {1} = {2}, {3} = {4}, {5} = {6}, {7} = {8}, {9} = {10}, {11} = {12}, {13} = {14} WHERE ID = {15};",tableName,attributeA,valueA,attributeB,valueB,attributeC,valueC,attributeD,valueD,attributeE,valueE,attributeF,valueF,attributeG,valueG,PrimaryKey); //shit's broken. I'll fix it next time.
-                //sqlCommand.CommandText = "UPDATE " + tableName + " SET " + attributeA + "= '" + valueA + "', " + attributeB + "= '" + valueB + "', " + attributeC + "= '" + valueC + "', " + attributeD + "= '" + valueD + "', " + attributeE + "= '" + valueE + "', " + attributeF + "= '" + valueF + "', " + attributeG + "= '" + valueG + "' WHERE ID= " + PrimaryKey + ";";
                 sqlCommand.CommandText = String.Format("UPDATE {0} SET {1}= '{2}', {3}= '{4}', {5}= '{6}', {7}= '{8}', {9}= '{10}', {11}= '{12}', {13}= '{14}' WHERE ID= {15};", tableName, attributeA, valueA, attributeB, valueB, attributeC, valueC, attributeD, valueD, attributeE, valueE, attributeF, valueF, attributeG, valueG, PrimaryKey);
                 sqlCommand.ExecuteNonQuery();
             }
@@ -247,14 +244,14 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
         /// <param name="itemToBeDeleted">The entity occurence to be deleted from the databse.</param>
-        public void deleteFromTable(string tableName, string connString, string itemToBeDeleted)
+        public void deleteFromTable(string tableName, string connString, int primaryKey)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
                 connectionString.Open();
                 SqlCommand sqlCommand = connectionString.CreateCommand();
                 sqlCommand.CommandType = CommandType.Text;
-                sqlCommand.CommandText = "DELETE FROM [" + tableName + "] where [Serial Number]='" + itemToBeDeleted + "'";
+                sqlCommand.CommandText = String.Format("DELETE FROM [{0}] WHERE ID= {1}",tableName,primaryKey);
                 sqlCommand.ExecuteNonQuery();
             }
         }
