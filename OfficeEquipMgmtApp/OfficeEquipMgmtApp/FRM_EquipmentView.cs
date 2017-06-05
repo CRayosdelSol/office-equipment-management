@@ -120,15 +120,23 @@ namespace OfficeEquipMgmtApp
             //Adjust the datagrid view to show all the present columns.
             grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
                 (grid.RowHeadersVisible ? grid.RowHeadersWidth : 0) + 3;
-            grid.AllowUserToAddRows = false;
+            grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
             grid.AllowUserToResizeColumns = true;
             grid.ReadOnly = false;
             db.Dispose(true);
+
+            grid.Columns[0].ReadOnly = true;
+            grid.Columns[2].ReadOnly = true;
+            grid.Columns[0].DefaultCellStyle.SelectionBackColor = Color.LightGray;
+            grid.Columns[0].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+            grid.Columns[2].DefaultCellStyle.SelectionBackColor = Color.LightGray;
+            grid.Columns[2].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+
         }
 
 
-        public void refrestDataGrid(DataGridView grid, string conn,string tableName)
+        public void refrestDataGrid(DataGridView grid, string conn, string tableName)
         {
 
             string selectCommand = "select * from Equipment";
@@ -136,25 +144,20 @@ namespace OfficeEquipMgmtApp
             SqlCommandBuilder commandBuilder;
             DataTable table;
             BindingSource bindingSource = new BindingSource();
+            
+            using (dataAdapter = new SqlDataAdapter(selectCommand, conn))
+            {
+                commandBuilder = new SqlCommandBuilder(dataAdapter);
+                table = new DataTable();
+                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                dataAdapter.Fill(table);
+                bindingSource.DataSource = table;
+                grid.DataSource = bindingSource;
+                dataAdapter.Dispose();
+            }
 
-            try
-            {
-                using (dataAdapter = new SqlDataAdapter(selectCommand, conn))
-                {
-                    commandBuilder = new SqlCommandBuilder(dataAdapter);
-                    table = new DataTable();
-                    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                    dataAdapter.Fill(table);
-                    bindingSource.DataSource = table;
-                    grid.DataSource = bindingSource;
-                    dataAdapter.Dispose();
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
         }
+
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
             initializeDefGrid(dtgrd_equipment);
@@ -194,44 +197,87 @@ namespace OfficeEquipMgmtApp
             file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
             string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
             string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-            string a, b, x, f, g;
-            int c;
-            decimal d;
+            string a, b, x, f, g, _c,_d;
+            int c = 0;
+            decimal d = 0;
             //int temp = Convert.ToInt32(dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].ToString());
 
             a = dtgrd_equipment.Rows[e.RowIndex].Cells[1].Value.ToString();
             b = dtgrd_equipment.Rows[e.RowIndex].Cells[2].Value.ToString();
-            //c = Convert.ToInt32(dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString());
-            //d = Convert.ToDecimal(dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString());
+            _c = dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString();
+            if(_c != string.Empty)
+            {
+                c = Convert.ToInt32(_c);
+            }
+            _d = dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString();
+            if(_d != string.Empty)
+            {
+                d = Convert.ToDecimal(_d);
+            }
             x = dtgrd_equipment.Rows[e.RowIndex].Cells[5].Value.ToString();
             f = dtgrd_equipment.Rows[e.RowIndex].Cells[6].Value.ToString();
             g = dtgrd_equipment.Rows[e.RowIndex].Cells[7].Value.ToString();
 
-            if (dtgrd_equipment.RowCount > 0 && e.RowIndex == dtgrd_equipment.RowCount - 1)
-            {
-                foreach (DataGridViewCell cell in dtgrd_equipment.Rows[e.RowIndex].Cells)
-                {
-                    if (cell.Value == null)
-                    {
-                        return;
-                    }
-                }
-                dtgrd_equipment.Rows.Add();
-            }
-
+            /*If the primary key (ID) is null, insert the specified user values. If it is not, update the 
+             values where the ID matches with the ID of the current entitity occurence.*/
             if (selectedEquipmentID == string.Empty)
             {
-                db.InsertIntoTable("Equipment", connString, a, b, 0, 0, x, f, g);
+                db.InsertIntoTable("Equipment", connString, a, "CHOOSE CONDITION FROM THE OPTIONS ON THE LEFT.", 0, 0, x, f, g);
             }
             else
             {
-                db.updateTable("Equipment", connString,"NAME","CONDITION","QUANTITY","PRICE","DEPARTMENT","MANUFACTURER","[DATE OF PURCHASE]",
-                    a,b,"0","0",x,f,g,Convert.ToInt32(selectedEquipmentID));
+                db.updateTable("Equipment", connString, "NAME", "CONDITION", "QUANTITY", "PRICE", "DEPARTMENT", "MANUFACTURER", "[DATE OF PURCHASE]",
+                    a,b,c, d, x, f, g, Convert.ToInt32(selectedEquipmentID));
             }
 
             refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+
+            //Kill all connections to the database.
+            SqlConnection.ClearAllPools();
         }
 
+        private void btn_GoodItemConditon_Click(object sender, EventArgs e)
+        {
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            int primaryKey = int.Parse(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            db.updateTable("Equipment", connString, "CONDITION", "GOOD", primaryKey);
+            refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+            SqlConnection.ClearAllPools();
+        }
 
+        private void btn_UnderRepairCondition_Click(object sender, EventArgs e)
+        {
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            int primaryKey = int.Parse(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            db.updateTable("Equipment", connString, "CONDITION", "UNDER REPAIR", primaryKey);
+            refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+            SqlConnection.ClearAllPools();
+        }
+
+        private void btn_forReplacementCondition_Click(object sender, EventArgs e)
+        {
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            int primaryKey = int.Parse(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            db.updateTable("Equipment", connString, "CONDITION", "NEEDS REPLACEMENT", primaryKey);
+            refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+            SqlConnection.ClearAllPools();
+        }
+
+        private void btn_lostCondition_Click(object sender, EventArgs e)
+        {
+            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            int primaryKey = int.Parse(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString());
+            db.updateTable("Equipment", connString, "CONDITION", "LOST", primaryKey);
+            refrestDataGrid(dtgrd_equipment, connString, "Equipment");
+            SqlConnection.ClearAllPools();
+        }
     }
 }

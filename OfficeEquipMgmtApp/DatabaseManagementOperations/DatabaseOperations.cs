@@ -215,7 +215,7 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public void updateTable(string tableName, string connstring, string attributeA, string attributeB, string attributeC, string attributeD, string attributeE, string attributeF, string attributeG,  string valueA, string valueB, String valueC, string valueD, string valueE, string valueF, string valueG, int PrimaryKey)
+        public void updateTable(string tableName, string connstring, string attributeA, string attributeB, string attributeC, string attributeD, string attributeE, string attributeF, string attributeG,  string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG, int PrimaryKey)
         {
             using(SqlConnection connectionString = new SqlConnection(connstring))
             {
@@ -228,9 +228,17 @@ namespace DatabaseManagementOperationsLibrary
                 sqlCommand.ExecuteNonQuery();
             }
         }
-        public void updateTable(string tableName)
+
+        public void updateTable(string tableName,string connstring, string attributeA,string valueA, int primaryKey)
         {
-            //Once again, chill.
+            using(SqlConnection connection = new SqlConnection(connstring))
+            {
+                connection.Open();
+                SqlCommand sqlCommand = connection.CreateCommand();
+                sqlCommand.CommandType = CommandType.Text;
+                sqlCommand.CommandText = string.Format("UPDATE {0} SET {1}= '{2}' WHERE ID= {3}", tableName, attributeA, valueA, primaryKey);
+                sqlCommand.ExecuteNonQuery();
+            }
         }
 
         /// <summary>
