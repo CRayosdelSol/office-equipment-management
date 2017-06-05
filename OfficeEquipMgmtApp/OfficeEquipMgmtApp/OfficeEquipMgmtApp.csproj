@@ -65,11 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FRM_Equipment Edit.cs">
+    <Compile Include="FRM_EquipmentEditing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FRM_Equipment Edit.Designer.cs">
-      <DependentUpon>FRM_Equipment Edit.cs</DependentUpon>
+    <Compile Include="FRM_EquipmentEditing.Designer.cs">
+      <DependentUpon>FRM_EquipmentEditing.cs</DependentUpon>
     </Compile>
     <Compile Include="FRM_EquipmentView.cs">
       <SubType>Form</SubType>
@@ -85,8 +85,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FRM_EquipmentView.resx">
-      <DependentUpon>FRM_EquipmentView.cs</DependentUpon>
+    <EmbeddedResource Include="FRM_EquipmentEditing.resx">
+      <DependentUpon>FRM_EquipmentEditing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main Form.resx">
       <DependentUpon>Main Form.cs</DependentUpon>
