@@ -32,6 +32,9 @@ namespace OfficeEquipMgmtApp
 {
     public partial class Main : Form
     {
+        // this keeps track of how many times the "New" menu item has been pressed 
+        public int fileCounter = 0;
+
         public Main()
         {
             InitializeComponent();
@@ -48,6 +51,30 @@ namespace OfficeEquipMgmtApp
             tmr.Interval = 1000; // ticks every 1 second
             tmr.Tick += new EventHandler(updateTime);
             tmr.Start();
+
+            // delete trash files in case the program crashed on it's previous launch
+            try
+            {
+                string user = Environment.UserName; // Get whatever the current computer's username is
+                string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+                string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                string[] filepaths = Directory.GetFiles(dir);
+
+                foreach (string f in filepaths)
+                {
+                    if (File.Exists(f))
+                        File.Delete(f);
+                }
+
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void updateTime(object sender, EventArgs e)
@@ -80,8 +107,8 @@ namespace OfficeEquipMgmtApp
             save.FileName = "Equipment_Record";
 
             DatabaseOperations db = new DatabaseOperations();
-            if (save.ShowDialog() == DialogResult.OK)
 
+            if (save.ShowDialog() == DialogResult.OK)
             {
                 db.CreateDatabase(save.FileName);
             }
@@ -93,9 +120,48 @@ namespace OfficeEquipMgmtApp
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fileCounter++;
             frm_EquipmentView frm = new frm_EquipmentView();
             frm.MdiParent = this;
             frm.Show();
+        }
+
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                string user = Environment.UserName; // Get whatever the current computer's username is
+                string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+                string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                string[] filepaths = Directory.GetFiles(dir);
+
+                foreach (string f in filepaths)
+                {
+                    if (File.Exists(f))
+                        File.Delete(f);
+                }
+
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var closing = MessageBox.Show("Do you want quit and discard all changes, if there are any?", "Exit Application", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (closing == DialogResult.Yes)
+            {
+                return;
+            }
+            else
+                e.Cancel = true;
         }
     }
 }

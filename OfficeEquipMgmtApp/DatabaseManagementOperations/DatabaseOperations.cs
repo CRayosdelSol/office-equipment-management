@@ -10,14 +10,17 @@ using System.Data;
 using System.Data.SqlClient; //Imports all needed SQL related syntax.
 using System.IO; //Imports syntax related to file streaming.
 using System.Text.RegularExpressions;
+using Microsoft.Win32.SafeHandles;
 
 namespace DatabaseManagementOperationsLibrary
 {
     /// <summary>
     /// This enables the system to manipulate or manage the databse. 
     /// </summary>
-    public class DatabaseOperations
+    public class DatabaseOperations : IDisposable
     {
+        bool disposed = false;
+        SafeFileHandle handle = new SafeFileHandle(IntPtr.Zero, true);
         /// <summary>
         /// Creates a databese
         /// </summary>
@@ -111,9 +114,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
-        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC,
-            string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH,
-            string dataTypeH, string attributeI, string dataTypeI)
+        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH, string attributeI, string dataTypeI)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
             {
@@ -121,12 +122,24 @@ namespace DatabaseManagementOperationsLibrary
 
                 if (checkExistence == 0)
                 {
-                    string createTableCommand = "CREATE TABLE [" + tableName + "] ([" + attributeA + "]" + dataTypeA + "," + "[" + attributeB + "]" + dataTypeB + "," + "[" + attributeC + "]" + dataTypeC + ","
-                        + "[" + attributeD + "]" + dataTypeD + "," + "[" + attributeE + "]" + dataTypeE + "," + "[" + attributeF + "]" + dataTypeF + ",[" + attributeG + "]" + dataTypeG + ",[" + attributeH + "]" + dataTypeH + ",[" + attributeI + "]" + dataTypeI + ")";
+                    string temp = string.Format(
+                        "CREATE TABLE {0}(" +
+                        "{1} {2}," +
+                        "{3} {4}," +
+                        "{5} {6}," +
+                        "{7} {8}," +
+                        "{9} {10}," +
+                        "{11} {12}," +
+                        "{13} {14}," +
+                        "{15} {16}," +
+                        "{17} {18}," +
+                        "PRIMARY KEY ({1}) );",
+                        tableName, attributeA, dataTypeA, attributeB, dataTypeB, attributeC, dataTypeC, attributeD, dataTypeD, attributeE, dataTypeE, attributeF, dataTypeF, attributeG, dataTypeG, attributeH, dataTypeH, attributeI, dataTypeI);
+
+                    string createTableCommand = temp;
                     SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
                     connectionString.Open();
                     sqlCommand.ExecuteNonQuery();
-                    connectionString.Close();
                 }
             }
         }
@@ -203,5 +216,37 @@ namespace DatabaseManagementOperationsLibrary
                 sqlCommand.ExecuteNonQuery();
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    GC.SuppressFinalize(this);
+                    SqlConnection.ClearAllPools();
+                }
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~DatabaseOperations() {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        void IDisposable.Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

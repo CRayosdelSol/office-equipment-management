@@ -15,12 +15,15 @@ namespace OfficeEquipMgmtApp
 {
     public partial class frm_EquipmentView : Form
     {
-        private SqlCommand selectCommand;
+        string user = Environment.UserName; // Get whatever the current computer's username is
+        Main mainForm;
+        string dir;
+        string file;
+        DatabaseOperations db = new DatabaseOperations();
 
         public frm_EquipmentView()
         {
             InitializeComponent();
-            initializeDefGrid(dtgrd_equipment);
         }
 
         private void manufacturerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -69,24 +72,12 @@ namespace OfficeEquipMgmtApp
         }
         public void initializeDefGrid(DataGridView grid)
         {
-            /*
-            Fields Reference:
-            -Serial No. (like: 1PN)
-            -Name
-            -Condition (Like: Good condition, needs repair, under repair, for replacement, fucked or stupidly lost)
-            -Quantity
-            -Price
-            -Department (Like: HR, IT)
-            -Manufacturer Name
-            -Date Purchased
-            -Description (like: "Used for writing.")
-            */
+            mainForm = ((Main)MdiParent);
+            dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+            file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
-            string user = Environment.UserName; // Get whatever the current computer's username is
-            string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-            string file = dir + "temp.mdf";
+            this.Text = string.Format("New Database {0}", mainForm.fileCounter);
 
-            DatabaseOperations db = new DatabaseOperations();
             string selectCommand = "select * from Equipment";
             SqlDataAdapter dataAdapter;
             SqlCommandBuilder commandBuilder;
@@ -97,41 +88,61 @@ namespace OfficeEquipMgmtApp
             DirectoryInfo dirInf = Directory.CreateDirectory(dir);
             dirInf.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
-            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
-
-            if (File.Exists(file)) // deletes temp files generated along with the mdf in case it exists
-            {
-                File.Delete(file);
-                File.Delete(dir + "temp_log.ldf");
-            }
-
-
             db.CreateDatabase(file);
 
-            db.CreateTable("Equipment", connString, "item_number", "int", "serial_no", "string", "name", "string", "condition", "string", "quantity", "int", "price", "decimal", "department", "string", "manufacturer", "string", "date_of_purchase", "DateTime", "description", "string"); // @RaysOfTHeSun take a look at this
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
 
-            //TODO: Add columns to database and bind it to the grid
+            db.CreateTable("Equipment", connString, "item_number", "int", "name", "varchar(255)", "condition", "varchar(255)", "quantity", "int", "price", "decimal", "department", "varchar(255)", "manufacturer", "varchar(255)", "date_of_purchase", "varchar(255)", "description", "varchar(255)");
 
             try
             {
-                dataAdapter = new SqlDataAdapter(selectCommand, connString);
-                commandBuilder = new SqlCommandBuilder(dataAdapter);
-                table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                dataAdapter.Fill(table);
-                bindingSource.DataSource = table;
+                using (dataAdapter = new SqlDataAdapter(selectCommand, connString))
+                {
+                    commandBuilder = new SqlCommandBuilder(dataAdapter);
+                    table = new DataTable();
+                    table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                    dataAdapter.Fill(table);
+                    bindingSource.DataSource = table;
+                    grid.DataSource = bindingSource;
+                    dataAdapter.Dispose();
+                }
             }
             catch (Exception e)
             {
-
                 MessageBox.Show(e.Message);
             }
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
-            grid.AllowUserToResizeColumns = true;
-            grid.DataSource = bindingSource;
+            grid.AllowUserToResizeColumns = true;          
+            db.Dispose(true);
         }
 
+        private void frm_EquipmentView_Load(object sender, EventArgs e)
+        {
+            initializeDefGrid(dtgrd_equipment);
+        }
+
+        private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
+            {
+                var close = MessageBox.Show("Do you want to discard changes?", "Unsaved Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (close == DialogResult.Yes)
+                {
+                    if (File.Exists(file)) // deletes temp files generated along with the mdf in case it exists
+                    {
+                        File.Delete(file);
+                        File.Delete(dir + string.Format("temp_{0}.ldf", mainForm.fileCounter));
+                    }
+                    e.Cancel = false;
+                }
+
+                else
+                    e.Cancel = true;
+            }
+        }
     }
 }
