@@ -191,15 +191,6 @@
     <None Include="Resources\Condition_Good.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Condition_UnderRepair1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Condition_NeedsReplacemnet1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Condition_Lost1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Save_16x1.png" />
   </ItemGroup>
   <ItemGroup>
