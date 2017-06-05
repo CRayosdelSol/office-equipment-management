@@ -35,13 +35,18 @@ namespace OfficeEquipMgmtApp
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtbx_ItemDescription = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sortItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ascendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.descendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manufacturerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ascendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.descendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripA = new System.Windows.Forms.StatusStrip();
             this.stsstrplbl_currentSort = new System.Windows.Forms.ToolStripStatusLabel();
             this.stsstrplbl_currentSortDirection = new System.Windows.Forms.ToolStripStatusLabel();
@@ -56,11 +61,7 @@ namespace OfficeEquipMgmtApp
             this.btn_EditEquipment = new System.Windows.Forms.Button();
             this.btn_DeleteEquipment = new System.Windows.Forms.Button();
             this.btn_NewEquipment = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.ascendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.descendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ascendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.descendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ttip_optionHints = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -115,6 +116,16 @@ namespace OfficeEquipMgmtApp
             this.textBox1.Size = new System.Drawing.Size(160, 29);
             this.textBox1.TabIndex = 1;
             // 
+            // button1
+            // 
+            this.button1.Image = global::OfficeEquipMgmtApp.Properties.Resources.Search_16x;
+            this.button1.Location = new System.Drawing.Point(120, 24);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(27, 24);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtbx_ItemDescription);
@@ -152,8 +163,8 @@ namespace OfficeEquipMgmtApp
             this.conditionToolStripMenuItem,
             this.manufacturerToolStripMenuItem});
             this.sortItemsToolStripMenuItem.Name = "sortItemsToolStripMenuItem";
-            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(72, 22);
-            this.sortItemsToolStripMenuItem.Text = "&Sort Items";
+            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(40, 22);
+            this.sortItemsToolStripMenuItem.Text = "&Sort";
             // 
             // nameToolStripMenuItem
             // 
@@ -161,13 +172,31 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem,
             this.descendingToolStripMenuItem});
             this.nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-            this.nameToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.nameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.nameToolStripMenuItem.Text = "&Name";
+            // 
+            // ascendingToolStripMenuItem
+            // 
+            this.ascendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
+            this.ascendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ascendingToolStripMenuItem.Name = "ascendingToolStripMenuItem";
+            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ascendingToolStripMenuItem.Text = "Ascending";
+            this.ascendingToolStripMenuItem.Click += new System.EventHandler(this.ascendingToolStripMenuItem_Click);
+            // 
+            // descendingToolStripMenuItem
+            // 
+            this.descendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
+            this.descendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.descendingToolStripMenuItem.Name = "descendingToolStripMenuItem";
+            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.descendingToolStripMenuItem.Text = "Descending";
+            this.descendingToolStripMenuItem.Click += new System.EventHandler(this.descendingToolStripMenuItem_Click);
             // 
             // conditionToolStripMenuItem
             // 
             this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
-            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.conditionToolStripMenuItem.Text = "&Condition";
             this.conditionToolStripMenuItem.Click += new System.EventHandler(this.conditionToolStripMenuItem_Click);
             // 
@@ -177,9 +206,27 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1,
             this.descendingToolStripMenuItem1});
             this.manufacturerToolStripMenuItem.Name = "manufacturerToolStripMenuItem";
-            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.manufacturerToolStripMenuItem.Text = "&Manufacturer";
             this.manufacturerToolStripMenuItem.Click += new System.EventHandler(this.manufacturerToolStripMenuItem_Click);
+            // 
+            // ascendingToolStripMenuItem1
+            // 
+            this.ascendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
+            this.ascendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ascendingToolStripMenuItem1.Name = "ascendingToolStripMenuItem1";
+            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.ascendingToolStripMenuItem1.Text = "Ascending";
+            this.ascendingToolStripMenuItem1.Click += new System.EventHandler(this.ascendingToolStripMenuItem1_Click);
+            // 
+            // descendingToolStripMenuItem1
+            // 
+            this.descendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
+            this.descendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.descendingToolStripMenuItem1.Name = "descendingToolStripMenuItem1";
+            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.descendingToolStripMenuItem1.Text = "Descending";
+            this.descendingToolStripMenuItem1.Click += new System.EventHandler(this.descendingToolStripMenuItem1_Click);
             // 
             // statusStripA
             // 
@@ -282,10 +329,6 @@ namespace OfficeEquipMgmtApp
             this.btn_GoodItemConditon.UseVisualStyleBackColor = true;
             this.btn_GoodItemConditon.Click += new System.EventHandler(this.btn_GoodItemConditon_Click);
             // 
-            // ttip_optionHints
-            // 
-            this.ttip_optionHints.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
-            // 
             // btn_updateEquipemntInfo
             // 
             this.btn_updateEquipemntInfo.Image = global::OfficeEquipMgmtApp.Properties.Resources.UpdateDatabase_16x;
@@ -385,6 +428,7 @@ namespace OfficeEquipMgmtApp
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frm_EquipmentView";
+            this.ShowIcon = false;
             this.Text = "FRM_EquipmentView";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_EquipmentView_FormClosing);
             this.Load += new System.EventHandler(this.frm_EquipmentView_Load);

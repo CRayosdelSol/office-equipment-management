@@ -167,5 +167,15 @@ namespace OfficeEquipMgmtApp
             else
                 e.Cancel = true;
         }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void toolHover(object sender, EventArgs e)
+        //{
+        //    ((Button)sender).Text
+        //}
     }
 }
