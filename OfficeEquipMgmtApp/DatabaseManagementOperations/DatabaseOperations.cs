@@ -19,7 +19,6 @@ namespace DatabaseManagementOperationsLibrary
     /// </summary>
     public class DatabaseOperations : IDisposable
     {
-        
         bool disposed = false;
         SafeFileHandle handle = new SafeFileHandle(IntPtr.Zero, true);
         /// <summary>
@@ -138,6 +137,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
+
         public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH)
         {
             using (SqlConnection connectionString = new SqlConnection(connString))
@@ -201,6 +201,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="valueF"></param>
         /// <param name="valueG"></param>
         /// <param name="valueH"></param>
+
         public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG)
         {
 
@@ -210,28 +211,28 @@ namespace DatabaseManagementOperationsLibrary
                 SqlCommand sqlCommand = connectionString.CreateCommand();
                 sqlCommand.CommandType = CommandType.Text;
                 //sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "','" + valueF + "','" + valueG + "','" + valueH + "')";
-                sqlCommand.CommandText = string.Format("INSERT INTO [{0}] VALUES ('{1}', '{2}', {3}, {4}, '{5}', '{6}', '{7}');",tableName,valueA,valueB,valueC,valueD,valueE,valueF,valueG);
+                sqlCommand.CommandText = string.Format("INSERT INTO [{0}] VALUES ('{1}', '{2}', {3}, {4}, '{5}', '{6}', '{7}');", tableName, valueA, valueB, valueC, valueD, valueE, valueF, valueG);
                 sqlCommand.ExecuteNonQuery();
             }
         }
 
-        public void updateTable(string tableName, string connstring, string attributeA, string attributeB, string attributeC, string attributeD, string attributeE, string attributeF, string attributeG,  string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG, int PrimaryKey)
+        public void updateTable(string tableName, string connstring, string attributeA, string attributeB, string attributeC, string attributeD, string attributeE, string attributeF, string attributeG, string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG, int PrimaryKey)
         {
-            using(SqlConnection connectionString = new SqlConnection(connstring))
+            using (SqlConnection connectionString = new SqlConnection(connstring))
             {
                 connectionString.Open();
                 SqlCommand sqlCommand = connectionString.CreateCommand();
                 sqlCommand.CommandType = CommandType.Text;
                 //sqlCommand.CommandText = string.Format("UPATE {0} SET {1} = {2}, {3} = {4}, {5} = {6}, {7} = {8}, {9} = {10}, {11} = {12}, {13} = {14} WHERE ID = {15};",tableName,attributeA,valueA,attributeB,valueB,attributeC,valueC,attributeD,valueD,attributeE,valueE,attributeF,valueF,attributeG,valueG,PrimaryKey); //shit's broken. I'll fix it next time.
                 //sqlCommand.CommandText = "UPDATE " + tableName + " SET " + attributeA + "= '" + valueA + "', " + attributeB + "= '" + valueB + "', " + attributeC + "= '" + valueC + "', " + attributeD + "= '" + valueD + "', " + attributeE + "= '" + valueE + "', " + attributeF + "= '" + valueF + "', " + attributeG + "= '" + valueG + "' WHERE ID= " + PrimaryKey + ";";
-                sqlCommand.CommandText = String.Format("UPDATE {0} SET {1}= '{2}', {3}= '{4}', {5}= '{6}', {7}= '{8}', {9}= '{10}', {11}= '{12}', {13}= '{14}' WHERE ID= {15};", tableName,attributeA, valueA, attributeB, valueB, attributeC, valueC, attributeD, valueD, attributeE, valueE, attributeF, valueF, attributeG, valueG, PrimaryKey);
+                sqlCommand.CommandText = String.Format("UPDATE {0} SET {1}= '{2}', {3}= '{4}', {5}= '{6}', {7}= '{8}', {9}= '{10}', {11}= '{12}', {13}= '{14}' WHERE ID= {15};", tableName, attributeA, valueA, attributeB, valueB, attributeC, valueC, attributeD, valueD, attributeE, valueE, attributeF, valueF, attributeG, valueG, PrimaryKey);
                 sqlCommand.ExecuteNonQuery();
             }
         }
 
-        public void updateTable(string tableName,string connstring, string attributeA,string valueA, int primaryKey)
+        public void updateTable(string tableName, string connstring, string attributeA, string valueA, int primaryKey)
         {
-            using(SqlConnection connection = new SqlConnection(connstring))
+            using (SqlConnection connection = new SqlConnection(connstring))
             {
                 connection.Open();
                 SqlCommand sqlCommand = connection.CreateCommand();

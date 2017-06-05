@@ -23,7 +23,6 @@ namespace OfficeEquipMgmtApp
         DatabaseOperations db = new DatabaseOperations();
         //string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
 
-
         public frm_EquipmentView()
         {
             InitializeComponent();
@@ -76,7 +75,6 @@ namespace OfficeEquipMgmtApp
         public void initializeDefGrid(DataGridView grid)
         {
             mainForm = ((Main)MdiParent);
-            //dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
             dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
             file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
@@ -144,7 +142,7 @@ namespace OfficeEquipMgmtApp
             SqlCommandBuilder commandBuilder;
             DataTable table;
             BindingSource bindingSource = new BindingSource();
-            
+
             using (dataAdapter = new SqlDataAdapter(selectCommand, conn))
             {
                 commandBuilder = new SqlCommandBuilder(dataAdapter);
@@ -155,14 +153,12 @@ namespace OfficeEquipMgmtApp
                 grid.DataSource = bindingSource;
                 dataAdapter.Dispose();
             }
-
         }
 
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
             initializeDefGrid(dtgrd_equipment);
-            
-           
+
             //Scale the form so that all of its contents are shown properly.
             this.MinimumSize = new Size(this.Width, this.Height);
             this.AutoSize = true;
@@ -197,7 +193,7 @@ namespace OfficeEquipMgmtApp
             file = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
             string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
             string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-            string a, b, x, f, g, _c,_d;
+            string a, b, x, f, g, _c, _d;
             int c = 0;
             decimal d = 0;
             //int temp = Convert.ToInt32(dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].ToString());
@@ -205,12 +201,12 @@ namespace OfficeEquipMgmtApp
             a = dtgrd_equipment.Rows[e.RowIndex].Cells[1].Value.ToString();
             b = dtgrd_equipment.Rows[e.RowIndex].Cells[2].Value.ToString();
             _c = dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString();
-            if(_c != string.Empty)
+            if (_c != string.Empty)
             {
                 c = Convert.ToInt32(_c);
             }
             _d = dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString();
-            if(_d != string.Empty)
+            if (_d != string.Empty)
             {
                 d = Convert.ToDecimal(_d);
             }
@@ -227,7 +223,7 @@ namespace OfficeEquipMgmtApp
             else
             {
                 db.updateTable("Equipment", connString, "NAME", "CONDITION", "QUANTITY", "PRICE", "DEPARTMENT", "MANUFACTURER", "[DATE OF PURCHASE]",
-                    a,b,c, d, x, f, g, Convert.ToInt32(selectedEquipmentID));
+                    a, b, c, d, x, f, g, Convert.ToInt32(selectedEquipmentID));
             }
 
             refrestDataGrid(dtgrd_equipment, connString, "Equipment");
