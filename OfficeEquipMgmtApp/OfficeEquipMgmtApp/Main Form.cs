@@ -56,8 +56,10 @@ namespace OfficeEquipMgmtApp
             try
             {
                 string user = Environment.UserName; // Get whatever the current computer's username is
-                string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-                string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                //string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+                //string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
                 string[] filepaths = Directory.GetFiles(dir);
 
                 foreach (string f in filepaths)
@@ -79,7 +81,7 @@ namespace OfficeEquipMgmtApp
 
         private void updateTime(object sender, EventArgs e)
         {
-            striplbl.Text = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt");
+            striplbl.Text = DateTime.Now.ToString("MM /dd/yyyy hh:mm tt");
         }
 
 
@@ -131,8 +133,10 @@ namespace OfficeEquipMgmtApp
             try
             {
                 string user = Environment.UserName; // Get whatever the current computer's username is
-                string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-                string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                //string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
+                //string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
                 string[] filepaths = Directory.GetFiles(dir);
 
                 foreach (string f in filepaths)

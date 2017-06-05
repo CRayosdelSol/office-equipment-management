@@ -169,6 +169,21 @@
   <ItemGroup>
     <None Include="Resources\Search_16x.png" />
   </ItemGroup>
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <None Include="Resources\Condition_Good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Condition_UnderRepair1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Condition_NeedsReplacemnet1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Condition_Lost1.png" />
+  </ItemGroup>
+>>>>>>> c_rayosdelsol
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
