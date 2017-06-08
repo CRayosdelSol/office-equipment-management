@@ -2,14 +2,9 @@
  * LAST MODIFIED BY: CARL RAYOS DEL SOL 5/28/2017 3:04 PM
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient; //Imports all needed SQL related syntax.
 using System.IO; //Imports syntax related to file streaming.
-using System.Text.RegularExpressions;
 using Microsoft.Win32.SafeHandles;
 
 namespace DatabaseManagementOperationsLibrary
@@ -19,8 +14,13 @@ namespace DatabaseManagementOperationsLibrary
     /// </summary>
     public class DatabaseOperations : IDisposable
     {
-        bool disposed = false;
-        SafeFileHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+        string strConn;
+
+        public DatabaseOperations(string connString)
+        {
+            strConn = connString;
+        }
+
         /// <summary>
         /// Creates a databese
         /// </summary>
@@ -52,9 +52,9 @@ namespace DatabaseManagementOperationsLibrary
         /// </summary>
         /// <param name="tableName">The name of the table or entity set to be created.</param>
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
-        public int checkForTableExistence(string tableName, string connString)
+        public int checkForTableExistence(string tableName)
         {
-            using (SqlConnection connectionString = new SqlConnection(connString))
+            using (SqlConnection connectionString = new SqlConnection(strConn))
             {
                 string checkExistence = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
                 connectionString.Open();
@@ -75,12 +75,12 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeB">The datatype of the SECOND attribute.</param>
         /// <param name="attributeC">The THIRD attribute's name.</param>
         /// <param name="dataTypeC">The datatype of the THIRD attribute.</param>
-        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string datatypeB,
+        public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB,
             string attributeC, string dataTypeC)
         {
-            using (SqlConnection connectionString = new SqlConnection(connString))
+            using (SqlConnection connectionString = new SqlConnection(strConn))
             {
-                int checkExistence = checkForTableExistence(tableName, connString);
+                int checkExistence = checkForTableExistence(tableName);
 
                 if (checkExistence == 0)
                 {
@@ -94,11 +94,11 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB)
+        public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB)
         {
-            using (SqlConnection connectionString = new SqlConnection(connString))
+            using (SqlConnection connectionString = new SqlConnection(strConn))
             {
-                int checkExistence = checkForTableExistence(tableName, connString);
+                int checkExistence = checkForTableExistence(tableName);
 
                 if (checkExistence == 0)
                 {
@@ -138,11 +138,11 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
 
-        public void CreateTable(string tableName, string connString, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH)
+        public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH)
         {
-            using (SqlConnection connectionString = new SqlConnection(connString))
+            using (SqlConnection connectionString = new SqlConnection(strConn))
             {
-                int checkExistence = checkForTableExistence(tableName, connString);
+                int checkExistence = checkForTableExistence(tableName);
 
                 if (checkExistence == 0)
                 {
@@ -155,8 +155,7 @@ namespace DatabaseManagementOperationsLibrary
                         "{9} {10}," +
                         "{11} {12}," +
                         "{13} {14}," +
-                        "{15} {16}," +
-                        "PRIMARY KEY ({1}) );",
+                        "{15} {16});",
                         tableName, attributeA, dataTypeA, attributeB, dataTypeB, attributeC, dataTypeC, attributeD, dataTypeD, attributeE, dataTypeE, attributeF, dataTypeF, attributeG, dataTypeG, attributeH, dataTypeH);
 
                     string createTableCommand = temp;
@@ -167,93 +166,55 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        /// <summary>
-        /// Insert new values to the table. This is preffered for the Manufacturer entity set.
-        /// </summary>
-        /// <param name="tableName">The name of the table where the values are to be added or inserted into.</param>
-        /// <param name="valueA"></param>
-        /// <param name="valueB"></param>
-        /// <param name="valueC"></param>
-        /// <param name="valueD"></param>
-        /// <param name="valueE"></param>
-        /// <param name="valueF"></param>
-        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, string valueC, string valueD, string valueE, int valueF)
+        public void UpdateDataSet(DataSet ds)
         {
-            using (SqlConnection connectionString = new SqlConnection(connString))
-            {
-                connectionString.Open();
-                SqlCommand sqlCommand = connectionString.CreateCommand();
-                sqlCommand.CommandType = CommandType.Text;
-                sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "'," + valueF + ")";
-                sqlCommand.ExecuteNonQuery();
-            }
-        }
+            SqlConnection conn = new SqlConnection(strConn);
 
-        /// <summary>
-        /// Insert new values into the table. This is preffered for the equipment entity set.
-        /// </summary>
-        /// <param name="tableName">The name of the table where the values are to be added or inserted into.</param>
-        /// <param name="valueA"></param>
-        /// <param name="valueB"></param>
-        /// <param name="valueC"></param>
-        /// <param name="valueD"></param>
-        /// <param name="valueE"></param>
-        /// <param name="valueF"></param>
-        /// <param name="valueG"></param>
-        /// <param name="valueH"></param>
+            string sInsert, sUpdate, sDelete;
 
-        public void InsertIntoTable(string tableName, string connString, string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG)
-        {
-            using (SqlConnection connectionString = new SqlConnection(connString))
-            {
-                connectionString.Open();
-                SqlCommand sqlCommand = connectionString.CreateCommand();
-                sqlCommand.CommandType = CommandType.Text;
-                //sqlCommand.CommandText = "INSERT INTO [" + tableName + "]" + "values('" + valueA + "','" + valueB + "','" + valueC + "','" + valueD + "','" + valueE + "','" + valueF + "','" + valueG + "','" + valueH + "')";
-                sqlCommand.CommandText = string.Format("INSERT INTO [{0}] VALUES ('{1}', '{2}', {3}, {4}, '{5}', '{6}', '{7}');", tableName, valueA, valueB, valueC, valueD, valueE, valueF, valueG);
-                sqlCommand.ExecuteNonQuery();
-            }
-        }
+            sInsert = "INSERT INTO EQUIPMENT (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
 
-        public void updateTable(string tableName, string connstring, string attributeA, string attributeB, string attributeC, string attributeD, string attributeE, string attributeF, string attributeG, string valueA, string valueB, int valueC, decimal valueD, string valueE, string valueF, string valueG, int PrimaryKey)
-        {
-            using (SqlConnection connectionString = new SqlConnection(connstring))
-            {
-                connectionString.Open();
-                SqlCommand sqlCommand = connectionString.CreateCommand();
-                sqlCommand.CommandType = CommandType.Text;
-                sqlCommand.CommandText = String.Format("UPDATE {0} SET {1}= '{2}', {3}= '{4}', {5}= '{6}', {7}= '{8}', {9}= '{10}', {11}= '{12}', {13}= '{14}' WHERE ID= {15};", tableName, attributeA, valueA, attributeB, valueB, attributeC, valueC, attributeD, valueD, attributeE, valueE, attributeF, valueF, attributeG, valueG, PrimaryKey);
-                sqlCommand.ExecuteNonQuery();
-            }
-        }
+            sUpdate = "UPDATE EQUIPMENT SET N=ame@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
 
-        public void updateTable(string tableName, string connstring, string attributeA, string valueA, int primaryKey)
-        {
-            using (SqlConnection connection = new SqlConnection(connstring))
-            {
-                connection.Open();
-                SqlCommand sqlCommand = connection.CreateCommand();
-                sqlCommand.CommandType = CommandType.Text;
-                sqlCommand.CommandText = string.Format("UPDATE {0} SET {1}= '{2}' WHERE ID= {3}", tableName, attributeA, valueA, primaryKey);
-                sqlCommand.ExecuteNonQuery();
-            }
-        }
+            sDelete = "DELETE FROM EQUIPMENT WHERE ID=@p1";
 
-        /// <summary>
-        /// Delete the selected entity occurence (row) from the database. 
-        /// </summary>
-        /// <param name="tableName">The name of the table.</param>
-        /// <param name="itemToBeDeleted">The entity occurence to be deleted from the databse.</param>
-        public void deleteFromTable(string tableName, string connString, int primaryKey)
-        {
-            using (SqlConnection connectionString = new SqlConnection(connString))
-            {
-                connectionString.Open();
-                SqlCommand sqlCommand = connectionString.CreateCommand();
-                sqlCommand.CommandType = CommandType.Text;
-                sqlCommand.CommandText = String.Format("DELETE FROM [{0}] WHERE ID= {1}",tableName,primaryKey);
-                sqlCommand.ExecuteNonQuery();
-            }
+            // TODO: Add parameters for SQL commands
+            SqlParameter[] pInsert = new SqlParameter[7];
+            SqlParameter[] pUpdate = new SqlParameter[7];
+            SqlParameter[] pDelete = new SqlParameter[1];
+
+            pInsert[0] = new SqlParameter("@p2", SqlDbType.VarChar, 20, "Name");
+            pInsert[1] = new SqlParameter("@p3", SqlDbType.VarChar, 20, "Condition");
+            pInsert[2] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
+            pInsert[3] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
+            pInsert[4] = new SqlParameter("@p6", SqlDbType.VarChar, 3, "Department");
+            pInsert[5] = new SqlParameter("@p7", SqlDbType.VarChar, 20, "Manufacturer");
+            pInsert[6] = new SqlParameter("@p8", SqlDbType.Date, 100, "Date of Purchase");
+
+            pUpdate[0] = new SqlParameter("@p2", SqlDbType.VarChar, 20, "Name");
+            pUpdate[1] = new SqlParameter("@p3", SqlDbType.VarChar, 20, "Condition");
+            pUpdate[2] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
+            pUpdate[3] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
+            pUpdate[4] = new SqlParameter("@p6", SqlDbType.VarChar, 3, "Department");
+            pUpdate[5] = new SqlParameter("@p7", SqlDbType.VarChar, 20, "Manufacturer");
+            pUpdate[6] = new SqlParameter("@p8", SqlDbType.Date, 100, "Date of Purchase");
+
+            pDelete[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
+
+            var cmdInsert = new SqlCommand(sInsert, conn);
+            var cmdUpdate = new SqlCommand(sUpdate, conn);
+            var cmdDelete = new SqlCommand(sDelete, conn);
+
+            cmdInsert.Parameters.AddRange(pInsert);
+            cmdUpdate.Parameters.AddRange(pUpdate);
+            cmdDelete.Parameters.AddRange(pDelete);
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.InsertCommand = cmdInsert;
+            da.UpdateCommand = cmdUpdate;
+            da.DeleteCommand = cmdDelete;
+            da.Update(ds, "Equipment");
+            ds.AcceptChanges();
         }
 
         #region IDisposable Support
@@ -265,7 +226,6 @@ namespace DatabaseManagementOperationsLibrary
             {
                 if (disposing)
                 {
-                    GC.SuppressFinalize(this);
                     SqlConnection.ClearAllPools();
                 }
                 disposedValue = true;
@@ -283,8 +243,8 @@ namespace DatabaseManagementOperationsLibrary
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            //TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
