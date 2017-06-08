@@ -77,6 +77,33 @@ namespace OfficeEquipMgmtApp
 
         }
 
+        public void refreshDataGrid(DataGridView grid, string connString)
+        {
+            string selectCommand = "SELECT * FROM Equipment";
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                try // database binding happens here
+                {
+                    dataAdapter = new SqlDataAdapter(selectCommand, connString);
+                    ds = new DataSet();
+                    dataAdapter.Fill(ds, "Equipment");
+                    grid.DataMember = "Equipment";
+                    grid.DataSource = ds;
+                }
+
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
+
+            //Scale the datagridview so that all of its contents are properly shown to the user.
+            grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
+            (grid.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
+        }
+
+
         public void initalizeDataGrid(DataGridView grid)
         {
 
@@ -120,8 +147,6 @@ namespace OfficeEquipMgmtApp
             }
 
             //Adjust the datagrid view to show all the present columns.
-            grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
-                (grid.RowHeadersVisible ? grid.RowHeadersWidth : 0) + 3;
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
             grid.AllowUserToResizeColumns = true;
@@ -173,6 +198,11 @@ namespace OfficeEquipMgmtApp
         private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             dtgrd_equipment.Refresh();
+
+            //Scale the datagridview so that all of its contents are properly shown to the user.
+            dtgrd_equipment.Width = dtgrd_equipment.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
+            (dtgrd_equipment.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
+
             ////Manufacturer manufacturer = new Manufacturer(); we'll have to fill these later.
             ////Equipment equipment = new Equipment();
             //string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
@@ -214,70 +244,6 @@ namespace OfficeEquipMgmtApp
             //SqlConnection.ClearAllPools();
         }
 
-        private void btn_GoodItemConditon_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int currentRow, currentColumn;
-                currentRow = dtgrd_equipment.CurrentCell.RowIndex;
-                currentColumn = dtgrd_equipment.CurrentCell.ColumnIndex;
-                dtgrd_equipment[2, currentRow].Value = "GOOD";
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
-        private void btn_UnderRepairCondition_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int currentRow, currentColumn;
-                currentRow = dtgrd_equipment.CurrentCell.RowIndex;
-                currentColumn = dtgrd_equipment.CurrentCell.ColumnIndex;
-                dtgrd_equipment[2, currentRow].Value = "UNDER REPAIR";
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
-        private void btn_forReplacementCondition_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int currentRow, currentColumn;
-                currentRow = dtgrd_equipment.CurrentCell.RowIndex;
-                currentColumn = dtgrd_equipment.CurrentCell.ColumnIndex;
-                dtgrd_equipment[2, currentRow].Value = "NEEDS REPLACEMENT";
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
-        private void btn_lostCondition_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int currentRow, currentColumn;
-                currentRow = dtgrd_equipment.CurrentCell.RowIndex;
-                currentColumn = dtgrd_equipment.CurrentCell.ColumnIndex;
-                dtgrd_equipment[2, currentRow].Value = "LOST";
-            }
-            catch (Exception)
-            {
-
-
-            }
-        }
-
         //private void btn_DeleteEquipment_Click(object sender, EventArgs e)
         //{
         //    DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to delete the equipment \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Delete Item", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -294,12 +260,14 @@ namespace OfficeEquipMgmtApp
             try
             {
                 db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
+                refreshDataGrid(dtgrd_equipment, connString);
             }
             catch (Exception)
             {
-
-                MessageBox.Show("There are no edits made");
+                MessageBox.Show("There were no modifications done to the data table.","Uncessesary Commit",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
+
+            SqlConnection.ClearAllPools();
 
         }
 

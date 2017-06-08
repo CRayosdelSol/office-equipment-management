@@ -35,45 +35,47 @@ namespace OfficeEquipMgmtApp
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
-            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtbx_ItemDescription = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sortItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ascendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.descendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manufacturerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ascendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.descendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripA = new System.Windows.Forms.StatusStrip();
             this.stsstrplbl_currentSort = new System.Windows.Forms.ToolStripStatusLabel();
             this.stsstrplbl_currentSortDirection = new System.Windows.Forms.ToolStripStatusLabel();
             this.ttip_optionHints = new System.Windows.Forms.ToolTip(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn1 = new DatabaseManagementOperationsLibrary.CalendarColumn();
+            this.grpbx_options = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.ascendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.descendingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ascendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.descendingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
+            this.grpbx_options.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtgrd_equipment
@@ -109,7 +111,8 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dtgrd_equipment.Location = new System.Drawing.Point(176, 32);
+            this.dtgrd_equipment.Location = new System.Drawing.Point(264, 48);
+            this.dtgrd_equipment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -120,34 +123,10 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgrd_equipment.RowTemplate.Height = 28;
-            this.dtgrd_equipment.Size = new System.Drawing.Size(688, 403);
+            this.dtgrd_equipment.Size = new System.Drawing.Size(1032, 604);
             this.dtgrd_equipment.TabIndex = 1;
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_RowLeave);
-            // 
-            // col_Condition
-            // 
-            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Condition.DataPropertyName = "Condition";
-            this.col_Condition.HeaderText = "Condition";
-            this.col_Condition.Items.AddRange(new object[] {
-            "Good",
-            "Under Repair",
-            "Needs Replacement",
-            "Broken"});
-            this.col_Condition.Name = "col_Condition";
-            this.col_Condition.Width = 57;
-            // 
-            // col_Manufacturer
-            // 
-            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Manufacturer.DataPropertyName = "Manufacturer";
-            this.col_Manufacturer.HeaderText = "Manufacturer";
-            this.col_Manufacturer.Items.AddRange(new object[] {
-            "Manuf 1",
-            "Manuf 2"});
-            this.col_Manufacturer.Name = "col_Manufacturer";
-            this.col_Manufacturer.Width = 76;
             // 
             // groupBox1
             // 
@@ -155,9 +134,11 @@ namespace OfficeEquipMgmtApp
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(11, 261);
+            this.groupBox1.Location = new System.Drawing.Point(16, 287);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(160, 80);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(240, 120);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
@@ -165,48 +146,39 @@ namespace OfficeEquipMgmtApp
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 59);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(24, 88);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 13);
+            this.label1.Size = new System.Drawing.Size(176, 21);
             this.label1.TabIndex = 2;
             this.label1.Text = "The item was not found.";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(5, 27);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Location = new System.Drawing.Point(8, 40);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(97, 22);
+            this.textBox1.Size = new System.Drawing.Size(144, 29);
             this.textBox1.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::OfficeEquipMgmtApp.Properties.Resources.Search_16x;
-            this.button1.Location = new System.Drawing.Point(107, 21);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 32);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.txtbx_ItemDescription);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(11, 171);
+            this.groupBox2.Location = new System.Drawing.Point(16, 151);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(160, 91);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(240, 136);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Item Description";
             // 
             // txtbx_ItemDescription
             // 
-            this.txtbx_ItemDescription.Location = new System.Drawing.Point(5, 21);
+            this.txtbx_ItemDescription.Location = new System.Drawing.Point(8, 32);
+            this.txtbx_ItemDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtbx_ItemDescription.Multiline = true;
             this.txtbx_ItemDescription.Name = "txtbx_ItemDescription";
-            this.txtbx_ItemDescription.Size = new System.Drawing.Size(151, 67);
+            this.txtbx_ItemDescription.Size = new System.Drawing.Size(224, 98);
             this.txtbx_ItemDescription.TabIndex = 0;
             // 
             // menuStrip1
@@ -216,7 +188,8 @@ namespace OfficeEquipMgmtApp
             this.sortItemsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(873, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1310, 35);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -227,7 +200,7 @@ namespace OfficeEquipMgmtApp
             this.conditionToolStripMenuItem,
             this.manufacturerToolStripMenuItem});
             this.sortItemsToolStripMenuItem.Name = "sortItemsToolStripMenuItem";
-            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
             this.sortItemsToolStripMenuItem.Text = "&Sort";
             // 
             // nameToolStripMenuItem
@@ -236,31 +209,13 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem,
             this.descendingToolStripMenuItem});
             this.nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-            this.nameToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.nameToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.nameToolStripMenuItem.Text = "&Name";
-            // 
-            // ascendingToolStripMenuItem
-            // 
-            this.ascendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
-            this.ascendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.ascendingToolStripMenuItem.Name = "ascendingToolStripMenuItem";
-            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.ascendingToolStripMenuItem.Text = "Ascending";
-            this.ascendingToolStripMenuItem.Click += new System.EventHandler(this.ascendingToolStripMenuItem_Click);
-            // 
-            // descendingToolStripMenuItem
-            // 
-            this.descendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
-            this.descendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.descendingToolStripMenuItem.Name = "descendingToolStripMenuItem";
-            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.descendingToolStripMenuItem.Text = "Descending";
-            this.descendingToolStripMenuItem.Click += new System.EventHandler(this.descendingToolStripMenuItem_Click);
             // 
             // conditionToolStripMenuItem
             // 
             this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
-            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.conditionToolStripMenuItem.Text = "&Condition";
             this.conditionToolStripMenuItem.Click += new System.EventHandler(this.conditionToolStripMenuItem_Click);
             // 
@@ -270,27 +225,9 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1,
             this.descendingToolStripMenuItem1});
             this.manufacturerToolStripMenuItem.Name = "manufacturerToolStripMenuItem";
-            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.manufacturerToolStripMenuItem.Text = "&Manufacturer";
             this.manufacturerToolStripMenuItem.Click += new System.EventHandler(this.manufacturerToolStripMenuItem_Click);
-            // 
-            // ascendingToolStripMenuItem1
-            // 
-            this.ascendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
-            this.ascendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.ascendingToolStripMenuItem1.Name = "ascendingToolStripMenuItem1";
-            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            this.ascendingToolStripMenuItem1.Text = "Ascending";
-            this.ascendingToolStripMenuItem1.Click += new System.EventHandler(this.ascendingToolStripMenuItem1_Click);
-            // 
-            // descendingToolStripMenuItem1
-            // 
-            this.descendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
-            this.descendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.descendingToolStripMenuItem1.Name = "descendingToolStripMenuItem1";
-            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
-            this.descendingToolStripMenuItem1.Text = "Descending";
-            this.descendingToolStripMenuItem1.Click += new System.EventHandler(this.descendingToolStripMenuItem1_Click);
             // 
             // statusStripA
             // 
@@ -298,38 +235,28 @@ namespace OfficeEquipMgmtApp
             this.statusStripA.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stsstrplbl_currentSort,
             this.stsstrplbl_currentSortDirection});
-            this.statusStripA.Location = new System.Drawing.Point(0, 439);
+            this.statusStripA.Location = new System.Drawing.Point(0, 662);
             this.statusStripA.Name = "statusStripA";
-            this.statusStripA.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStripA.Size = new System.Drawing.Size(873, 22);
+            this.statusStripA.Padding = new System.Windows.Forms.Padding(3, 0, 21, 0);
+            this.statusStripA.Size = new System.Drawing.Size(1310, 30);
             this.statusStripA.TabIndex = 5;
             this.statusStripA.Text = "statusStrip1";
             // 
             // stsstrplbl_currentSort
             // 
             this.stsstrplbl_currentSort.Name = "stsstrplbl_currentSort";
-            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(120, 17);
+            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(181, 25);
             this.stsstrplbl_currentSort.Text = "Currently Sorted By: -";
             // 
             // stsstrplbl_currentSortDirection
             // 
             this.stsstrplbl_currentSortDirection.Name = "stsstrplbl_currentSortDirection";
-            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(110, 17);
+            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(167, 25);
             this.stsstrplbl_currentSortDirection.Text = "Sorting Direction: - ";
             // 
             // ttip_optionHints
             // 
             this.ttip_optionHints.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(16, 368);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -338,7 +265,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn1.HeaderText = "ID";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn1.Width = 43;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -347,7 +273,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn2.HeaderText = "Name";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.Width = 60;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -355,7 +280,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn3.DataPropertyName = "Quantity";
             this.dataGridViewTextBoxColumn3.HeaderText = "Quantity";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 71;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -363,7 +287,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn4.DataPropertyName = "Price";
             this.dataGridViewTextBoxColumn4.HeaderText = "Price";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 56;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -372,7 +295,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn5.HeaderText = "Department";
             this.dataGridViewTextBoxColumn5.MaxInputLength = 5;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 87;
             // 
             // calendarColumn1
             // 
@@ -382,6 +304,73 @@ namespace OfficeEquipMgmtApp
             this.calendarColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.calendarColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // grpbx_options
+            // 
+            this.grpbx_options.Controls.Add(this.button2);
+            this.grpbx_options.Location = new System.Drawing.Point(16, 47);
+            this.grpbx_options.Name = "grpbx_options";
+            this.grpbx_options.Size = new System.Drawing.Size(240, 96);
+            this.grpbx_options.TabIndex = 9;
+            this.grpbx_options.TabStop = false;
+            this.grpbx_options.Text = "Options";
+            // 
+            // button2
+            // 
+            this.button2.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
+            this.button2.Location = new System.Drawing.Point(13, 30);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(56, 56);
+            this.button2.TabIndex = 8;
+            this.ttip_optionHints.SetToolTip(this.button2, "Save the changes you made to the database.");
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Image = global::OfficeEquipMgmtApp.Properties.Resources.Search_16x;
+            this.button1.Location = new System.Drawing.Point(160, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(56, 48);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // ascendingToolStripMenuItem
+            // 
+            this.ascendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
+            this.ascendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ascendingToolStripMenuItem.Name = "ascendingToolStripMenuItem";
+            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
+            this.ascendingToolStripMenuItem.Text = "Ascending";
+            this.ascendingToolStripMenuItem.Click += new System.EventHandler(this.ascendingToolStripMenuItem_Click);
+            // 
+            // descendingToolStripMenuItem
+            // 
+            this.descendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
+            this.descendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.descendingToolStripMenuItem.Name = "descendingToolStripMenuItem";
+            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
+            this.descendingToolStripMenuItem.Text = "Descending";
+            this.descendingToolStripMenuItem.Click += new System.EventHandler(this.descendingToolStripMenuItem_Click);
+            // 
+            // ascendingToolStripMenuItem1
+            // 
+            this.ascendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
+            this.ascendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.ascendingToolStripMenuItem1.Name = "ascendingToolStripMenuItem1";
+            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
+            this.ascendingToolStripMenuItem1.Text = "Ascending";
+            this.ascendingToolStripMenuItem1.Click += new System.EventHandler(this.ascendingToolStripMenuItem1_Click);
+            // 
+            // descendingToolStripMenuItem1
+            // 
+            this.descendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
+            this.descendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.descendingToolStripMenuItem1.Name = "descendingToolStripMenuItem1";
+            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
+            this.descendingToolStripMenuItem1.Text = "Descending";
+            this.descendingToolStripMenuItem1.Click += new System.EventHandler(this.descendingToolStripMenuItem1_Click);
+            // 
             // col_ID
             // 
             this.col_ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -389,7 +378,7 @@ namespace OfficeEquipMgmtApp
             this.col_ID.HeaderText = "ID";
             this.col_ID.Name = "col_ID";
             this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_ID.Width = 43;
+            this.col_ID.Width = 62;
             // 
             // col_Name
             // 
@@ -398,7 +387,20 @@ namespace OfficeEquipMgmtApp
             this.col_Name.HeaderText = "Name";
             this.col_Name.Name = "col_Name";
             this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_Name.Width = 60;
+            this.col_Name.Width = 89;
+            // 
+            // col_Condition
+            // 
+            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Condition.DataPropertyName = "Condition";
+            this.col_Condition.HeaderText = "Condition";
+            this.col_Condition.Items.AddRange(new object[] {
+            "Good",
+            "Under Repair",
+            "Needs Replacement",
+            "Lost"});
+            this.col_Condition.Name = "col_Condition";
+            this.col_Condition.Width = 85;
             // 
             // col_Quantity
             // 
@@ -406,7 +408,7 @@ namespace OfficeEquipMgmtApp
             this.col_Quantity.DataPropertyName = "Quantity";
             this.col_Quantity.HeaderText = "Quantity";
             this.col_Quantity.Name = "col_Quantity";
-            this.col_Quantity.Width = 71;
+            this.col_Quantity.Width = 107;
             // 
             // col_Price
             // 
@@ -414,7 +416,7 @@ namespace OfficeEquipMgmtApp
             this.col_Price.DataPropertyName = "Price";
             this.col_Price.HeaderText = "Price";
             this.col_Price.Name = "col_Price";
-            this.col_Price.Width = 56;
+            this.col_Price.Width = 84;
             // 
             // col_Department
             // 
@@ -423,7 +425,18 @@ namespace OfficeEquipMgmtApp
             this.col_Department.HeaderText = "Department";
             this.col_Department.MaxInputLength = 5;
             this.col_Department.Name = "col_Department";
-            this.col_Department.Width = 87;
+            this.col_Department.Width = 133;
+            // 
+            // col_Manufacturer
+            // 
+            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Manufacturer.DataPropertyName = "Manufacturer";
+            this.col_Manufacturer.HeaderText = "Manufacturer";
+            this.col_Manufacturer.Items.AddRange(new object[] {
+            "Manuf 1",
+            "Manuf 2"});
+            this.col_Manufacturer.Name = "col_Manufacturer";
+            this.col_Manufacturer.Width = 114;
             // 
             // col_date_of_purchase
             // 
@@ -435,19 +448,20 @@ namespace OfficeEquipMgmtApp
             // 
             // frm_EquipmentEditing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(873, 461);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(1310, 692);
+            this.Controls.Add(this.grpbx_options);
             this.Controls.Add(this.statusStripA);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dtgrd_equipment);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frm_EquipmentEditing";
             this.ShowIcon = false;
-            this.Text = "FRM_EquipmentView";
+            this.Text = " ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_EquipmentView_FormClosing);
             this.Load += new System.EventHandler(this.frm_EquipmentView_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).EndInit();
@@ -459,6 +473,7 @@ namespace OfficeEquipMgmtApp
             this.menuStrip1.PerformLayout();
             this.statusStripA.ResumeLayout(false);
             this.statusStripA.PerformLayout();
+            this.grpbx_options.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -487,6 +502,13 @@ namespace OfficeEquipMgmtApp
         private ToolStripStatusLabel stsstrplbl_currentSortDirection;
         private ToolTip ttip_optionHints;
         private Button button2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DatabaseManagementOperationsLibrary.CalendarColumn calendarColumn1;
+        private GroupBox grpbx_options;
         private DataGridViewTextBoxColumn col_ID;
         private DataGridViewTextBoxColumn col_Name;
         private DataGridViewComboBoxColumn col_Condition;
@@ -495,11 +517,5 @@ namespace OfficeEquipMgmtApp
         private DataGridViewTextBoxColumn col_Department;
         private DataGridViewComboBoxColumn col_Manufacturer;
         private DatabaseManagementOperationsLibrary.CalendarColumn col_date_of_purchase;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DatabaseManagementOperationsLibrary.CalendarColumn calendarColumn1;
     }
 }

@@ -174,30 +174,31 @@ namespace DatabaseManagementOperationsLibrary
 
             sInsert = "INSERT INTO EQUIPMENT (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
 
-            sUpdate = "UPDATE EQUIPMENT SET N=ame@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
+            sUpdate = "UPDATE EQUIPMENT SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
 
             sDelete = "DELETE FROM EQUIPMENT WHERE ID=@p1";
 
             // TODO: Add parameters for SQL commands
             SqlParameter[] pInsert = new SqlParameter[7];
-            SqlParameter[] pUpdate = new SqlParameter[7];
+            SqlParameter[] pUpdate = new SqlParameter[8];
             SqlParameter[] pDelete = new SqlParameter[1];
 
-            pInsert[0] = new SqlParameter("@p2", SqlDbType.VarChar, 20, "Name");
+            pInsert[0] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
             pInsert[1] = new SqlParameter("@p3", SqlDbType.VarChar, 20, "Condition");
             pInsert[2] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
             pInsert[3] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
-            pInsert[4] = new SqlParameter("@p6", SqlDbType.VarChar, 3, "Department");
-            pInsert[5] = new SqlParameter("@p7", SqlDbType.VarChar, 20, "Manufacturer");
-            pInsert[6] = new SqlParameter("@p8", SqlDbType.Date, 100, "Date of Purchase");
+            pInsert[4] = new SqlParameter("@p6", SqlDbType.VarChar, 5, "Department");
+            pInsert[5] = new SqlParameter("@p7", SqlDbType.VarChar, 255, "Manufacturer");
+            pInsert[6] = new SqlParameter("@p8", SqlDbType.Date, 12, "Date of Purchase");
 
-            pUpdate[0] = new SqlParameter("@p2", SqlDbType.VarChar, 20, "Name");
-            pUpdate[1] = new SqlParameter("@p3", SqlDbType.VarChar, 20, "Condition");
-            pUpdate[2] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
-            pUpdate[3] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
-            pUpdate[4] = new SqlParameter("@p6", SqlDbType.VarChar, 3, "Department");
-            pUpdate[5] = new SqlParameter("@p7", SqlDbType.VarChar, 20, "Manufacturer");
-            pUpdate[6] = new SqlParameter("@p8", SqlDbType.Date, 100, "Date of Purchase");
+            pUpdate[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
+            pUpdate[1] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
+            pUpdate[2] = new SqlParameter("@p3", SqlDbType.VarChar, 255, "Condition");
+            pUpdate[3] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
+            pUpdate[4] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
+            pUpdate[5] = new SqlParameter("@p6", SqlDbType.VarChar, 5, "Department");
+            pUpdate[6] = new SqlParameter("@p7", SqlDbType.VarChar, 255, "Manufacturer");
+            pUpdate[7] = new SqlParameter("@p8", SqlDbType.Date, 12, "Date of Purchase");
 
             pDelete[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
 
