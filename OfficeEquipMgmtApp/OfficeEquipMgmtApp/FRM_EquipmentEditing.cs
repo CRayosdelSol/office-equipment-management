@@ -12,7 +12,6 @@ namespace OfficeEquipMgmtApp
 {
     public partial class frm_EquipmentEditing : Form
     {
-        string user = Environment.UserName; // Get whatever the current computer's username is
         Main mainForm;
         string dir;
         string file;
