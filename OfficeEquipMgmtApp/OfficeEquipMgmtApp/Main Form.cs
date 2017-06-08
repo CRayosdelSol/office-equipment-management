@@ -87,15 +87,13 @@ namespace OfficeEquipMgmtApp
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //File_Browser browser = new File_Browser();
-            //browser.ShowDialog();
-
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "SQL Server Database Files|*.mdf";
             open.Title = "Open Inventory File";
 
             if (open.ShowDialog() == DialogResult.OK) // if the user pressed OK on the form then read the file
             {
+                //open.
                 this.Cursor = new Cursor(open.OpenFile());
             }
 
@@ -108,11 +106,11 @@ namespace OfficeEquipMgmtApp
             save.Title = "Save Inventory File";
             save.FileName = "Equipment_Record";
 
-            DatabaseOperations db = new DatabaseOperations();
+            //DatabaseOperations db = new DatabaseOperations();
 
             if (save.ShowDialog() == DialogResult.OK)
             {
-                db.CreateDatabase(save.FileName);
+                //db.CreateDatabase(save.FileName);
             }
         }
 
@@ -123,7 +121,7 @@ namespace OfficeEquipMgmtApp
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fileCounter++;
-            frm_EquipmentView frm = new frm_EquipmentView();
+            frm_EquipmentEditing frm = new frm_EquipmentEditing();
             frm.MdiParent = this;
             frm.Show();
         }
