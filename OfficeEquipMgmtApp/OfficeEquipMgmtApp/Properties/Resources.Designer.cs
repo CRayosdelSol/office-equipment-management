@@ -203,6 +203,26 @@ namespace OfficeEquipMgmtApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_fast_forward_black_18dp_1x {
+            get {
+                object obj = ResourceManager.GetObject("ic_fast_forward_black_18dp_1x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_fast_rewind_black_18dp_1x {
+            get {
+                object obj = ResourceManager.GetObject("ic_fast_rewind_black_18dp_1x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_save_black_18dp_1x {
             get {
                 object obj = ResourceManager.GetObject("ic_save_black_18dp_1x", resourceCulture);

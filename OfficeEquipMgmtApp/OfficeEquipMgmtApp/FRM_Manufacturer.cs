@@ -66,7 +66,7 @@ namespace OfficeEquipMgmtApp
             db.CreateDatabase(file);
 
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
-            db.CreateTable("Manufacturer","ADDRESS", "varchar(255)", "EMAIL", "varchar(255)", "[CONTACT NUMBER]", "varchar(255)",);
+            db.CreateTable("Manufacturer","ADDRESS", "varchar(255)", "EMAIL", "varchar(255)", "[CONTACT NUMBER]", "varchar(255)");
 
             try
             {

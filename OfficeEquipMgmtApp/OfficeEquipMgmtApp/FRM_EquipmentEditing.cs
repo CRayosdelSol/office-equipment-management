@@ -13,17 +13,19 @@ namespace OfficeEquipMgmtApp
     public partial class frm_EquipmentEditing : Form
     {
         Main mainForm;
+        SqlDataAdapter dataAdapter;
+        DataSet ds;
+        DatabaseOperations db;
         string dir;
         string file;
         string connString;
-        SqlDataAdapter dataAdapter;
-        DataSet ds;
         private static string strConn;
-        DatabaseOperations db;
+        int minimumNumberOfRecords;
 
         public frm_EquipmentEditing()
         {
             InitializeComponent();
+            minimumNumberOfRecords = 0;
         }
 
         public frm_EquipmentEditing(string filepath)
@@ -86,7 +88,7 @@ namespace OfficeEquipMgmtApp
                 {
                     dataAdapter = new SqlDataAdapter(selectCommand, connString);
                     ds = new DataSet();
-                    dataAdapter.Fill(ds, "Equipment");
+                    dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
                     grid.DataMember = "Equipment";
                     grid.DataSource = ds;
                 }
@@ -97,11 +99,16 @@ namespace OfficeEquipMgmtApp
                 }
             }
 
+            scaleDatagrid(dtgrd_equipment);
+        }
+
+
+        public void scaleDatagrid(DataGridView grid)
+        {
             //Scale the datagridview so that all of its contents are properly shown to the user.
             grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
             (grid.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
         }
-
 
         public void initalizeDataGrid(DataGridView grid)
         {
@@ -135,7 +142,8 @@ namespace OfficeEquipMgmtApp
             {
                 dataAdapter = new SqlDataAdapter(selectCommand, connString);
                 ds = new DataSet();
-                dataAdapter.Fill(ds, "Equipment");
+                //dataAdapter.Fill(ds, "Equipment");
+                dataAdapter.Fill(ds,minimumNumberOfRecords,5,"Equipment");
                 grid.DataMember = "Equipment";
                 grid.DataSource = ds;
             }
@@ -145,7 +153,6 @@ namespace OfficeEquipMgmtApp
                 MessageBox.Show(e.Message);
             }
 
-            //Adjust the datagrid view to show all the present columns.
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
             grid.AllowUserToResizeColumns = true;
@@ -197,13 +204,10 @@ namespace OfficeEquipMgmtApp
         private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             dtgrd_equipment.Refresh();
+            scaleDatagrid(dtgrd_equipment);
 
-            //Scale the datagridview so that all of its contents are properly shown to the user.
-            dtgrd_equipment.Width = dtgrd_equipment.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
-            (dtgrd_equipment.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
-
-            ////Manufacturer manufacturer = new Manufacturer(); we'll have to fill these later.
-            ////Equipment equipment = new Equipment();
+            //Manufacturer manufacturer = new Manufacturer(); we'll have to fill these later.
+            //Equipment equipment = new Equipment();
             //string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
             //string a, b, x, f, g, _c, _d;
             //int c = 0;
@@ -273,6 +277,35 @@ namespace OfficeEquipMgmtApp
         private void dtgrd_equipment_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            minimumNumberOfRecords -= 5;
+            if (minimumNumberOfRecords <= 0)
+            {
+                minimumNumberOfRecords = 0;
+            }
+            ds.Clear();
+            dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
+            SqlConnection.ClearAllPools();
+
+            scaleDatagrid(dtgrd_equipment);
+        }
+
+        private void btn_forward_Click(object sender, EventArgs e)
+        {
+            minimumNumberOfRecords += 5;
+            if (minimumNumberOfRecords > 23)
+            {
+                minimumNumberOfRecords = 18;
+            }
+
+            ds.Clear();
+            dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
+            SqlConnection.ClearAllPools();
+
+            scaleDatagrid(dtgrd_equipment);
         }
     }
 }
