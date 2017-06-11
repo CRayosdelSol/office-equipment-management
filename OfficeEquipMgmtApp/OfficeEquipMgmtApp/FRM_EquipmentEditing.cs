@@ -205,58 +205,16 @@ namespace OfficeEquipMgmtApp
         {
             dtgrd_equipment.Refresh();
             scaleDatagrid(dtgrd_equipment);
-
-            //Manufacturer manufacturer = new Manufacturer(); we'll have to fill these later.
-            //Equipment equipment = new Equipment();
-            //string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-            //string a, b, x, f, g, _c, _d;
-            //int c = 0;
-            //decimal d = 0;
-
-            //a = dtgrd_equipment.Rows[e.RowIndex].Cells[1].Value.ToString();
-            //b = dtgrd_equipment.Rows[e.RowIndex].Cells[2].Value.ToString();
-            //_c = dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString();
-            //if (_c != string.Empty)
-            //{
-            //    c = Convert.ToInt32(_c);
-            //}
-            //_d = dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString();
-            //if (_d != string.Empty)
-            //{
-            //    d = Convert.ToDecimal(_d);
-            //}
-            //x = dtgrd_equipment.Rows[e.RowIndex].Cells[5].Value.ToString();
-            //f = dtgrd_equipment.Rows[e.RowIndex].Cells[6].Value.ToString();
-            //g = dtgrd_equipment.Rows[e.RowIndex].Cells[7].Value.ToString();
-
-            ///*If the primary key (ID) is null, insert the specified user values. If it is not, update the 
-            // values where the ID matches with the ID of the current entitity occurence.*/
-            //if (selectedEquipmentID == string.Empty)
-            //{
-            //    db.InsertIntoTable("Equipment", connString, a, "CHOOSE CONDITION FROM THE OPTIONS ON THE LEFT.", 0, 0, x, f, g);
-            //}
-            //else
-            //{
-            //    db.updateTable("Equipment", connString, "NAME", "CONDITION", "QUANTITY", "PRICE", "DEPARTMENT", "MANUFACTURER", "[DATE OF PURCHASE]",
-            //        a, b, c, d, x, f, g, Convert.ToInt32(selectedEquipmentID));
-            //}
-
-            //refreshDataGrid(dtgrd_equipment, connString, "Equipment");
-
-            ////Kill all connections to the database.
-            //SqlConnection.ClearAllPools();
+            /*If the user fills up one cell in a row, assume that he'll fill everything up. 
+             if that's the case then DATE OF PURCHASE column will have a value of today's date.*/
+            foreach (DataGridViewRow gridRow in dtgrd_equipment.Rows)
+            {
+                if (gridRow.Cells[7].Value == null || gridRow.Cells[7].Value == DBNull.Value || String.IsNullOrWhiteSpace(gridRow.Cells[7].Value.ToString()))
+                {
+                    gridRow.Cells[7].Value = DateTime.Now;
+                }
+            }
         }
-
-        //private void btn_DeleteEquipment_Click(object sender, EventArgs e)
-        //{
-        //    DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to delete the equipment \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Delete Item", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        //    if (dialogResult == DialogResult.Yes)
-        //    {
-        //        db.deleteFromTable("Equipment", connString, Convert.ToInt32(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString()));
-        //        refreshDataGrid(dtgrd_equipment, connString, "Equipment");
-        //    }
-        //    SqlConnection.ClearAllPools();
-        //}
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -306,6 +264,137 @@ namespace OfficeEquipMgmtApp
             SqlConnection.ClearAllPools();
 
             scaleDatagrid(dtgrd_equipment);
+        }
+
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            bool uncommitedRowExists = false;
+            string primaryKey = dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString();
+            DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                /*If the user wants to delete the selected row, disable the "AllowUserToAddRows" property so there wouldn't be a blank uncommited row.
+                 This property can be re-enabled when the deletion process is over.*/
+                dtgrd_equipment.AllowUserToAddRows = false;
+
+                //Since the user is trying to delete an uncommited row, just simply delete it from the datagridview.
+                if (primaryKey == string.Empty)
+                {
+                    dtgrd_equipment.Rows.RemoveAt(dtgrd_equipment.CurrentCell.RowIndex);
+                    dtgrd_equipment.AllowUserToAddRows = true;
+
+                }
+                else
+                {
+                    //If the selected entity exists in the database, check if there are any unsaved changes (Rows without a primary key)
+                    foreach (DataGridViewRow gridRow in dtgrd_equipment.Rows)
+                    {
+                        if (gridRow.Cells[0].Value == null || gridRow.Cells[0].Value == DBNull.Value || String.IsNullOrWhiteSpace(gridRow.Cells[0].Value.ToString()))
+                        {
+                            uncommitedRowExists = true;
+                        }
+                    }
+
+                    //If there are unsaved changes, we have no choice but to commit them to the databse before deletion
+                    if (uncommitedRowExists)
+                    {
+                        DialogResult dialogResultB = MessageBox.Show(string.Format("The item \"{0}\" is present in the database and there appears to be unsaved changes. Deleting this item will automatically save these unsaved changes. Are you sure you wish to continue deleting this item?", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (dialogResultB == DialogResult.Yes)
+                        {
+                            ds.Tables["Equipment"].Rows[dtgrd_equipment.CurrentCell.RowIndex].Delete();
+                            db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
+                            refreshDataGrid(dtgrd_equipment, connString);
+                            dtgrd_equipment.AllowUserToAddRows = true;
+                        }
+                    }
+
+                    //If there are no unsaved changes, just simply delete the selected row and update everything that needs updating.
+                    else
+                    {
+                        ds.Tables["Equipment"].Rows[dtgrd_equipment.CurrentCell.RowIndex].Delete();
+                        db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
+                        refreshDataGrid(dtgrd_equipment, connString);
+                        dtgrd_equipment.AllowUserToAddRows = true;
+                    }
+                }
+            }
+
+            scaleDatagrid(dtgrd_equipment);
+            SqlConnection.ClearAllPools();
+            
+        }
+        
+
+        private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            //Draw only grid content cells not ColumnHeader cells nor RowHeader cells
+            if (e.ColumnIndex > -1 & e.RowIndex > -1)
+            {
+                //Pen for left and top borders
+                using (var backGroundPen = new Pen(e.CellStyle.BackColor, 1))
+                //Pen for bottom and right borders
+                using (var gridlinePen = new Pen(dtgrd_equipment.GridColor, 1))
+                //Pen for empty cell borders
+                using (var selectedPen = new Pen(Color.Red, 1))
+                {
+                    var topLeftPoint = new Point(e.CellBounds.Left, e.CellBounds.Top);
+                    var topRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Top);
+                    var bottomRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                    var bottomleftPoint = new Point(e.CellBounds.Left, e.CellBounds.Bottom - 1);
+
+
+                    //Draw empty cells here
+                    //If the cell is part of the "ID" column or if the row is new leave it alone
+                    if ((e.RowIndex != dtgrd_equipment.NewRowIndex && e.ColumnIndex != 0) && (this.dtgrd_equipment[e.ColumnIndex, e.RowIndex].Value == null || this.dtgrd_equipment[e.ColumnIndex, e.RowIndex].Value == DBNull.Value || String.IsNullOrWhiteSpace(this.dtgrd_equipment[e.ColumnIndex, e.RowIndex].Value.ToString())))
+                    {
+                        //Paint all parts except borders.
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
+
+                        //Draw empty cells border here
+                        e.Graphics.DrawRectangle(selectedPen, new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+
+                        //Handled painting for this cell, Stop default rendering.
+                        e.Handled = true;
+                    }
+                    //Draw non-null cells here
+                    else
+                    {
+                        //Paint all parts except borders.
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
+
+                        //Top border of first row cells should be in background color
+                        if (e.RowIndex == 0)
+                            e.Graphics.DrawLine(backGroundPen, topLeftPoint, topRightPoint);
+
+                        //Left border of first column cells should be in background color
+                        if (e.ColumnIndex == 0)
+                            e.Graphics.DrawLine(backGroundPen, topLeftPoint, bottomleftPoint);
+
+                        //Bottom border of last row cells should be in gridLine color
+                        if (e.RowIndex == dtgrd_equipment.RowCount - 1)
+                            e.Graphics.DrawLine(gridlinePen, bottomRightPoint, bottomleftPoint);
+                        else  //Bottom border of non-last row cells should be in background color
+                            e.Graphics.DrawLine(backGroundPen, bottomRightPoint, bottomleftPoint);
+
+                        //Right border of last column cells should be in gridLine color
+                        if (e.ColumnIndex == dtgrd_equipment.ColumnCount - 1)
+                            e.Graphics.DrawLine(gridlinePen, bottomRightPoint, topRightPoint);
+                        else //Right border of non-last column cells should be in background color
+                            e.Graphics.DrawLine(backGroundPen, bottomRightPoint, topRightPoint);
+
+                        //Top border of non-first row cells should be in gridLine color, and they should be drawn here after right border
+                        if (e.RowIndex > 0)
+                            e.Graphics.DrawLine(gridlinePen, topLeftPoint, topRightPoint);
+
+                        //Left border of non-first column cells should be in gridLine color, and they should be drawn here after bottom border
+                        if (e.ColumnIndex > 0)
+                            e.Graphics.DrawLine(gridlinePen, topLeftPoint, bottomleftPoint);
+
+                        //We handled painting for this cell, Stop default rendering.
+                        e.Handled = true;
+                    }
+                }
+            }
         }
     }
 }
