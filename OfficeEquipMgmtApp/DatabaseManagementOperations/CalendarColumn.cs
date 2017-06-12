@@ -21,7 +21,7 @@ namespace DatabaseManagementOperationsLibrary
                 if (value != null &&
                     !value.GetType().IsAssignableFrom(typeof(CalendarCell)))
                 {
-                    throw new InvalidCastException("Must be a CalendarCell");
+                    throw new InvalidCastException("Must be a Calendar Cell");
                 }
                 base.CellTemplate = value;
             }
@@ -41,19 +41,26 @@ namespace DatabaseManagementOperationsLibrary
         public override void InitializeEditingControl(int rowIndex, object
             initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
         {
-            // Set the value of the editing control to the current cell value.
-            base.InitializeEditingControl(rowIndex, initialFormattedValue,
-                dataGridViewCellStyle);
-            CalendarEditingControl ctl =
-                DataGridView.EditingControl as CalendarEditingControl;
-            // Use the default row value when Value property is null.
-            if (this.Value == DBNull.Value)
+            try
             {
-                ctl.Value = (DateTime)this.DefaultNewRowValue;
+                // Set the value of the editing control to the current cell value.
+                base.InitializeEditingControl(rowIndex, initialFormattedValue,
+                    dataGridViewCellStyle);
+                CalendarEditingControl ctl =
+                    DataGridView.EditingControl as CalendarEditingControl;
+                // Use the default row value when Value property is null.
+                if (this.Value == DBNull.Value)
+                {
+                    ctl.Value = (DateTime)this.DefaultNewRowValue;
+                }
+                else
+                {
+                    ctl.Value = (DateTime)this.Value;
+                }
             }
-            else
+            catch (Exception)
             {
-                ctl.Value = (DateTime)this.Value;
+
             }
         }
 
@@ -71,7 +78,6 @@ namespace DatabaseManagementOperationsLibrary
             get
             {
                 // Return the type of the value that CalendarCell contains.
-
                 return typeof(DateTime);
             }
         }

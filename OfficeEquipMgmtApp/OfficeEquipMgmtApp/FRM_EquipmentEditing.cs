@@ -21,6 +21,7 @@ namespace OfficeEquipMgmtApp
         string connString;
         private static string strConn;
         int minimumNumberOfRecords;
+        int itemsPerPage;
 
         public frm_EquipmentEditing()
         {
@@ -143,7 +144,7 @@ namespace OfficeEquipMgmtApp
                 dataAdapter = new SqlDataAdapter(selectCommand, connString);
                 ds = new DataSet();
                 //dataAdapter.Fill(ds, "Equipment");
-                dataAdapter.Fill(ds,minimumNumberOfRecords,5,"Equipment");
+                dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
                 grid.DataMember = "Equipment";
                 grid.DataSource = ds;
             }
@@ -166,6 +167,7 @@ namespace OfficeEquipMgmtApp
             grid.Columns[0].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
             grid.Columns[2].DefaultCellStyle.SelectionBackColor = Color.LightGray;
             grid.Columns[2].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+
         }
 
         private void frm_EquipmentView_Load(object sender, EventArgs e)
@@ -203,60 +205,8 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            dtgrd_equipment.Refresh();
             scaleDatagrid(dtgrd_equipment);
-
-            //Manufacturer manufacturer = new Manufacturer(); we'll have to fill these later.
-            //Equipment equipment = new Equipment();
-            //string selectedEquipmentID = dtgrd_equipment.Rows[e.RowIndex].Cells["ID"].Value.ToString();
-            //string a, b, x, f, g, _c, _d;
-            //int c = 0;
-            //decimal d = 0;
-
-            //a = dtgrd_equipment.Rows[e.RowIndex].Cells[1].Value.ToString();
-            //b = dtgrd_equipment.Rows[e.RowIndex].Cells[2].Value.ToString();
-            //_c = dtgrd_equipment.Rows[e.RowIndex].Cells[3].Value.ToString();
-            //if (_c != string.Empty)
-            //{
-            //    c = Convert.ToInt32(_c);
-            //}
-            //_d = dtgrd_equipment.Rows[e.RowIndex].Cells[4].Value.ToString();
-            //if (_d != string.Empty)
-            //{
-            //    d = Convert.ToDecimal(_d);
-            //}
-            //x = dtgrd_equipment.Rows[e.RowIndex].Cells[5].Value.ToString();
-            //f = dtgrd_equipment.Rows[e.RowIndex].Cells[6].Value.ToString();
-            //g = dtgrd_equipment.Rows[e.RowIndex].Cells[7].Value.ToString();
-
-            ///*If the primary key (ID) is null, insert the specified user values. If it is not, update the 
-            // values where the ID matches with the ID of the current entitity occurence.*/
-            //if (selectedEquipmentID == string.Empty)
-            //{
-            //    db.InsertIntoTable("Equipment", connString, a, "CHOOSE CONDITION FROM THE OPTIONS ON THE LEFT.", 0, 0, x, f, g);
-            //}
-            //else
-            //{
-            //    db.updateTable("Equipment", connString, "NAME", "CONDITION", "QUANTITY", "PRICE", "DEPARTMENT", "MANUFACTURER", "[DATE OF PURCHASE]",
-            //        a, b, c, d, x, f, g, Convert.ToInt32(selectedEquipmentID));
-            //}
-
-            //refreshDataGrid(dtgrd_equipment, connString, "Equipment");
-
-            ////Kill all connections to the database.
-            //SqlConnection.ClearAllPools();
         }
-
-        //private void btn_DeleteEquipment_Click(object sender, EventArgs e)
-        //{
-        //    DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to delete the equipment \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Delete Item", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-        //    if (dialogResult == DialogResult.Yes)
-        //    {
-        //        db.deleteFromTable("Equipment", connString, Convert.ToInt32(dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[0].Value.ToString()));
-        //        refreshDataGrid(dtgrd_equipment, connString, "Equipment");
-        //    }
-        //    SqlConnection.ClearAllPools();
-        //}
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -267,7 +217,7 @@ namespace OfficeEquipMgmtApp
             }
             catch (Exception)
             {
-                MessageBox.Show("There were no modifications done to the data table.","Uncessesary Commit",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("There were no modifications done to the data table.", "Uncessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             SqlConnection.ClearAllPools();
@@ -281,13 +231,14 @@ namespace OfficeEquipMgmtApp
 
         private void btn_back_Click(object sender, EventArgs e)
         {
-            minimumNumberOfRecords -= 5;
+            minimumNumberOfRecords -= itemsPerPage;
             if (minimumNumberOfRecords <= 0)
             {
                 minimumNumberOfRecords = 0;
             }
+
             ds.Clear();
-            dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
+            dataAdapter.Fill(ds, minimumNumberOfRecords, itemsPerPage, "Equipment");
             SqlConnection.ClearAllPools();
 
             scaleDatagrid(dtgrd_equipment);
@@ -295,17 +246,27 @@ namespace OfficeEquipMgmtApp
 
         private void btn_forward_Click(object sender, EventArgs e)
         {
-            minimumNumberOfRecords += 5;
+            minimumNumberOfRecords += itemsPerPage;
             if (minimumNumberOfRecords > 23)
             {
                 minimumNumberOfRecords = 18;
             }
 
             ds.Clear();
-            dataAdapter.Fill(ds, minimumNumberOfRecords, 5, "Equipment");
+            dataAdapter.Fill(ds, minimumNumberOfRecords, itemsPerPage, "Equipment");
             SqlConnection.ClearAllPools();
 
             scaleDatagrid(dtgrd_equipment);
+        }
+
+        private void pageSelector_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            itemsPerPage = (int)pageSelector.Value;
         }
     }
 }
