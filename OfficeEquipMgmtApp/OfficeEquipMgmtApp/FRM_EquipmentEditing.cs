@@ -493,6 +493,13 @@ namespace OfficeEquipMgmtApp
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
+                //dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[4].ErrorText = "Letters and special characters are not allowed.";
+                groupBox1.Visible = true;
+            }
+            else
+            {
+                e.Handled = false;
+                groupBox1.Visible = false;
             }
         }
     }

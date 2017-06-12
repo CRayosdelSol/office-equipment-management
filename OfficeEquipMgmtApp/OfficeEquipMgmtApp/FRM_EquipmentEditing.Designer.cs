@@ -31,9 +31,9 @@ namespace OfficeEquipMgmtApp
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
             this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,12 +73,16 @@ namespace OfficeEquipMgmtApp
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
             this.grpbx_options.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtgrd_equipment
@@ -88,14 +92,14 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.AllowUserToResizeColumns = false;
             this.dtgrd_equipment.AllowUserToResizeRows = false;
             this.dtgrd_equipment.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.dtgrd_equipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_equipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_ID,
@@ -106,26 +110,26 @@ namespace OfficeEquipMgmtApp
             this.col_Department,
             this.col_Manufacturer,
             this.col_date_of_purchase});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle14;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dtgrd_equipment.Location = new System.Drawing.Point(276, 48);
-            this.dtgrd_equipment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgrd_equipment.Margin = new System.Windows.Forms.Padding(4);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dtgrd_equipment.RowTemplate.Height = 28;
             this.dtgrd_equipment.Size = new System.Drawing.Size(1020, 604);
             this.dtgrd_equipment.TabIndex = 1;
@@ -328,7 +332,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
             this.btn_forward.Location = new System.Drawing.Point(204, 548);
-            this.btn_forward.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(6);
             this.btn_forward.Name = "btn_forward";
             this.btn_forward.Size = new System.Drawing.Size(60, 60);
             this.btn_forward.TabIndex = 11;
@@ -340,7 +344,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
             this.btn_back.Location = new System.Drawing.Point(15, 548);
-            this.btn_back.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(6);
             this.btn_back.Name = "btn_back";
             this.btn_back.Size = new System.Drawing.Size(60, 60);
             this.btn_back.TabIndex = 10;
@@ -352,7 +356,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
             this.saveBtn.Location = new System.Drawing.Point(12, 24);
-            this.saveBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(6);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(60, 60);
             this.saveBtn.TabIndex = 8;
@@ -364,7 +368,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
             this.btn_Delete.Location = new System.Drawing.Point(84, 24);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(6);
             this.btn_Delete.Name = "btn_Delete";
             this.btn_Delete.Size = new System.Drawing.Size(60, 60);
             this.btn_Delete.TabIndex = 9;
@@ -432,7 +436,7 @@ namespace OfficeEquipMgmtApp
             // itemPerPageUpDown
             // 
             this.itemPerPageUpDown.Location = new System.Drawing.Point(71, 492);
-            this.itemPerPageUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.itemPerPageUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.itemPerPageUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -466,7 +470,7 @@ namespace OfficeEquipMgmtApp
             // btnRefresh
             // 
             this.btnRefresh.Location = new System.Drawing.Point(12, 612);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(252, 34);
             this.btnRefresh.TabIndex = 12;
@@ -477,7 +481,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pageSelector.Location = new System.Drawing.Point(84, 555);
-            this.pageSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pageSelector.Margin = new System.Windows.Forms.Padding(4);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
@@ -512,11 +516,47 @@ namespace OfficeEquipMgmtApp
             this.label3.TabIndex = 16;
             this.label3.Text = "PAGE NUMBER";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.ForeColor = System.Drawing.Color.Red;
+            this.groupBox1.Location = new System.Drawing.Point(24, 214);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(228, 151);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Input Error";
+            this.groupBox1.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 20);
+            this.label4.TabIndex = 0;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Enabled = false;
+            this.textBox1.ForeColor = System.Drawing.Color.Red;
+            this.textBox1.Location = new System.Drawing.Point(11, 37);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(204, 89);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "This cell only accepts numerical input. Letters and special characters are not al" +
+    "lowed.";
+            // 
             // frm_EquipmentEditing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1310, 696);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pageSelector);
@@ -529,7 +569,7 @@ namespace OfficeEquipMgmtApp
             this.Controls.Add(this.dtgrd_equipment);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frm_EquipmentEditing";
             this.ShowIcon = false;
             this.Text = " ";
@@ -543,6 +583,8 @@ namespace OfficeEquipMgmtApp
             this.grpbx_options.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -589,5 +631,8 @@ namespace OfficeEquipMgmtApp
         private Button btn_Delete;
         private Label label1;
         private Label label3;
+        private GroupBox groupBox1;
+        private TextBox textBox1;
+        private Label label4;
     }
 }
