@@ -31,9 +31,9 @@ namespace OfficeEquipMgmtApp
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
             this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +59,7 @@ namespace OfficeEquipMgmtApp
             this.btn_forward = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btn_Delete = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,8 +67,8 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn1 = new DatabaseManagementOperationsLibrary.CalendarColumn();
             this.grpbx_options = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.itemPerPageUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
@@ -84,14 +85,15 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.AllowUserToDeleteRows = false;
             this.dtgrd_equipment.AllowUserToResizeColumns = false;
             this.dtgrd_equipment.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dtgrd_equipment.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dtgrd_equipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_equipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_ID,
@@ -102,28 +104,29 @@ namespace OfficeEquipMgmtApp
             this.col_Department,
             this.col_Manufacturer,
             this.col_date_of_purchase});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle11;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dtgrd_equipment.Location = new System.Drawing.Point(184, 32);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dtgrd_equipment.RowTemplate.Height = 28;
             this.dtgrd_equipment.Size = new System.Drawing.Size(680, 403);
             this.dtgrd_equipment.TabIndex = 1;
+            this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             // 
             // col_ID
@@ -290,7 +293,7 @@ namespace OfficeEquipMgmtApp
             this.statusStripA.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stsstrplbl_currentSort,
             this.stsstrplbl_currentSortDirection});
-            this.statusStripA.Location = new System.Drawing.Point(0, 439);
+            this.statusStripA.Location = new System.Drawing.Point(0, 442);
             this.statusStripA.Name = "statusStripA";
             this.statusStripA.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
             this.statusStripA.Size = new System.Drawing.Size(873, 22);
@@ -316,9 +319,10 @@ namespace OfficeEquipMgmtApp
             // btn_forward
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
-            this.btn_forward.Location = new System.Drawing.Point(112, 376);
+            this.btn_forward.Location = new System.Drawing.Point(136, 376);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
             this.btn_forward.Name = "btn_forward";
-            this.btn_forward.Size = new System.Drawing.Size(32, 24);
+            this.btn_forward.Size = new System.Drawing.Size(40, 24);
             this.btn_forward.TabIndex = 11;
             this.ttip_optionHints.SetToolTip(this.btn_forward, "Save the changes you made to the database.");
             this.btn_forward.UseVisualStyleBackColor = true;
@@ -327,9 +331,10 @@ namespace OfficeEquipMgmtApp
             // btn_back
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
-            this.btn_back.Location = new System.Drawing.Point(32, 376);
+            this.btn_back.Location = new System.Drawing.Point(8, 376);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(32, 24);
+            this.btn_back.Size = new System.Drawing.Size(40, 24);
             this.btn_back.TabIndex = 10;
             this.ttip_optionHints.SetToolTip(this.btn_back, "Save the changes you made to the database.");
             this.btn_back.UseVisualStyleBackColor = true;
@@ -339,12 +344,25 @@ namespace OfficeEquipMgmtApp
             // 
             this.button2.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
             this.button2.Location = new System.Drawing.Point(8, 16);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(32, 32);
+            this.button2.Size = new System.Drawing.Size(40, 40);
             this.button2.TabIndex = 8;
             this.ttip_optionHints.SetToolTip(this.button2, "Save the changes you made to the database.");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // btn_Delete
+            // 
+            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
+            this.btn_Delete.Location = new System.Drawing.Point(56, 16);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Delete.Name = "btn_Delete";
+            this.btn_Delete.Size = new System.Drawing.Size(40, 40);
+            this.btn_Delete.TabIndex = 9;
+            this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
+            this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -394,17 +412,39 @@ namespace OfficeEquipMgmtApp
             // 
             // grpbx_options
             // 
-            this.grpbx_options.Controls.Add(this.label2);
+            this.grpbx_options.Controls.Add(this.btn_Delete);
             this.grpbx_options.Controls.Add(this.button2);
-            this.grpbx_options.Controls.Add(this.itemPerPageUpDown);
             this.grpbx_options.Location = new System.Drawing.Point(8, 24);
             this.grpbx_options.Margin = new System.Windows.Forms.Padding(2);
             this.grpbx_options.Name = "grpbx_options";
             this.grpbx_options.Padding = new System.Windows.Forms.Padding(2);
-            this.grpbx_options.Size = new System.Drawing.Size(168, 104);
+            this.grpbx_options.Size = new System.Drawing.Size(168, 64);
             this.grpbx_options.TabIndex = 9;
             this.grpbx_options.TabStop = false;
             this.grpbx_options.Text = "Options";
+            // 
+            // itemPerPageUpDown
+            // 
+            this.itemPerPageUpDown.Location = new System.Drawing.Point(8, 352);
+            this.itemPerPageUpDown.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.itemPerPageUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.itemPerPageUpDown.Name = "itemPerPageUpDown";
+            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 20);
+            this.itemPerPageUpDown.TabIndex = 13;
+            this.itemPerPageUpDown.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.itemPerPageUpDown.ValueChanged += new System.EventHandler(this.itemPerPageUpDown_ValueChanged);
             // 
             // label2
             // 
@@ -415,19 +455,11 @@ namespace OfficeEquipMgmtApp
             this.label2.TabIndex = 15;
             this.label2.Text = "Items per page:";
             // 
-            // itemPerPageUpDown
-            // 
-            this.itemPerPageUpDown.Location = new System.Drawing.Point(8, 72);
-            this.itemPerPageUpDown.Name = "itemPerPageUpDown";
-            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 20);
-            this.itemPerPageUpDown.TabIndex = 13;
-            this.itemPerPageUpDown.ValueChanged += new System.EventHandler(this.itemPerPageUpDown_ValueChanged);
-            // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(32, 408);
+            this.btnRefresh.Location = new System.Drawing.Point(8, 408);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(112, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(168, 23);
             this.btnRefresh.TabIndex = 12;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -435,7 +467,7 @@ namespace OfficeEquipMgmtApp
             // pageSelector
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageSelector.Location = new System.Drawing.Point(72, 376);
+            this.pageSelector.Location = new System.Drawing.Point(56, 376);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
@@ -455,8 +487,9 @@ namespace OfficeEquipMgmtApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(873, 461);
+            this.ClientSize = new System.Drawing.Size(873, 464);
             this.Controls.Add(this.pageSelector);
+            this.Controls.Add(this.itemPerPageUpDown);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btn_forward);
             this.Controls.Add(this.btn_back);
@@ -476,7 +509,6 @@ namespace OfficeEquipMgmtApp
             this.statusStripA.ResumeLayout(false);
             this.statusStripA.PerformLayout();
             this.grpbx_options.ResumeLayout(false);
-            this.grpbx_options.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).EndInit();
             this.ResumeLayout(false);
@@ -522,5 +554,6 @@ namespace OfficeEquipMgmtApp
         private NumericUpDown itemPerPageUpDown;
         private NumericUpDown pageSelector;
         private Label label2;
+        private Button btn_Delete;
     }
 }
