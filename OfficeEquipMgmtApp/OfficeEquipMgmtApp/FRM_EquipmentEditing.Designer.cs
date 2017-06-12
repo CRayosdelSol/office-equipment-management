@@ -71,6 +71,8 @@ namespace OfficeEquipMgmtApp
             this.label2 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
@@ -113,7 +115,8 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dtgrd_equipment.Location = new System.Drawing.Point(184, 32);
+            this.dtgrd_equipment.Location = new System.Drawing.Point(276, 48);
+            this.dtgrd_equipment.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -124,11 +127,13 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgrd_equipment.RowTemplate.Height = 28;
-            this.dtgrd_equipment.Size = new System.Drawing.Size(680, 403);
+            this.dtgrd_equipment.Size = new System.Drawing.Size(1020, 604);
             this.dtgrd_equipment.TabIndex = 1;
+            this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
             this.dtgrd_equipment.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_equipment_CellValidating);
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dtgrd_equipment_DataError);
+            this.dtgrd_equipment.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_equipment_EditingControlShowing);
             this.dtgrd_equipment.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dtgrd_equipment_UserAddedRow);
             // 
             // col_ID
@@ -138,7 +143,7 @@ namespace OfficeEquipMgmtApp
             this.col_ID.HeaderText = "ID";
             this.col_ID.Name = "col_ID";
             this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_ID.Width = 43;
+            this.col_ID.Width = 62;
             // 
             // col_Name
             // 
@@ -147,7 +152,7 @@ namespace OfficeEquipMgmtApp
             this.col_Name.HeaderText = "Name";
             this.col_Name.Name = "col_Name";
             this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_Name.Width = 60;
+            this.col_Name.Width = 89;
             // 
             // col_Condition
             // 
@@ -160,7 +165,7 @@ namespace OfficeEquipMgmtApp
             "Needs Replacement",
             "Lost"});
             this.col_Condition.Name = "col_Condition";
-            this.col_Condition.Width = 57;
+            this.col_Condition.Width = 85;
             // 
             // col_Quantity
             // 
@@ -168,7 +173,7 @@ namespace OfficeEquipMgmtApp
             this.col_Quantity.DataPropertyName = "Quantity";
             this.col_Quantity.HeaderText = "Quantity";
             this.col_Quantity.Name = "col_Quantity";
-            this.col_Quantity.Width = 71;
+            this.col_Quantity.Width = 107;
             // 
             // col_Price
             // 
@@ -176,7 +181,7 @@ namespace OfficeEquipMgmtApp
             this.col_Price.DataPropertyName = "Price";
             this.col_Price.HeaderText = "Price";
             this.col_Price.Name = "col_Price";
-            this.col_Price.Width = 56;
+            this.col_Price.Width = 84;
             // 
             // col_Department
             // 
@@ -185,7 +190,7 @@ namespace OfficeEquipMgmtApp
             this.col_Department.HeaderText = "Department";
             this.col_Department.MaxInputLength = 5;
             this.col_Department.Name = "col_Department";
-            this.col_Department.Width = 87;
+            this.col_Department.Width = 133;
             // 
             // col_Manufacturer
             // 
@@ -196,7 +201,7 @@ namespace OfficeEquipMgmtApp
             "Manuf 1",
             "Manuf 2"});
             this.col_Manufacturer.Name = "col_Manufacturer";
-            this.col_Manufacturer.Width = 76;
+            this.col_Manufacturer.Width = 114;
             // 
             // col_date_of_purchase
             // 
@@ -213,7 +218,8 @@ namespace OfficeEquipMgmtApp
             this.sortItemsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(873, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1310, 35);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -224,7 +230,7 @@ namespace OfficeEquipMgmtApp
             this.conditionToolStripMenuItem,
             this.manufacturerToolStripMenuItem});
             this.sortItemsToolStripMenuItem.Name = "sortItemsToolStripMenuItem";
-            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
             this.sortItemsToolStripMenuItem.Text = "&Sort";
             // 
             // nameToolStripMenuItem
@@ -233,7 +239,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem,
             this.descendingToolStripMenuItem});
             this.nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-            this.nameToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.nameToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.nameToolStripMenuItem.Text = "&Name";
             // 
             // ascendingToolStripMenuItem
@@ -241,7 +247,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
             this.ascendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ascendingToolStripMenuItem.Name = "ascendingToolStripMenuItem";
-            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
             this.ascendingToolStripMenuItem.Text = "Ascending";
             this.ascendingToolStripMenuItem.Click += new System.EventHandler(this.ascendingToolStripMenuItem_Click);
             // 
@@ -250,14 +256,14 @@ namespace OfficeEquipMgmtApp
             this.descendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
             this.descendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.descendingToolStripMenuItem.Name = "descendingToolStripMenuItem";
-            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
             this.descendingToolStripMenuItem.Text = "Descending";
             this.descendingToolStripMenuItem.Click += new System.EventHandler(this.descendingToolStripMenuItem_Click);
             // 
             // conditionToolStripMenuItem
             // 
             this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
-            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.conditionToolStripMenuItem.Text = "&Condition";
             this.conditionToolStripMenuItem.Click += new System.EventHandler(this.conditionToolStripMenuItem_Click);
             // 
@@ -267,7 +273,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1,
             this.descendingToolStripMenuItem1});
             this.manufacturerToolStripMenuItem.Name = "manufacturerToolStripMenuItem";
-            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.manufacturerToolStripMenuItem.Text = "&Manufacturer";
             this.manufacturerToolStripMenuItem.Click += new System.EventHandler(this.manufacturerToolStripMenuItem_Click);
             // 
@@ -276,7 +282,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
             this.ascendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ascendingToolStripMenuItem1.Name = "ascendingToolStripMenuItem1";
-            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
             this.ascendingToolStripMenuItem1.Text = "Ascending";
             this.ascendingToolStripMenuItem1.Click += new System.EventHandler(this.ascendingToolStripMenuItem1_Click);
             // 
@@ -285,7 +291,7 @@ namespace OfficeEquipMgmtApp
             this.descendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
             this.descendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.descendingToolStripMenuItem1.Name = "descendingToolStripMenuItem1";
-            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
             this.descendingToolStripMenuItem1.Text = "Descending";
             this.descendingToolStripMenuItem1.Click += new System.EventHandler(this.descendingToolStripMenuItem1_Click);
             // 
@@ -295,23 +301,23 @@ namespace OfficeEquipMgmtApp
             this.statusStripA.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stsstrplbl_currentSort,
             this.stsstrplbl_currentSortDirection});
-            this.statusStripA.Location = new System.Drawing.Point(0, 442);
+            this.statusStripA.Location = new System.Drawing.Point(0, 666);
             this.statusStripA.Name = "statusStripA";
-            this.statusStripA.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
-            this.statusStripA.Size = new System.Drawing.Size(873, 22);
+            this.statusStripA.Padding = new System.Windows.Forms.Padding(3, 0, 21, 0);
+            this.statusStripA.Size = new System.Drawing.Size(1310, 30);
             this.statusStripA.TabIndex = 5;
             this.statusStripA.Text = "statusStrip1";
             // 
             // stsstrplbl_currentSort
             // 
             this.stsstrplbl_currentSort.Name = "stsstrplbl_currentSort";
-            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(120, 17);
+            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(181, 25);
             this.stsstrplbl_currentSort.Text = "Currently Sorted By: -";
             // 
             // stsstrplbl_currentSortDirection
             // 
             this.stsstrplbl_currentSortDirection.Name = "stsstrplbl_currentSortDirection";
-            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(110, 17);
+            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(167, 25);
             this.stsstrplbl_currentSortDirection.Text = "Sorting Direction: - ";
             // 
             // ttip_optionHints
@@ -321,10 +327,10 @@ namespace OfficeEquipMgmtApp
             // btn_forward
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
-            this.btn_forward.Location = new System.Drawing.Point(136, 376);
-            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_forward.Location = new System.Drawing.Point(204, 548);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btn_forward.Name = "btn_forward";
-            this.btn_forward.Size = new System.Drawing.Size(40, 24);
+            this.btn_forward.Size = new System.Drawing.Size(60, 60);
             this.btn_forward.TabIndex = 11;
             this.ttip_optionHints.SetToolTip(this.btn_forward, "Save the changes you made to the database.");
             this.btn_forward.UseVisualStyleBackColor = true;
@@ -333,10 +339,10 @@ namespace OfficeEquipMgmtApp
             // btn_back
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
-            this.btn_back.Location = new System.Drawing.Point(8, 376);
-            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_back.Location = new System.Drawing.Point(15, 548);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(40, 24);
+            this.btn_back.Size = new System.Drawing.Size(60, 60);
             this.btn_back.TabIndex = 10;
             this.ttip_optionHints.SetToolTip(this.btn_back, "Save the changes you made to the database.");
             this.btn_back.UseVisualStyleBackColor = true;
@@ -345,10 +351,10 @@ namespace OfficeEquipMgmtApp
             // saveBtn
             // 
             this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
-            this.saveBtn.Location = new System.Drawing.Point(8, 16);
-            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.saveBtn.Location = new System.Drawing.Point(12, 24);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(40, 40);
+            this.saveBtn.Size = new System.Drawing.Size(60, 60);
             this.saveBtn.TabIndex = 8;
             this.ttip_optionHints.SetToolTip(this.saveBtn, "Save the changes you made to the database.");
             this.saveBtn.UseVisualStyleBackColor = true;
@@ -357,10 +363,10 @@ namespace OfficeEquipMgmtApp
             // btn_Delete
             // 
             this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
-            this.btn_Delete.Location = new System.Drawing.Point(56, 16);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Delete.Location = new System.Drawing.Point(84, 24);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(40, 40);
+            this.btn_Delete.Size = new System.Drawing.Size(60, 60);
             this.btn_Delete.TabIndex = 9;
             this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
             this.btn_Delete.UseVisualStyleBackColor = true;
@@ -416,18 +422,17 @@ namespace OfficeEquipMgmtApp
             // 
             this.grpbx_options.Controls.Add(this.btn_Delete);
             this.grpbx_options.Controls.Add(this.saveBtn);
-            this.grpbx_options.Location = new System.Drawing.Point(8, 24);
-            this.grpbx_options.Margin = new System.Windows.Forms.Padding(2);
+            this.grpbx_options.Location = new System.Drawing.Point(12, 36);
             this.grpbx_options.Name = "grpbx_options";
-            this.grpbx_options.Padding = new System.Windows.Forms.Padding(2);
-            this.grpbx_options.Size = new System.Drawing.Size(168, 64);
+            this.grpbx_options.Size = new System.Drawing.Size(252, 96);
             this.grpbx_options.TabIndex = 9;
             this.grpbx_options.TabStop = false;
             this.grpbx_options.Text = "Options";
             // 
             // itemPerPageUpDown
             // 
-            this.itemPerPageUpDown.Location = new System.Drawing.Point(8, 352);
+            this.itemPerPageUpDown.Location = new System.Drawing.Point(71, 492);
+            this.itemPerPageUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.itemPerPageUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -439,8 +444,9 @@ namespace OfficeEquipMgmtApp
             0,
             0});
             this.itemPerPageUpDown.Name = "itemPerPageUpDown";
-            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 20);
+            this.itemPerPageUpDown.Size = new System.Drawing.Size(133, 26);
             this.itemPerPageUpDown.TabIndex = 13;
+            this.itemPerPageUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemPerPageUpDown.Value = new decimal(new int[] {
             5,
             0,
@@ -459,9 +465,10 @@ namespace OfficeEquipMgmtApp
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(8, 408);
+            this.btnRefresh.Location = new System.Drawing.Point(12, 612);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(168, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(252, 34);
             this.btnRefresh.TabIndex = 12;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -469,15 +476,17 @@ namespace OfficeEquipMgmtApp
             // pageSelector
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageSelector.Location = new System.Drawing.Point(56, 376);
+            this.pageSelector.Location = new System.Drawing.Point(84, 555);
+            this.pageSelector.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.pageSelector.Name = "pageSelector";
-            this.pageSelector.Size = new System.Drawing.Size(32, 23);
+            this.pageSelector.Size = new System.Drawing.Size(113, 30);
             this.pageSelector.TabIndex = 14;
+            this.pageSelector.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pageSelector.Value = new decimal(new int[] {
             1,
             0,
@@ -485,11 +494,31 @@ namespace OfficeEquipMgmtApp
             0});
             this.pageSelector.ValueChanged += new System.EventHandler(this.pageSelector_ValueChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(37, 522);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(215, 20);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "# OF RECORDS PER PAGE";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(76, 588);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 20);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "PAGE NUMBER";
+            // 
             // frm_EquipmentEditing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(873, 464);
+            this.ClientSize = new System.Drawing.Size(1310, 696);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pageSelector);
             this.Controls.Add(this.itemPerPageUpDown);
             this.Controls.Add(this.btnRefresh);
@@ -500,6 +529,7 @@ namespace OfficeEquipMgmtApp
             this.Controls.Add(this.dtgrd_equipment);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frm_EquipmentEditing";
             this.ShowIcon = false;
             this.Text = " ";
@@ -557,5 +587,7 @@ namespace OfficeEquipMgmtApp
         private NumericUpDown pageSelector;
         private Label label2;
         private Button btn_Delete;
+        private Label label1;
+        private Label label3;
     }
 }
