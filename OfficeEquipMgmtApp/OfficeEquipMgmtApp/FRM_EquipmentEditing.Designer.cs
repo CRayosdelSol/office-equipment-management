@@ -65,6 +65,7 @@ namespace OfficeEquipMgmtApp
             this.btn_forward = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btn_Delete = new System.Windows.Forms.Button();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,7 +73,6 @@ namespace OfficeEquipMgmtApp
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn1 = new DatabaseManagementOperationsLibrary.CalendarColumn();
             this.grpbx_options = new System.Windows.Forms.GroupBox();
-            this.btn_Delete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -130,6 +130,7 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.Size = new System.Drawing.Size(1032, 604);
             this.dtgrd_equipment.TabIndex = 1;
             this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
+            this.dtgrd_equipment.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_equipment_CellValidating);
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_RowLeave);
             // 
@@ -419,6 +420,18 @@ namespace OfficeEquipMgmtApp
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // btn_Delete
+            // 
+            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
+            this.btn_Delete.Location = new System.Drawing.Point(77, 30);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Delete.Name = "btn_Delete";
+            this.btn_Delete.Size = new System.Drawing.Size(56, 56);
+            this.btn_Delete.TabIndex = 9;
+            this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
+            this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -475,18 +488,6 @@ namespace OfficeEquipMgmtApp
             this.grpbx_options.TabIndex = 9;
             this.grpbx_options.TabStop = false;
             this.grpbx_options.Text = "Options";
-            // 
-            // btn_Delete
-            // 
-            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
-            this.btn_Delete.Location = new System.Drawing.Point(77, 30);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(56, 56);
-            this.btn_Delete.TabIndex = 9;
-            this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
-            this.btn_Delete.UseVisualStyleBackColor = true;
-            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
             // frm_EquipmentEditing
             // 
