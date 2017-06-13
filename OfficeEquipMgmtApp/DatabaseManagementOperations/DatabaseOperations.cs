@@ -29,7 +29,7 @@ namespace DatabaseManagementOperationsLibrary
         public void CreateDatabase(string filename)
         {
             string path = filename; //Obtains the absolute path to the databse.
-            string databaseName = Path.GetFileNameWithoutExtension(path); //Derived database name.
+            string databaseName = Path.GetFileNameWithoutExtension(path); //Derived  database name.
             using (var connection = new SqlConnection(
             @"Data Source=(LocalDB)\MSSQLLocalDB; Initial Catalog=master; Integrated Security=true;"))
             {
@@ -169,7 +169,7 @@ namespace DatabaseManagementOperationsLibrary
         public void UpdateDataSet(DataSet ds)
         {
 
-            
+
             SqlConnection conn = new SqlConnection(strConn);
 
             string sInsert, sUpdate, sDelete;

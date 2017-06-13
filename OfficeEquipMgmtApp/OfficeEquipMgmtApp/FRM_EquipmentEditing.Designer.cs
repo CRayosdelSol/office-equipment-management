@@ -71,12 +71,18 @@ namespace OfficeEquipMgmtApp
             this.label2 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
             this.grpbx_options.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtgrd_equipment
@@ -113,7 +119,7 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dtgrd_equipment.Location = new System.Drawing.Point(184, 32);
+            this.dtgrd_equipment.Location = new System.Drawing.Point(184, 64);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -124,12 +130,14 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgrd_equipment.RowTemplate.Height = 28;
-            this.dtgrd_equipment.Size = new System.Drawing.Size(680, 403);
+            this.dtgrd_equipment.Size = new System.Drawing.Size(680, 371);
             this.dtgrd_equipment.TabIndex = 1;
+            this.dtgrd_equipment.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellEndEdit);
+            this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
             this.dtgrd_equipment.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_equipment_CellValidating);
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dtgrd_equipment_DataError);
-            this.dtgrd_equipment.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dtgrd_equipment_UserAddedRow);
+            this.dtgrd_equipment.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_equipment_EditingControlShowing);
             // 
             // col_ID
             // 
@@ -321,10 +329,10 @@ namespace OfficeEquipMgmtApp
             // btn_forward
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
-            this.btn_forward.Location = new System.Drawing.Point(136, 376);
+            this.btn_forward.Location = new System.Drawing.Point(136, 365);
             this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
             this.btn_forward.Name = "btn_forward";
-            this.btn_forward.Size = new System.Drawing.Size(40, 24);
+            this.btn_forward.Size = new System.Drawing.Size(40, 40);
             this.btn_forward.TabIndex = 11;
             this.ttip_optionHints.SetToolTip(this.btn_forward, "Save the changes you made to the database.");
             this.btn_forward.UseVisualStyleBackColor = true;
@@ -333,10 +341,10 @@ namespace OfficeEquipMgmtApp
             // btn_back
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
-            this.btn_back.Location = new System.Drawing.Point(8, 376);
+            this.btn_back.Location = new System.Drawing.Point(10, 365);
             this.btn_back.Margin = new System.Windows.Forms.Padding(4);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(40, 24);
+            this.btn_back.Size = new System.Drawing.Size(40, 40);
             this.btn_back.TabIndex = 10;
             this.ttip_optionHints.SetToolTip(this.btn_back, "Save the changes you made to the database.");
             this.btn_back.UseVisualStyleBackColor = true;
@@ -416,7 +424,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.grpbx_options.Controls.Add(this.btn_Delete);
             this.grpbx_options.Controls.Add(this.saveBtn);
-            this.grpbx_options.Location = new System.Drawing.Point(8, 24);
+            this.grpbx_options.Location = new System.Drawing.Point(8, 64);
             this.grpbx_options.Margin = new System.Windows.Forms.Padding(2);
             this.grpbx_options.Name = "grpbx_options";
             this.grpbx_options.Padding = new System.Windows.Forms.Padding(2);
@@ -427,7 +435,7 @@ namespace OfficeEquipMgmtApp
             // 
             // itemPerPageUpDown
             // 
-            this.itemPerPageUpDown.Location = new System.Drawing.Point(8, 352);
+            this.itemPerPageUpDown.Location = new System.Drawing.Point(47, 328);
             this.itemPerPageUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -439,8 +447,9 @@ namespace OfficeEquipMgmtApp
             0,
             0});
             this.itemPerPageUpDown.Name = "itemPerPageUpDown";
-            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 20);
+            this.itemPerPageUpDown.Size = new System.Drawing.Size(89, 20);
             this.itemPerPageUpDown.TabIndex = 13;
+            this.itemPerPageUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemPerPageUpDown.Value = new decimal(new int[] {
             5,
             0,
@@ -465,19 +474,21 @@ namespace OfficeEquipMgmtApp
             this.btnRefresh.TabIndex = 12;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // pageSelector
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageSelector.Location = new System.Drawing.Point(56, 376);
+            this.pageSelector.Location = new System.Drawing.Point(56, 368);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.pageSelector.Name = "pageSelector";
-            this.pageSelector.Size = new System.Drawing.Size(32, 23);
+            this.pageSelector.Size = new System.Drawing.Size(75, 23);
             this.pageSelector.TabIndex = 14;
+            this.pageSelector.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pageSelector.Value = new decimal(new int[] {
             1,
             0,
@@ -485,11 +496,73 @@ namespace OfficeEquipMgmtApp
             0});
             this.pageSelector.ValueChanged += new System.EventHandler(this.pageSelector_ValueChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(25, 348);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(144, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "# OF RECORDS PER PAGE";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(51, 392);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "PAGE NUMBER";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.ForeColor = System.Drawing.Color.Red;
+            this.groupBox1.Location = new System.Drawing.Point(16, 143);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(152, 101);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Input Error";
+            this.groupBox1.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Enabled = false;
+            this.textBox1.ForeColor = System.Drawing.Color.Red;
+            this.textBox1.Location = new System.Drawing.Point(7, 25);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(136, 59);
+            this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "This cell only accepts numerical input. Letters and special characters are not al" +
+    "lowed.";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 29);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 13);
+            this.label4.TabIndex = 0;
+            // 
             // frm_EquipmentEditing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(873, 464);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pageSelector);
             this.Controls.Add(this.itemPerPageUpDown);
             this.Controls.Add(this.btnRefresh);
@@ -513,6 +586,8 @@ namespace OfficeEquipMgmtApp
             this.grpbx_options.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -557,5 +632,10 @@ namespace OfficeEquipMgmtApp
         private NumericUpDown pageSelector;
         private Label label2;
         private Button btn_Delete;
+        private Label label1;
+        private Label label3;
+        private GroupBox groupBox1;
+        private TextBox textBox1;
+        private Label label4;
     }
 }
