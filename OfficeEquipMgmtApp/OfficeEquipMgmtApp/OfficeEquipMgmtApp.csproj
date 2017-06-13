@@ -86,6 +86,12 @@
     <Compile Include="FRM_Manufacturer.Designer.cs">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FRM_TableViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_TableViewer.Designer.cs">
+      <DependentUpon>FRM_TableViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_Manufacturer.resx">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRM_TableViewer.resx">
+      <DependentUpon>FRM_TableViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main Form.resx">
       <DependentUpon>Main Form.cs</DependentUpon>

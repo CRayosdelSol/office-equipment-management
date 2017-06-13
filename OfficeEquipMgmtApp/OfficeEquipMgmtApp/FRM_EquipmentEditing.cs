@@ -425,8 +425,8 @@ namespace OfficeEquipMgmtApp
             try
             {
                 db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
-                dtgrd_equipment.Refresh();
-                //refreshDataGrid(dtgrd_equipment, connString);
+                //dtgrd_equipment.Refresh();
+                refreshDataGrid(dtgrd_equipment, connString);
 
                 //DB Pagination Initalizers
                 // For Page view.
@@ -436,13 +436,14 @@ namespace OfficeEquipMgmtApp
 
                 // Adjust page count if the last page contains partial page.
                 if (totalRecords % pageSize > 0)
-                    this.pageCount++;                                
+                    this.pageCount++;
             }
             catch (Exception)
             {
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             db.Dispose(true);
+            SqlConnection.ClearAllPools();
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -530,7 +531,8 @@ namespace OfficeEquipMgmtApp
             da.Fill(ds, "Equipment");
 
             // Populate Data Grid
-            dtgrd_equipment.DataSource = ds.Tables["Equipment"];
+            dtgrd_equipment.DataMember = "Equipment";
+            dtgrd_equipment.DataSource = ds;
             //// Show Status
             //this.lblStatus.Text = (currPage + 1).ToString() +
             //  " / " + pageCount.ToString();
@@ -538,6 +540,7 @@ namespace OfficeEquipMgmtApp
             cmd.Dispose();
             da.Dispose();
             ds.Dispose();
+            SqlConnection.ClearAllPools();
         }
 
 
@@ -558,7 +561,7 @@ namespace OfficeEquipMgmtApp
                 intCount = (int)cmd.ExecuteScalar();
                 cmd.Dispose();
                 sqlPage.Close();
-            }           
+            }
 
             return intCount;
         }
@@ -633,7 +636,7 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_equipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dtgrd_equipment.Rows[e.RowIndex].ErrorText = String.Empty;
+            //dtgrd_equipment.Rows[e.RowIndex].ErrorText = String.Empty;
         }
     }
 }
