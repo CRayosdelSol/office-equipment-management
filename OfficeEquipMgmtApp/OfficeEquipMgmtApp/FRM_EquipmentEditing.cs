@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Data.Entity;
 using DatabaseManagementOperationsLibrary;
 
 namespace OfficeEquipMgmtApp
@@ -273,7 +274,6 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-
         //private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         //{
         //    //Draw only grid content cells not ColumnHeader cells nor RowHeader cells
@@ -440,7 +440,7 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_equipment_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
-            
+
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)

@@ -11,7 +11,6 @@ namespace EquipmentLibrary
         string name;
         string serial_model_number;
 
-
         /// <summary>
         /// Creates an instance of the item class.
         /// </summary>
@@ -23,7 +22,6 @@ namespace EquipmentLibrary
             this.price = price;
             this.name = name;
             serial_model_number = id;
-        }    
-       
+        }
     }
 }
