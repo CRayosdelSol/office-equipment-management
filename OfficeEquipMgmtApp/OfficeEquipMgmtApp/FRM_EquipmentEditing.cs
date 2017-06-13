@@ -426,7 +426,7 @@ namespace OfficeEquipMgmtApp
             {
                 db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
                 dtgrd_equipment.Refresh();
-                //refreshDataGrid(dtgrd_equipment, connString);
+                refreshDataGrid(dtgrd_equipment, connString);
 
                 //DB Pagination Initalizers
                 // For Page view.
@@ -436,7 +436,7 @@ namespace OfficeEquipMgmtApp
 
                 // Adjust page count if the last page contains partial page.
                 if (totalRecords % pageSize > 0)
-                    this.pageCount++;                                
+                    this.pageCount++;
             }
             catch (Exception)
             {
@@ -530,7 +530,8 @@ namespace OfficeEquipMgmtApp
             da.Fill(ds, "Equipment");
 
             // Populate Data Grid
-            dtgrd_equipment.DataSource = ds.Tables["Equipment"];
+            //dtgrd_equipment.DataMember = "Equipment";
+            dtgrd_equipment.DataSource = ds;
             //// Show Status
             //this.lblStatus.Text = (currPage + 1).ToString() +
             //  " / " + pageCount.ToString();
@@ -558,7 +559,7 @@ namespace OfficeEquipMgmtApp
                 intCount = (int)cmd.ExecuteScalar();
                 cmd.Dispose();
                 sqlPage.Close();
-            }           
+            }
 
             return intCount;
         }
@@ -567,7 +568,7 @@ namespace OfficeEquipMgmtApp
 
         private void goFirst()
         {
-            if (currPage == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage = 0;
@@ -577,7 +578,7 @@ namespace OfficeEquipMgmtApp
 
         private void goPrevious()
         {
-            if (currPage == 0)
+            if (getResultCount() == 0)
                 return;
 
             if (currPage == pageCount)
@@ -593,7 +594,7 @@ namespace OfficeEquipMgmtApp
 
         private void goNext()
         {
-            if (currPage == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage++;
@@ -606,7 +607,7 @@ namespace OfficeEquipMgmtApp
 
         private void goLast()
         {
-            if (currPage == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage = pageCount - 1;
