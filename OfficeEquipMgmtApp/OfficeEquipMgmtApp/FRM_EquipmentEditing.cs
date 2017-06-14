@@ -425,7 +425,6 @@ namespace OfficeEquipMgmtApp
             try
             {
                 db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
-                dtgrd_equipment.Refresh();
                 refreshDataGrid(dtgrd_equipment, connString);
 
                 //DB Pagination Initalizers
@@ -443,6 +442,7 @@ namespace OfficeEquipMgmtApp
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             db.Dispose(true);
+            SqlConnection.ClearAllPools();
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -530,7 +530,7 @@ namespace OfficeEquipMgmtApp
             da.Fill(ds, "Equipment");
 
             // Populate Data Grid
-            //dtgrd_equipment.DataMember = "Equipment";
+            dtgrd_equipment.DataMember = "Equipment";
             dtgrd_equipment.DataSource = ds;
             //// Show Status
             //this.lblStatus.Text = (currPage + 1).ToString() +
@@ -539,6 +539,7 @@ namespace OfficeEquipMgmtApp
             cmd.Dispose();
             da.Dispose();
             ds.Dispose();
+            SqlConnection.ClearAllPools();
         }
 
 
