@@ -15,10 +15,24 @@ namespace DatabaseManagementOperationsLibrary
     public class DatabaseOperations : IDisposable
     {
         string strConn;
+        public string fileName;
+
+        public string StrConn
+        {
+            get
+            {
+                return strConn;
+            }
+
+            set
+            {
+                strConn = value;
+            }
+        }
 
         public DatabaseOperations(string connString)
         {
-            strConn = connString;
+            StrConn = connString;
         }
 
         /// <summary>
@@ -28,6 +42,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="savepath"></param>
         public void CreateDatabase(string filename)
         {
+            fileName = filename;
             string path = filename; //Obtains the absolute path to the databse.
             string databaseName = Path.GetFileNameWithoutExtension(path); //Derived  database name.
             using (var connection = new SqlConnection(
@@ -47,6 +62,28 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
+        public void OpenDatabase(string filename)
+        {
+            fileName = filename;
+            string path = filename; //Obtains the absolute path to the databse.
+            string databaseName = Path.GetFileNameWithoutExtension(path); //Derived database name.
+            using (var connection = new SqlConnection(
+            @"Data Source=(LocalDB)\MSSQLLocalDB; Initial Catalog=master; Integrated Security=true;"))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        string.Format("CREATE DATABASE {0} ON PRIMARY (NAME={0}, FILENAME='{1}') FOR ATTACH", databaseName, path);
+                    command.ExecuteNonQuery();
+
+                    command.CommandText =
+                        string.Format("EXEC sp_detach_db '{0}', 'true'", databaseName);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         /// <summary>
         /// Checks if the table already exists in the database.
         /// </summary>
@@ -54,7 +91,7 @@ namespace DatabaseManagementOperationsLibrary
         /// <returns>Returns 1 if the table already exists and 0 if not.</returns>
         public int checkForTableExistence(string tableName)
         {
-            using (SqlConnection connectionString = new SqlConnection(strConn))
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
             {
                 string checkExistence = @"IF EXISTS(SELECT*FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME=" + "'[" + tableName + "]') SELECT 1 ELSE SELECT 0";
                 connectionString.Open();
@@ -78,7 +115,7 @@ namespace DatabaseManagementOperationsLibrary
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string datatypeB,
             string attributeC, string dataTypeC)
         {
-            using (SqlConnection connectionString = new SqlConnection(strConn))
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
             {
                 int checkExistence = checkForTableExistence(tableName);
 
@@ -96,7 +133,7 @@ namespace DatabaseManagementOperationsLibrary
 
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB)
         {
-            using (SqlConnection connectionString = new SqlConnection(strConn))
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
             {
                 int checkExistence = checkForTableExistence(tableName);
 
@@ -140,7 +177,7 @@ namespace DatabaseManagementOperationsLibrary
 
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH)
         {
-            using (SqlConnection connectionString = new SqlConnection(strConn))
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
             {
                 int checkExistence = checkForTableExistence(tableName);
 
@@ -166,11 +203,9 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public void UpdateDataSet(DataSet ds)
+        public void UpdateEquipDataSet(DataSet ds)
         {
-
-
-            SqlConnection conn = new SqlConnection(strConn);
+            SqlConnection conn = new SqlConnection(StrConn);
 
             string sInsert, sUpdate, sDelete;
 
@@ -220,8 +255,27 @@ namespace DatabaseManagementOperationsLibrary
             ds.AcceptChanges();
         }
 
+        public void DetachDB(string filename)
+        {
+            SqlConnection conn = new SqlConnection(StrConn);
+
+            string path = filename; //Obtains the absolute path to the databse.
+            string databaseName = Path.GetFileNameWithoutExtension(path); //Derived  database name.
+            using (var connection = new SqlConnection(
+            @"Data Source=(LocalDB)\MSSQLLocalDB; Initial Catalog=master; Integrated Security=true;"))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        string.Format("EXEC sp_detach_db '{0}', 'true'", databaseName);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false; // To detect redundant calls      
 
         public virtual void Dispose(bool disposing)
         {

@@ -16,17 +16,8 @@
  * P.S. MSVS Shows you who last edited a method/class since it reads github related files AFAIK
  */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using EquipmentLibrary;
-using DatabaseManagementOperationsLibrary;
 
 namespace OfficeEquipMgmtApp
 {
@@ -56,8 +47,6 @@ namespace OfficeEquipMgmtApp
             try
             {
                 string user = Environment.UserName; // Get whatever the current computer's username is
-                //string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-                //string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
                 string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
                 string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
                 string[] filepaths = Directory.GetFiles(dir);
@@ -93,24 +82,42 @@ namespace OfficeEquipMgmtApp
 
             if (open.ShowDialog() == DialogResult.OK) // if the user pressed OK on the form then read the file
             {
-                //open.
-                this.Cursor = new Cursor(open.OpenFile());
+                frm_EquipmentEditing frm = new frm_EquipmentEditing(open.FileName);
+                frm.MdiParent = this;
+                frm.Show();
             }
 
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "SQL Server Database Files|*.mdf";
-            save.Title = "Save Inventory File";
-            save.FileName = "Equipment_Record";
-
-            //DatabaseOperations db = new DatabaseOperations();
-
-            if (save.ShowDialog() == DialogResult.OK)
+            // get active MDI Form and determine if it is an EquipmentView Form
+            if (ActiveMdiChild.GetType() == typeof(frm_EquipmentEditing))
             {
-                //db.CreateDatabase(save.FileName);
+                frm_EquipmentEditing tempForm = (frm_EquipmentEditing)ActiveMdiChild;
+
+                if (tempForm.Page.getResultCount() == 0)
+                {
+                    MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "SQL Server Database Files|*.mdf";
+                save.Title = "Save Inventory File";
+                save.FileName = "Equipment_Record";
+
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    tempForm.Db.Dispose(true);
+                    File.Move(tempForm.Db.fileName, save.FileName);
+
+                    //string temp = Path.GetFullPath(tempForm.Db.fileName);
+                    //string str = Path.GetFileNameWithoutExtension(save.FileName);
+                    //File.Move(temp + "_.ldf", str + "_.ldf");
+                    // move the db to esired user foldser and rename it 
+                    // perform saving;
+                }
             }
         }
 

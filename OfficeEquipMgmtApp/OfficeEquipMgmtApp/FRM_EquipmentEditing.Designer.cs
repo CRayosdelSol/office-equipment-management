@@ -279,7 +279,6 @@ namespace OfficeEquipMgmtApp
             this.manufacturerToolStripMenuItem.Name = "manufacturerToolStripMenuItem";
             this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.manufacturerToolStripMenuItem.Text = "&Manufacturer";
-            this.manufacturerToolStripMenuItem.Click += new System.EventHandler(this.manufacturerToolStripMenuItem_Click);
             // 
             // ascendingToolStripMenuItem1
             // 
@@ -323,10 +322,6 @@ namespace OfficeEquipMgmtApp
             this.stsstrplbl_currentSortDirection.Name = "stsstrplbl_currentSortDirection";
             this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(167, 25);
             this.stsstrplbl_currentSortDirection.Text = "Sorting Direction: - ";
-            // 
-            // ttip_optionHints
-            // 
-            this.ttip_optionHints.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // btn_forward
             // 

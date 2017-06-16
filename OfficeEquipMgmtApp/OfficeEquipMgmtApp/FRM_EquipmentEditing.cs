@@ -14,6 +14,7 @@ namespace OfficeEquipMgmtApp
     public partial class frm_EquipmentEditing : Form
     {
         Main mainForm;
+        bool isNewDB;
 
         // Database variables
         SqlDataAdapter dataAdapter;
@@ -22,29 +23,50 @@ namespace OfficeEquipMgmtApp
         string dir;
         string file;
         protected string connString;
-        //private static string strConn;
 
         //DB Pagination
-        protected SqlConnection sqlPage;
-        int totalRecords, pageSize, pageCount;
-        int currPage = 1;
+        DBPagination page;
+
+        public DatabaseOperations Db
+        {
+            get
+            {
+                return db;
+            }
+
+            set
+            {
+                db = value;
+            }
+        }
+
+        public DBPagination Page
+        {
+            get
+            {
+                return page;
+            }
+
+            set
+            {
+                page = value;
+            }
+        }
 
         public frm_EquipmentEditing()
         {
             InitializeComponent();
+            isNewDB = true;
         }
 
         public frm_EquipmentEditing(string filepath)
         {
             InitializeComponent();
+            isNewDB = false;
+            file = filepath;
         }
 
-        #region toolstripClickEvents
-
-        private void manufacturerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
+        #region Sorting
 
         private void ascendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -83,11 +105,6 @@ namespace OfficeEquipMgmtApp
 
         #endregion  
 
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
         public void refreshDataGrid(DataGridView grid, string connString)
         {
             string selectCommand = "SELECT * FROM Equipment";
@@ -102,7 +119,6 @@ namespace OfficeEquipMgmtApp
                     grid.DataMember = "Equipment";
                     grid.DataSource = ds;
                 }
-
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message);
@@ -119,9 +135,48 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
         }
 
+        /// <summary>
+        /// Opens an existing mdf file
+        /// </summary>
+        /// <param name="grid">The datagrid to bind the DB to</param>
         public void initalizeDataGrid(DataGridView grid)
         {
+            mainForm = ((Main)MdiParent);
+            string selectCommand = "SELECT * FROM Equipment";
 
+            // DB Connection Setup
+            connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
+            Db = new DatabaseOperations(connString);
+            Db.OpenDatabase(file);
+
+            Page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector);
+
+            this.Text = Path.GetFileNameWithoutExtension(file);
+
+            try // database binding happens here
+            {
+                dataAdapter = new SqlDataAdapter(selectCommand, connString);
+                ds = new DataSet();
+                dataAdapter.Fill(ds, "Equipment");
+                grid.DataMember = "Equipment";
+                grid.DataSource = ds;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            grid.AllowUserToAddRows = true;
+            grid.AllowUserToDeleteRows = true;
+            grid.AllowUserToResizeColumns = true;
+            grid.ReadOnly = false;
+            grid.Columns[0].ReadOnly = true;
+            grid.Columns[0].DefaultCellStyle.SelectionBackColor = Color.LightGray;
+            grid.Columns[0].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+            grid.Columns[2].DefaultCellStyle.SelectionBackColor = Color.LightGray;
+            grid.Columns[2].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
+
+            Db.Dispose(true);
         }
 
         public void initializeDefGrid(DataGridView grid)
@@ -139,11 +194,13 @@ namespace OfficeEquipMgmtApp
 
             // DB Connection Setup
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
-            db = new DatabaseOperations(connString);
-            db.CreateDatabase(file);
+            Db = new DatabaseOperations(connString);
+            Db.CreateDatabase(file);
+
+            Page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector);
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
             try // database binding happens here
             {
@@ -169,34 +226,29 @@ namespace OfficeEquipMgmtApp
             grid.Columns[2].DefaultCellStyle.SelectionBackColor = Color.LightGray;
             grid.Columns[2].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
 
-            db.Dispose(true);
+            Db.Dispose(true);
         }
 
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
-            initializeDefGrid(dtgrd_equipment);
-            pageSize = (int)itemPerPageUpDown.Value;
+            if (isNewDB)
+                initializeDefGrid(dtgrd_equipment);
+            else
+                initalizeDataGrid(dtgrd_equipment);
+
+            Page.pageSize = (int)itemPerPageUpDown.Value;
             //Scale the form so that all of its contents are shown properly.
             this.MinimumSize = new Size(this.Width, this.Height);
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
-            //DB Pagination Initializers
-            // For Page view.
-            pageSize = int.Parse(itemPerPageUpDown.Text);
-            totalRecords = getResultCount();
-            pageCount = totalRecords / pageSize;
-
-            // Adjust page count if the last page contains partial page.
-            if (totalRecords % pageSize > 0)
-                this.pageCount++;
-
-            currPage = 0;
+            Page.ReCount();
+            Page.currPage = 0;
         }
 
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
         {
-            db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
+            Db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
 
             if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
             {
@@ -211,7 +263,6 @@ namespace OfficeEquipMgmtApp
                     }
                     e.Cancel = false;
                 }
-
                 else
                     e.Cancel = true;
             }
@@ -238,53 +289,35 @@ namespace OfficeEquipMgmtApp
 
         private void btn_back_Click(object sender, EventArgs e)
         {
-            goPrevious();
-            //minimumNumberOfRecords -= itemsPerPage;
-            //if (minimumNumberOfRecords <= 0)
-            //{
-            //    minimumNumberOfRecords = 0;
-            //}
-
-            //ds.Clear();
-            //dataAdapter.Fill(ds, minimumNumberOfRecords, itemsPerPage, "Equipment");
-            //SqlConnection.ClearAllPools();
-            //scaleDatagrid(dtgrd_equipment);
+            Page.goPrevious();
         }
 
         private void btn_forward_Click(object sender, EventArgs e)
         {
-            goNext();
-            //minimumNumberOfRecords += itemsPerPage;
-            //if (minimumNumberOfRecords > 23)
-            //{
-            //    minimumNumberOfRecords = 18;
-            //}
-
-            //ds.Clear();
-            //dataAdapter.Fill(ds, minimumNumberOfRecords, itemsPerPage, "Equipment");
-            //SqlConnection.ClearAllPools();
-            //scaleDatagrid(dtgrd_equipment);
+            Page.goNext();
         }
 
         private void pageSelector_ValueChanged(object sender, EventArgs e)
         {
-
+            Page.currPage = (int)pageSelector.Value - 1;
+            Page.loadPage();
         }
 
         private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
         {
-            pageSize = (int)itemPerPageUpDown.Value;
+            Page.pageSize = (int)itemPerPageUpDown.Value;
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
             if (dialogResult == DialogResult.Yes)
             {
                 ds.Tables["Equipment"].Rows[dtgrd_equipment.CurrentCell.RowIndex].Delete();
                 scaleDatagrid(dtgrd_equipment);
-                db.UpdateDataSet(ds); // perform necessarry operations to the DB based on the changes in the DS
-                db.Dispose(true);
+                Db.UpdateEquipDataSet(ds); // perform necessarry operations to the DB based on the changes in the DS
+                Db.Dispose(true);
             }
         }
 
@@ -424,25 +457,14 @@ namespace OfficeEquipMgmtApp
         {
             try
             {
-                db.UpdateDataSet((DataSet)dtgrd_equipment.DataSource);
-                refreshDataGrid(dtgrd_equipment, connString);
-
-                //DB Pagination Initalizers
-                // For Page view.
-                pageSize = int.Parse(itemPerPageUpDown.Text);
-                totalRecords = getResultCount();
-                pageCount = totalRecords / pageSize;
-
-                // Adjust page count if the last page contains partial page.
-                if (totalRecords % pageSize > 0)
-                    this.pageCount++;
+                Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource);
+                Page.ReCount();
             }
             catch (Exception)
             {
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            db.Dispose(true);
-            SqlConnection.ClearAllPools();
+            Db.Dispose(true);
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -492,131 +514,9 @@ namespace OfficeEquipMgmtApp
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            // For Page view.
-            pageSize = int.Parse(itemPerPageUpDown.Text);
-            totalRecords = getResultCount();
-            pageCount = totalRecords / pageSize;
-
-            // Adjust page count if the last page contains partial page.
-            if (totalRecords % pageSize > 0)
-                this.pageCount++;
-
-            currPage = 0;
-            loadPage();
+            Page.ReCount();
+            Page.currPage = 0;
         }
-
-        /// <summary>
-        /// Fills the DS with the user-specifide parameters
-        /// </summary>
-        private void loadPage()
-        {
-            string strSql;
-            int intSkip = 0;
-
-            intSkip = (currPage * pageSize);
-
-            // Select only the n records.
-            strSql = "SELECT TOP " + pageSize +
-                " * FROM Equipment WHERE ID NOT IN " +
-                "(SELECT TOP " + intSkip + " ID FROM Equipment)";
-
-            sqlPage = new SqlConnection(connString);
-
-            var cmd = new SqlCommand(strSql, sqlPage);
-
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-
-            DataSet ds = new DataSet();
-            da.Fill(ds, "Equipment");
-
-            // Populate Data Grid
-            dtgrd_equipment.DataMember = "Equipment";
-            dtgrd_equipment.DataSource = ds;
-            //// Show Status
-            //this.lblStatus.Text = (currPage + 1).ToString() +
-            //  " / " + pageCount.ToString();
-
-            cmd.Dispose();
-            da.Dispose();
-            ds.Dispose();
-            SqlConnection.ClearAllPools();
-        }
-
-
-        private int getResultCount()
-        {
-            // This select statement is very fast compare to SELECT COUNT(*)
-            string strSql = "SELECT rows FROM sys.sysindexes " +
-                            "WHERE id = OBJECT_ID('Equipment') AND indid < 2";
-            int intCount = 0;
-
-            sqlPage = new SqlConnection(connString);
-
-            var cmd = new SqlCommand(strSql, sqlPage);
-
-            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-            {
-                sqlPage.Open();
-                intCount = (int)cmd.ExecuteScalar();
-                cmd.Dispose();
-                sqlPage.Close();
-            }
-
-            return intCount;
-        }
-
-        #region pageScroll
-
-        private void goFirst()
-        {
-            if (getResultCount() == 0)
-                return;
-
-            currPage = 0;
-
-            loadPage();
-        }
-
-        private void goPrevious()
-        {
-            if (getResultCount() == 0)
-                return;
-
-            if (currPage == pageCount)
-                currPage = pageCount - 1;
-
-            currPage--;
-
-            if (currPage < 1)
-                currPage = 0;
-
-            loadPage();
-        }
-
-        private void goNext()
-        {
-            if (getResultCount() == 0)
-                return;
-
-            currPage++;
-
-            if (currPage > (pageCount - 1))
-                currPage = (pageCount - 1);
-
-            loadPage();
-        }
-
-        private void goLast()
-        {
-            if (getResultCount() == 0)
-                return;
-
-            currPage = pageCount - 1;
-
-            loadPage();
-        }
-
-        #endregion
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -635,6 +535,7 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_equipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            // discard edits made by the user
             dtgrd_equipment.Rows[e.RowIndex].ErrorText = String.Empty;
         }
     }
