@@ -9,7 +9,10 @@ namespace EquipmentLibrary
     {
         decimal price; //use decimal type for anything related to money/currency      
         string name;
-        string serial_model_number;
+        string condition;
+        int itemID;
+
+        public string Condition { get => condition; set => condition = value; }
 
         /// <summary>
         /// Creates an instance of the item class.
@@ -17,11 +20,15 @@ namespace EquipmentLibrary
         /// <param name="price">The price of the item.</param>
         /// <param name="name">The name of the item.</param>
         /// <param name="id">The serial number or model number of the item.</param>
-        public Item(decimal price, string name, string id)
+        /// <param name="condition">The current state of the equipment.</param>
+        public Item(decimal price, string name, int id, string condition)
         {
             this.price = price;
             this.name = name;
-            serial_model_number = id;
+            this.condition = condition;
+            itemID = id;
         }
+
+        public Item() { }
     }
 }

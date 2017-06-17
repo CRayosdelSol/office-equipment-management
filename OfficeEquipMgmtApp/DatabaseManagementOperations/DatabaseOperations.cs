@@ -153,6 +153,33 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
+        public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG)
+        {
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
+            {
+                int checkExistence = checkForTableExistence(tableName);
+
+                if (checkExistence == 0)
+                {
+                    string temp = string.Format(
+                        "CREATE TABLE {0}(" +
+                        "{1} {2}," +
+                        "{3} {4}," +
+                        "{5} {6}," +
+                        "{7} {8}," +
+                        "{9} {10}," +
+                        "{11} {12}," +
+                        "{11} {12});",
+                        tableName, attributeA, dataTypeA, attributeB, dataTypeB, attributeC, dataTypeC, attributeD, dataTypeD, attributeE, dataTypeE, attributeF, dataTypeF,attributeG,dataTypeG);
+
+                    string createTableCommand = temp;
+                    SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
+                    connectionString.Open();
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
         /// <summary>
         /// Creates a table for the entity set. (Preffered for the creation of the equipment table.)
         /// </summary>
@@ -173,7 +200,6 @@ namespace DatabaseManagementOperationsLibrary
         /// <param name="dataTypeG">The SEVENTH attribute's data type.</param>
         /// <param name="attributeH">The EIGTH attribute's name.</param>
         /// <param name="dataTypeH">The EIGTH attribute's data type.</param>
-
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG, string attributeH, string dataTypeH)
         {
             using (SqlConnection connectionString = new SqlConnection(StrConn))
@@ -202,17 +228,17 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public void UpdateEquipDataSet(DataSet ds)
+        public void UpdateEquipDataSet(DataSet ds, string tableName)
         {
             SqlConnection conn = new SqlConnection(StrConn);
 
             string sInsert, sUpdate, sDelete;
 
-            sInsert = "INSERT INTO EQUIPMENT (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+            sInsert = "INSERT INTO " + tableName + " (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
 
-            sUpdate = "UPDATE EQUIPMENT SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
+            sUpdate = "UPDATE " + tableName + " SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
 
-            sDelete = "DELETE FROM EQUIPMENT WHERE ID=@p1";
+            sDelete = "DELETE FROM " + tableName + " WHERE ID=@p1";
 
             SqlParameter[] pInsert = new SqlParameter[7];
             SqlParameter[] pUpdate = new SqlParameter[8];
@@ -249,7 +275,7 @@ namespace DatabaseManagementOperationsLibrary
             da.InsertCommand = cmdInsert;
             da.UpdateCommand = cmdUpdate;
             da.DeleteCommand = cmdDelete;
-            da.Update(ds, "Equipment");
+            da.Update(ds, tableName);
             ds.AcceptChanges();
         }
 
@@ -269,6 +295,18 @@ namespace DatabaseManagementOperationsLibrary
                         string.Format("EXEC sp_detach_db '{0}', 'true'", databaseName);
                     command.ExecuteNonQuery();
                 }
+            }
+        }
+
+        public void DropTable(string tableName)
+        {
+            using (SqlConnection connectionString = new SqlConnection(StrConn))
+            {
+                string temp = string.Format("DROP TABLE {0}",tableName);
+                string createTableCommand = temp;
+                SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
+                connectionString.Open();
+                sqlCommand.ExecuteNonQuery();
             }
         }
 

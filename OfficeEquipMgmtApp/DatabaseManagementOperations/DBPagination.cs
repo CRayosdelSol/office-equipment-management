@@ -52,30 +52,30 @@ namespace DatabaseManagementOperationsLibrary
             this.pageSelector = pageSelector;
         }
 
-        public void ReCount()
+        public void ReCount(string tableName)
         {
             //DB Pagination Initalizers
             // For Page view.
             pageSize = int.Parse(itemPerPageUpDown.Text);
-            totalRecords = getResultCount();
+            totalRecords = getResultCount(tableName);
             pageCount = totalRecords / pageSize;
 
             // Adjust page count if the last page contains partial page.
             if (totalRecords % pageSize > 0)
                 this.pageCount++;
 
-            if (getResultCount() == 0)
+            if (getResultCount(tableName) == 0)
                 pageSelector.Maximum = 1;
             else
                 pageSelector.Maximum = pageCount;
 
-            loadPage();
+            loadPage(tableName);
         }
 
         /// <summary>
         /// Fills the DS with the user-specifide parameters
         /// </summary>
-        public void loadPage()
+        public void loadPage(string tableName)
         {
             string strSql;
             int intSkip = 0;
@@ -84,8 +84,8 @@ namespace DatabaseManagementOperationsLibrary
 
             // Select only the n records.
             strSql = "SELECT TOP " + pageSize +
-                " * FROM Equipment WHERE ID NOT IN " +
-                "(SELECT TOP " + intSkip + " ID FROM Equipment)";
+                " * FROM " + tableName + " WHERE ID NOT IN " +
+                "(SELECT TOP " + intSkip + " ID FROM " + tableName +")";
 
             sqlPage = new SqlConnection(db.StrConn);
 
@@ -94,10 +94,10 @@ namespace DatabaseManagementOperationsLibrary
             SqlDataAdapter da = new SqlDataAdapter(cmd);
 
             ds = new DataSet();
-            da.Fill(ds, "Equipment");
+            da.Fill(ds, tableName);
 
             // Populate Data Grid
-            datagrid.DataMember = "Equipment";
+            datagrid.DataMember = tableName;
             datagrid.DataSource = ds;
             //// Show Status
             //this.lblStatus.Text = (currPage + 1).ToString() +
@@ -109,11 +109,11 @@ namespace DatabaseManagementOperationsLibrary
             SqlConnection.ClearAllPools();
         }
 
-        public int getResultCount()
+        public int getResultCount(string tableName)
         {
             // This select statement is very fast compared to SELECT COUNT(*)
             string strSql = "SELECT rows FROM sys.sysindexes " +
-                            "WHERE id = OBJECT_ID('Equipment') AND indid < 2";
+                            "WHERE id = OBJECT_ID('" + tableName + "') AND indid < 2";
             int intCount = 0;
 
             sqlPage = new SqlConnection(db.StrConn);
@@ -132,9 +132,9 @@ namespace DatabaseManagementOperationsLibrary
             return intCount;
         }
 
-        public void goFirst()
+        public void goFirst(string tableName)
         {
-            if (getResultCount() == 0)
+            if (getResultCount(tableName) == 0)
                 return;
 
             currPage = 0;
@@ -142,9 +142,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goPrevious()
+        public void goPrevious(string tableName)
         {
-            if (getResultCount() == 0)
+            if (getResultCount(tableName) == 0)
                 return;
 
             if (currPage == pageCount)
@@ -158,9 +158,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goNext()
+        public void goNext(string tableName)
         {
-            if (getResultCount() == 0)
+            if (getResultCount(tableName) == 0)
                 return;
 
             currPage++;
@@ -171,9 +171,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goLast()
+        public void goLast(string tableName)
         {
-            if (getResultCount() == 0)
+            if (getResultCount(tableName) == 0)
                 return;
 
             currPage = pageCount - 1;
