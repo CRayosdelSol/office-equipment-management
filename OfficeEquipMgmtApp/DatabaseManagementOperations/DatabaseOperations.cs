@@ -36,10 +36,9 @@ namespace DatabaseManagementOperationsLibrary
         }
 
         /// <summary>
-        /// Creates a databese
+        /// Creates a databese with the specified filename
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="savepath"></param>
+        /// <param name="filename">Complete filename and path of the DB</param>
         public void CreateDatabase(string filename)
         {
             fileName = filename;
@@ -215,7 +214,6 @@ namespace DatabaseManagementOperationsLibrary
 
             sDelete = "DELETE FROM EQUIPMENT WHERE ID=@p1";
 
-            // TODO: Add parameters for SQL commands
             SqlParameter[] pInsert = new SqlParameter[7];
             SqlParameter[] pUpdate = new SqlParameter[8];
             SqlParameter[] pDelete = new SqlParameter[1];
@@ -289,7 +287,6 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         // ~DatabaseOperations() {
         //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
         //   Dispose(false);
@@ -299,8 +296,6 @@ namespace DatabaseManagementOperationsLibrary
         void IDisposable.Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            //TODO: uncomment the following line if the finalizer is overridden above.
             GC.SuppressFinalize(this);
         }
         #endregion

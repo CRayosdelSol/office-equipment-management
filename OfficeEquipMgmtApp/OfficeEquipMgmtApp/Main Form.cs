@@ -91,38 +91,83 @@ namespace OfficeEquipMgmtApp
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // get active MDI Form and determine if it is an EquipmentView Form
-            if (ActiveMdiChild.GetType() == typeof(frm_EquipmentEditing))
+            try
             {
-                frm_EquipmentEditing tempForm = (frm_EquipmentEditing)ActiveMdiChild;
-
-                if (tempForm.Page.getResultCount() == 0)
+                // get active MDI Form and determine if it is an EquipmentView Form
+                if (ActiveMdiChild.GetType() == typeof(frm_EquipmentEditing))
                 {
-                    MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+                    // get the active mdi child and determine if it is an equipment form
+                    frm_EquipmentEditing tempForm = (frm_EquipmentEditing)ActiveMdiChild;
 
-                SaveFileDialog save = new SaveFileDialog();
-                save.Filter = "SQL Server Database Files|*.mdf";
-                save.Title = "Save Inventory File";
-                save.FileName = "Equipment_Record";
+                    if (tempForm.Page.getResultCount() == 0)
+                    {
+                        MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
 
-                if (save.ShowDialog() == DialogResult.OK)
-                {
-                    tempForm.Db.Dispose(true);
-                    File.Move(tempForm.Db.fileName, save.FileName);
+                    SaveFileDialog save = new SaveFileDialog();
+                    save.Filter = "SQL Server Database Files|*.mdf";
+                    save.Title = "Save Inventory File";
+                    save.FileName = "Equipment_Record";
 
-                    //string temp = Path.GetFullPath(tempForm.Db.fileName);
-                    //string str = Path.GetFileNameWithoutExtension(save.FileName);
-                    //File.Move(temp + "_.ldf", str + "_.ldf");
-                    // move the db to esired user foldser and rename it 
-                    // perform saving;
+                    DialogResult result = save.ShowDialog();
+
+                    if (result == DialogResult.OK && tempForm.IsNewDB == true)
+                    {
+                        try
+                        {
+                            if (File.Exists(save.FileName)) // overwrite the existing file
+                            {
+                                File.Delete(save.FileName);
+                                string str = Path.GetFileNameWithoutExtension(save.FileName);
+                                str += "_log.ldf";
+                                string str2 = Path.GetDirectoryName(save.FileName);
+                                File.Delete(str2 + @"\\" + str); // delete the ldf file
+                            }
+                            tempForm.Db.Dispose(true);
+                            File.Move(tempForm.Db.fileName, save.FileName);
+
+                            tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
+                            tempForm.initalizeDataGrid(tempForm.getDGV());
+                            tempForm.Page.ReCount();
+                            tempForm.Page.loadPage();
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                    else if (result == DialogResult.OK && tempForm.IsNewDB == false)
+                    {
+                        try
+                        {
+                            if (File.Exists(save.FileName)) // overwrite if the file is exisiting
+                            {
+                                File.Delete(save.FileName);
+                                string str = Path.GetFileNameWithoutExtension(save.FileName);
+                                str += "_log.ldf";
+                                string str2 = Path.GetDirectoryName(save.FileName);
+                                File.Delete(str2 + @"\\" + str); // delete the ldf file
+                            }
+                            File.Copy(tempForm.Db.fileName, save.FileName); // copy DB to the new DIR
+                            tempForm.Db.Dispose(true);
+
+                            tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
+                            tempForm.initalizeDataGrid(tempForm.getDGV());
+                            tempForm.Page.ReCount();
+                            tempForm.Page.loadPage();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Failed to Save file, are you trying to overwrite a locked DB?", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
                 }
             }
-        }
+            catch (Exception)
+            {
 
-        private void windowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+            }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -133,13 +178,14 @@ namespace OfficeEquipMgmtApp
             frm.Show();
         }
 
+        /// <summary>
+        /// Deletes all temp files generated during runtime
+        /// </summary>
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
             {
-                string user = Environment.UserName; // Get whatever the current computer's username is
-                //string dir = @"C:\Users\" + user + @"\Desktop\.managementapp\";
-                //string folder = @"C:\Users\" + user + @"\Desktop\.managementapp";
+                string user = Environment.UserName;
                 string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
                 string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
                 string[] filepaths = Directory.GetFiles(dir);
@@ -173,14 +219,19 @@ namespace OfficeEquipMgmtApp
                 e.Cancel = true;
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        private void btnNew_Click(object sender, EventArgs e)
         {
-
+            newToolStripMenuItem_Click(sender, e);
         }
 
-        //private void toolHover(object sender, EventArgs e)
-        //{
-        //    ((Button)sender).Text
-        //}
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            openToolStripMenuItem_Click(sender, e);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(sender, e);
+        }
     }
 }

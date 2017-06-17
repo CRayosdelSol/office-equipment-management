@@ -16,6 +16,34 @@ namespace DatabaseManagementOperationsLibrary
         DataGridView datagrid;
         NumericUpDown itemPerPageUpDown, pageSelector;
 
+        DataSet ds;
+
+        public DataSet Ds
+        {
+            get
+            {
+                return ds;
+            }
+
+            set
+            {
+                ds = value;
+            }
+        }
+
+        public DatabaseOperations Db
+        {
+            get
+            {
+                return db;
+            }
+
+            set
+            {
+                db = value;
+            }
+        }
+
         public DBPagination(DatabaseOperations db, DataGridView datagrid, NumericUpDown itemPerPageUpDown, NumericUpDown pageSelector)
         {
             this.db = db;
@@ -65,7 +93,7 @@ namespace DatabaseManagementOperationsLibrary
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
 
-            DataSet ds = new DataSet();
+            ds = new DataSet();
             da.Fill(ds, "Equipment");
 
             // Populate Data Grid
