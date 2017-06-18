@@ -12,7 +12,7 @@ using EquipmentLibrary;
 
 namespace OfficeEquipMgmtApp
 {
-    public partial class frm_EquipmentEditing : Form
+    public partial class FRM_EquipmentEditing : Form
     {
         Main mainForm;
         bool isNewDB;
@@ -27,7 +27,7 @@ namespace OfficeEquipMgmtApp
         protected string connString;
 
         //DB Pagination
-        DBPagination page;
+        DBPagination equipmentPage, manufacturersPage;
 
         #region Properties
         public DatabaseOperations Db
@@ -38,8 +38,8 @@ namespace OfficeEquipMgmtApp
 
         public DBPagination Page
         {
-            get { return page; }
-            set { page = value; }
+            get { return equipmentPage; }
+            set { equipmentPage = value; }
         }
 
         public string Filepath
@@ -58,7 +58,7 @@ namespace OfficeEquipMgmtApp
         /// <summary>
         /// Default form opening behavior, used for creating new databases
         /// </summary>
-        internal frm_EquipmentEditing()
+        internal FRM_EquipmentEditing()
         {
             InitializeComponent();
             isNewDB = true;
@@ -68,7 +68,7 @@ namespace OfficeEquipMgmtApp
         /// Called when opening an already existing DB 
         /// </summary>
         /// <param name="filepath"></param>
-        internal frm_EquipmentEditing(string filepath)
+        internal FRM_EquipmentEditing(string filepath)
         {
             InitializeComponent();
             isNewDB = false;
@@ -132,8 +132,8 @@ namespace OfficeEquipMgmtApp
             Db = new DatabaseOperations(connString);
             Db.OpenDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
-            page.currPage = 0; // make sure the form shows the first page
+            equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            equipmentPage.currPage = 0; // make sure the form shows the first page
 
             Text = Path.GetFileNameWithoutExtension(filepath);
 
@@ -146,7 +146,7 @@ namespace OfficeEquipMgmtApp
 
             try
             {
-                page.loadPage("Equipment"); // database binding
+                equipmentPage.loadPage(); // database binding
             }
             catch (Exception e)
             {
@@ -187,11 +187,13 @@ namespace OfficeEquipMgmtApp
             Db = new DatabaseOperations(connString);
             Db.CreateDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
-            page.currPage = 0; // make sure the form shows the first page
+            equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            equipmentPage.currPage = 0; // make sure the form shows the first page
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "VARCHAR(255)", "Email", "VARCHAR(255)", "Number", "VARCHAR(255)", "Country", "VARCHAR(255)", "City", "VARCHAR(255)", "Zip", "VARCHAR(255)");
 
             DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
             conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
@@ -202,7 +204,7 @@ namespace OfficeEquipMgmtApp
 
             try
             {
-                page.loadPage("Equipment"); // database binding
+                equipmentPage.loadPage(); // database binding
             }
             catch (Exception e)
             {
@@ -227,6 +229,7 @@ namespace OfficeEquipMgmtApp
         /// </summary>
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
+            condList.conditionList.Add(new Condition { value = "Select item condition", priority = 99 });
             condList.conditionList.Add(new Condition { value = "Good", priority = 1 });
             condList.conditionList.Add(new Condition { value = "Under Repair", priority = 2 });
             condList.conditionList.Add(new Condition { value = "Needs Replacement", priority = 3 });
@@ -244,10 +247,10 @@ namespace OfficeEquipMgmtApp
 
             // Grid View page handler
             Page.pageSize = (int)itemPerPageUpDown.Value;
-            Page.ReCount("Equipment");
+            Page.ReCount();
             Page.currPage = 0; // do this so the viewport goes to the first page 
 
-            lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+            lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
         }
 
@@ -290,18 +293,18 @@ namespace OfficeEquipMgmtApp
         #region Page Navigation
         private void btn_back_Click(object sender, EventArgs e)
         {
-            Page.goPrevious("Equipment");
+            Page.goPrevious();
         }
 
         private void btn_forward_Click(object sender, EventArgs e)
         {
-            Page.goNext("Equipment");
+            Page.goNext();
         }
 
         private void pageSelector_ValueChanged(object sender, EventArgs e)
         {
             Page.currPage = (int)pageSelector.Value - 1;
-            Page.loadPage("Equipment");
+            Page.loadPage();
         }
         #endregion
 
@@ -313,8 +316,14 @@ namespace OfficeEquipMgmtApp
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             // TODO: Add multiple row deletion dialog box
+            DialogResult dialogResult = DialogResult.No;
 
-            DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            try
+            {
+                dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            }
+            catch (Exception)
+            { }
 
             if (dialogResult == DialogResult.Yes)
             {
@@ -322,16 +331,16 @@ namespace OfficeEquipMgmtApp
                 {
                     for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
                     {
-                        page.Ds.Tables["Equipment"].Rows[index].Delete();
+                        equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
                     }
 
                     scaleDatagrid(dtgrd_equipment);
-                    page.Db.UpdateEquipDataSet(page.Ds, "Equipment"); // perform necessarry operations to the DB based on the changes in the DS
-                    page.Ds.Dispose();
-                    page.Db.Dispose(true);
-                    page.loadPage("Equipment");
+                    equipmentPage.Db.UpdateEquipDataSet(equipmentPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                    equipmentPage.Ds.Dispose();
+                    equipmentPage.Db.Dispose(true);
+                    equipmentPage.loadPage();
 
-                    lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+                    lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
                     lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
@@ -477,18 +486,25 @@ namespace OfficeEquipMgmtApp
 
         internal void saveBtn_Click(object sender, EventArgs e)
         {
-            try
+            if (tab_Tables.SelectedTab.Name == "tabEquipment")
             {
-                page.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource, "Equipment");
-                Page.ReCount("Equipment");
-                lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
-                lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+                try
+                {
+                    equipmentPage.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource);
+                    Page.ReCount();
+                    lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
+                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                equipmentPage.Db.Dispose(true);
             }
-            catch (Exception)
+            else if (tab_Tables.SelectedTab.Name == "tabManufacturers")
             {
-                MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            page.Db.Dispose(true);
+
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -538,9 +554,9 @@ namespace OfficeEquipMgmtApp
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Page.ReCount("Equipment");
+            Page.ReCount();
             Page.currPage = 0;
-            lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+            lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
 
         }
@@ -573,12 +589,12 @@ namespace OfficeEquipMgmtApp
 
         private void btn_First_Click(object sender, EventArgs e)
         {
-            page.goFirst("Equipment");
+            equipmentPage.goFirst();
         }
 
         private void btn_Last_Click(object sender, EventArgs e)
         {
-            page.goLast("Equipment");
+            equipmentPage.goLast();
         }
     }
 }

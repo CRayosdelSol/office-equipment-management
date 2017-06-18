@@ -168,9 +168,8 @@ namespace DatabaseManagementOperationsLibrary
                         "{5} {6}," +
                         "{7} {8}," +
                         "{9} {10}," +
-                        "{11} {12}," +
                         "{11} {12});",
-                        tableName, attributeA, dataTypeA, attributeB, dataTypeB, attributeC, dataTypeC, attributeD, dataTypeD, attributeE, dataTypeE, attributeF, dataTypeF,attributeG,dataTypeG);
+                        tableName, attributeA, dataTypeA, attributeB, dataTypeB, attributeC, dataTypeC, attributeD, dataTypeD, attributeE, dataTypeE, attributeF, dataTypeF, attributeG, dataTypeG);
 
                     string createTableCommand = temp;
                     SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
@@ -228,17 +227,17 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
-        public void UpdateEquipDataSet(DataSet ds, string tableName)
+        public void UpdateEquipDataSet(DataSet ds)
         {
             SqlConnection conn = new SqlConnection(StrConn);
 
             string sInsert, sUpdate, sDelete;
 
-            sInsert = "INSERT INTO " + tableName + " (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+            sInsert = "INSERT INTO Equipment (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
 
-            sUpdate = "UPDATE " + tableName + " SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
+            sUpdate = "UPDATE Equipment SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
 
-            sDelete = "DELETE FROM " + tableName + " WHERE ID=@p1";
+            sDelete = "DELETE FROM Equipment WHERE ID=@p1";
 
             SqlParameter[] pInsert = new SqlParameter[7];
             SqlParameter[] pUpdate = new SqlParameter[8];
@@ -275,7 +274,59 @@ namespace DatabaseManagementOperationsLibrary
             da.InsertCommand = cmdInsert;
             da.UpdateCommand = cmdUpdate;
             da.DeleteCommand = cmdDelete;
-            da.Update(ds, tableName);
+            da.Update(ds, "Equipment");
+            ds.AcceptChanges();
+        }
+
+        public void UpdateManufDataSet(DataSet ds)
+        {
+            // TODO: @Carl, Edit the following code to match the columns of the mmanuf database, also do RENAME the target table name at line 329
+            SqlConnection conn = new SqlConnection(StrConn);
+
+            string sInsert, sUpdate, sDelete;
+
+            sInsert = "INSERT INTO Equipment (Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+
+            sUpdate = "UPDATE Equipment SET Name=@p2,Condition=@p3,Quantity=@p4,Price=@p5,Department=@p6,Manufacturer=@p7,[Date of Purchase]=@p8 where ID=@p1";
+
+            sDelete = "DELETE FROM Equipment WHERE ID=@p1";
+
+            SqlParameter[] pInsert = new SqlParameter[7];
+            SqlParameter[] pUpdate = new SqlParameter[8];
+            SqlParameter[] pDelete = new SqlParameter[1];
+
+            pInsert[0] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
+            pInsert[1] = new SqlParameter("@p3", SqlDbType.VarChar, 20, "Condition");
+            pInsert[2] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
+            pInsert[3] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
+            pInsert[4] = new SqlParameter("@p6", SqlDbType.VarChar, 5, "Department");
+            pInsert[5] = new SqlParameter("@p7", SqlDbType.VarChar, 255, "Manufacturer");
+            pInsert[6] = new SqlParameter("@p8", SqlDbType.Date, 12, "Date of Purchase");
+
+            pUpdate[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
+            pUpdate[1] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
+            pUpdate[2] = new SqlParameter("@p3", SqlDbType.VarChar, 255, "Condition");
+            pUpdate[3] = new SqlParameter("@p4", SqlDbType.Int, 1000, "Quantity");
+            pUpdate[4] = new SqlParameter("@p5", SqlDbType.Decimal, 10, "Price");
+            pUpdate[5] = new SqlParameter("@p6", SqlDbType.VarChar, 5, "Department");
+            pUpdate[6] = new SqlParameter("@p7", SqlDbType.VarChar, 255, "Manufacturer");
+            pUpdate[7] = new SqlParameter("@p8", SqlDbType.Date, 12, "Date of Purchase");
+
+            pDelete[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
+
+            var cmdInsert = new SqlCommand(sInsert, conn);
+            var cmdUpdate = new SqlCommand(sUpdate, conn);
+            var cmdDelete = new SqlCommand(sDelete, conn);
+
+            cmdInsert.Parameters.AddRange(pInsert);
+            cmdUpdate.Parameters.AddRange(pUpdate);
+            cmdDelete.Parameters.AddRange(pDelete);
+
+            SqlDataAdapter da = new SqlDataAdapter();
+            da.InsertCommand = cmdInsert;
+            da.UpdateCommand = cmdUpdate;
+            da.DeleteCommand = cmdDelete;
+            da.Update(ds, "Equipment");
             ds.AcceptChanges();
         }
 
@@ -302,7 +353,7 @@ namespace DatabaseManagementOperationsLibrary
         {
             using (SqlConnection connectionString = new SqlConnection(StrConn))
             {
-                string temp = string.Format("DROP TABLE {0}",tableName);
+                string temp = string.Format("DROP TABLE {0}", tableName);
                 string createTableCommand = temp;
                 SqlCommand sqlCommand = new SqlCommand(createTableCommand, connectionString);
                 connectionString.Open();

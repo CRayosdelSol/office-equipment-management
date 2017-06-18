@@ -151,14 +151,14 @@ namespace OfficeEquipMgmtApp
             Db = new DatabaseOperations(connString);
             Db.OpenDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_manufacturer, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            page = new DBPagination(db, dtgrd_manufacturer, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             page.currPage = 0; // make sure the form shows the first page
 
             Text = Path.GetFileNameWithoutExtension(filepath);
 
             try
             {
-                page.loadPage("Equipment"); // database binding
+                page.loadPage(); // database binding
             }
             catch (Exception e)
             {
@@ -199,11 +199,11 @@ namespace OfficeEquipMgmtApp
             Db = new DatabaseOperations(connString);
             Db.CreateDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_manufacturer, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            page = new DBPagination(db, dtgrd_manufacturer,"Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             page.currPage = 0; // make sure the form shows the first page
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY","Name","VARCHAR(255)","Email","VARCHAR(255)","Number","VARCHAR(255)","Country","VARCHAR(255)","City", "VARCHAR(255)","Zip", "VARCHAR(255)");
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "VARCHAR(255)", "Email", "VARCHAR(255)", "Number", "VARCHAR(255)", "Country", "VARCHAR(255)", "City", "VARCHAR(255)", "Zip", "VARCHAR(255)");
 
             try
             {
@@ -285,6 +285,10 @@ namespace OfficeEquipMgmtApp
                     page.Ds.Dispose();
                     page.Db.Dispose(true);
                     page.loadPage("Manufacturer");
+
+                    lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+
                 }
                 catch (Exception err)
                 {
@@ -371,6 +375,8 @@ namespace OfficeEquipMgmtApp
             {
                 page.Db.UpdateEquipDataSet((DataSet)dtgrd_manufacturer.DataSource, "Manufacturer");
                 Page.ReCount("Equipment");
+                lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+                lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
             }
             catch (Exception)
             {
@@ -428,6 +434,8 @@ namespace OfficeEquipMgmtApp
         {
             Page.ReCount("Equipment");
             Page.currPage = 0;
+            lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
         }
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
@@ -475,6 +483,16 @@ namespace OfficeEquipMgmtApp
         private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
         {
             Page.pageSize = (int)itemPerPageUpDown.Value;
+        }
+
+        private void btn_First_Click(object sender, EventArgs e)
+        {
+            page.goFirst("Equipment");
+        }
+
+        private void btn_Last_Click(object sender, EventArgs e)
+        {
+            page.goLast("Equipment");
         }
     }
 }

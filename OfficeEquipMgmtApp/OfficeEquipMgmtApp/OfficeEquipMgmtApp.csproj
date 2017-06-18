@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -86,12 +86,6 @@
     <Compile Include="FRM_Manufacturer.Designer.cs">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FRM_ManufacturerEditing.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FRM_ManufacturerEditing.Designer.cs">
-      <DependentUpon>FRM_ManufacturerEditing.cs</DependentUpon>
-    </Compile>
     <Compile Include="FRM_TableViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,9 +105,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_Manufacturer.resx">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FRM_ManufacturerEditing.resx">
-      <DependentUpon>FRM_ManufacturerEditing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRM_TableViewer.resx">
       <DependentUpon>FRM_TableViewer.cs</DependentUpon>
@@ -217,6 +208,18 @@
     <Content Include="Database.ico" />
     <None Include="Resources\DeleteTableRow_16x.png" />
     <None Include="Resources\SaveAs_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
