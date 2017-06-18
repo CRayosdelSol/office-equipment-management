@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace DatabaseManagementOperationsLibrary
 {
+    /// <summary>
+    /// Handles the datagridview's page controls
+    /// </summary>
     public class DBPagination
     {
         //DB Pagination
@@ -45,7 +48,7 @@ namespace DatabaseManagementOperationsLibrary
         }
 
         public DBPagination(DatabaseOperations db, DataGridView datagrid, NumericUpDown itemPerPageUpDown, NumericUpDown pageSelector)
-        {
+        {            
             this.db = db;
             this.datagrid = datagrid;
             this.itemPerPageUpDown = itemPerPageUpDown;

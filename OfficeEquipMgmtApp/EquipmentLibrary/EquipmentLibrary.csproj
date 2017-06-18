@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
+    <Compile Include="Condition.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentContext.cs" />
     <Compile Include="Item.cs" />

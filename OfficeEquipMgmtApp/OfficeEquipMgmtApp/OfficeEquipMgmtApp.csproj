@@ -227,6 +227,11 @@
   <ItemGroup>
     <None Include="Resources\ic_fast_forward_black_18dp_1x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="checklist.ico" />
+    <Content Include="Database.ico" />
+    <None Include="Resources\SaveAs_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

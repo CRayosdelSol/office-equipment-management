@@ -6,8 +6,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Data.Entity;
+using System.Collections.Generic;
 using DatabaseManagementOperationsLibrary;
+using EquipmentLibrary;
 
 namespace OfficeEquipMgmtApp
 {
@@ -15,6 +16,7 @@ namespace OfficeEquipMgmtApp
     {
         Main mainForm;
         bool isNewDB;
+        ConditionList condList = new ConditionList();
 
         // Database variables
         SqlDataAdapter dataAdapter;
@@ -84,7 +86,7 @@ namespace OfficeEquipMgmtApp
         /// <summary>
         /// Default form opening behavior, used for creating new databases
         /// </summary>
-        public frm_EquipmentEditing()
+        internal frm_EquipmentEditing()
         {
             InitializeComponent();
             isNewDB = true;
@@ -94,7 +96,7 @@ namespace OfficeEquipMgmtApp
         /// Called when opening an already existing DB 
         /// </summary>
         /// <param name="filepath"></param>
-        public frm_EquipmentEditing(string filepath)
+        internal frm_EquipmentEditing(string filepath)
         {
             InitializeComponent();
             isNewDB = false;
@@ -163,6 +165,13 @@ namespace OfficeEquipMgmtApp
 
             Text = Path.GetFileNameWithoutExtension(filepath);
 
+            DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
+            conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
+            conditionCol.DefaultCellStyle.NullValue = condList.conditionList[0].Value;
+            conditionCol.DisplayMember = "Value";
+            conditionCol.ValueMember = "Value";
+            conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
+
             try
             {
                 page.loadPage(); // database binding
@@ -212,6 +221,13 @@ namespace OfficeEquipMgmtApp
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
+            DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
+            conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
+            conditionCol.DefaultCellStyle.NullValue = condList.conditionList[0].Value;
+            conditionCol.DisplayMember = "Value";
+            conditionCol.ValueMember = "Value";
+            conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
+
             try
             {
                 page.loadPage(); // database binding
@@ -239,11 +255,16 @@ namespace OfficeEquipMgmtApp
         /// </summary>
         private void frm_EquipmentView_Load(object sender, EventArgs e)
         {
+            condList.conditionList.Add(new Condition { value = "Good", priority = 1 });
+            condList.conditionList.Add(new Condition { value = "Under Repair", priority = 2 });
+            condList.conditionList.Add(new Condition { value = "Needs Replacement", priority = 3 });
+            condList.conditionList.Add(new Condition { value = "Lost", priority = 4 });
+
             if (isNewDB)
                 initializeDefGrid(dtgrd_equipment);
             else
                 initalizeDataGrid(dtgrd_equipment);
-            
+
             //Scale the form so that all of its contents are shown properly.
             this.MinimumSize = new Size(this.Width, this.Height);
             this.AutoSize = true;
@@ -252,7 +273,7 @@ namespace OfficeEquipMgmtApp
             // Grid View page handler
             Page.pageSize = (int)itemPerPageUpDown.Value;
             Page.ReCount();
-            Page.currPage = 0; // do this so the viewport goes to the first page 
+            Page.currPage = 0; // do this so the viewport goes to the first page             
         }
 
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
@@ -316,13 +337,19 @@ namespace OfficeEquipMgmtApp
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+            // TODO: Add multiple row deletion dialog box
+
             DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialogResult == DialogResult.Yes)
             {
                 try
                 {
-                    page.Ds.Tables["Equipment"].Rows[dtgrd_equipment.CurrentCell.RowIndex].Delete();
+                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    {
+                        page.Ds.Tables["Equipment"].Rows[index].Delete();
+                    }
+
                     scaleDatagrid(dtgrd_equipment);
                     page.Db.UpdateEquipDataSet(page.Ds); // perform necessarry operations to the DB based on the changes in the DS
                     page.Ds.Dispose();
@@ -332,13 +359,14 @@ namespace OfficeEquipMgmtApp
                 catch (Exception err)
                 {
                     MessageBox.Show(err.Message);
-
                 }
             }
         }
 
         private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
+            //TODO: Add option to show row colors based on condtition of item
+
             //Draw only grid content cells not ColumnHeader cells nor RowHeader cells
             if (e.ColumnIndex > -1 & e.RowIndex > -1)
             {
@@ -469,7 +497,7 @@ namespace OfficeEquipMgmtApp
 
         }
 
-        private void saveBtn_Click(object sender, EventArgs e)
+        internal void saveBtn_Click(object sender, EventArgs e)
         {
             try
             {
@@ -555,10 +583,9 @@ namespace OfficeEquipMgmtApp
             dtgrd_equipment.Rows[e.RowIndex].ErrorText = string.Empty;
         }
 
-        public DataGridView getDGV()
+        internal DataGridView getDGV()
         {
             return dtgrd_equipment;
         }
-
     }
 }

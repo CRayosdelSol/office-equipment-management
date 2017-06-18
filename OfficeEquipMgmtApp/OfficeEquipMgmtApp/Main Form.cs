@@ -63,9 +63,7 @@ namespace OfficeEquipMgmtApp
                 }
             }
             catch (Exception)
-            {
-
-            }
+            { }
         }
 
         private void updateTime(object sender, EventArgs e)
@@ -90,6 +88,84 @@ namespace OfficeEquipMgmtApp
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ActiveMdiChild.GetType() == typeof(frm_EquipmentEditing))
+                {
+                    frm_EquipmentEditing tempform = (frm_EquipmentEditing)ActiveMdiChild;
+
+                    tempform.saveBtn_Click(sender, e);
+                }
+            }
+            catch (Exception)
+            { }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileCounter++;
+            frm_EquipmentEditing frm = new frm_EquipmentEditing();
+            frm.MdiParent = this;
+            frm.Show();
+        }
+
+        /// <summary>
+        /// Deletes all temp files generated during runtime
+        /// </summary>
+        private void Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                string user = Environment.UserName;
+                string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
+                string[] filepaths = Directory.GetFiles(dir);
+
+                foreach (string f in filepaths)
+                {
+                    if (File.Exists(f))
+                        File.Delete(f);
+                }
+
+                if (Directory.Exists(folder))
+                {
+                    Directory.Delete(folder);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var closing = MessageBox.Show("Do you want quit and discard all changes, if there are any?", "Exit Application", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (closing == DialogResult.Yes)
+            {
+                return;
+            }
+            else
+                e.Cancel = true;
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            newToolStripMenuItem_Click(sender, e);
+        }
+
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            openToolStripMenuItem_Click(sender, e);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            saveToolStripMenuItem_Click(sender, e);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -127,15 +203,14 @@ namespace OfficeEquipMgmtApp
                             tempForm.Db.Dispose(true);
                             File.Move(tempForm.Db.fileName, save.FileName);
 
+                            tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
                             tempForm.Page.ReCount();
                             tempForm.Page.loadPage();
                         }
                         catch (Exception)
-                        {
-
-                        }
+                        { }
                     }
                     else if (result == DialogResult.OK && tempForm.IsNewDB == false)
                     {
@@ -152,6 +227,7 @@ namespace OfficeEquipMgmtApp
                             File.Copy(tempForm.Db.fileName, save.FileName); // copy DB to the new DIR
                             tempForm.Db.Dispose(true);
 
+                            tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
                             tempForm.Page.ReCount();
@@ -165,73 +241,7 @@ namespace OfficeEquipMgmtApp
                 }
             }
             catch (Exception)
-            {
-
-            }
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fileCounter++;
-            frm_EquipmentEditing frm = new frm_EquipmentEditing();
-            frm.MdiParent = this;
-            frm.Show();
-        }
-
-        /// <summary>
-        /// Deletes all temp files generated during runtime
-        /// </summary>
-        private void Main_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            try
-            {
-                string user = Environment.UserName;
-                string dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
-                string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp";
-                string[] filepaths = Directory.GetFiles(dir);
-
-                foreach (string f in filepaths)
-                {
-                    if (File.Exists(f))
-                        File.Delete(f);
-                }
-
-                if (Directory.Exists(folder))
-                {
-                    Directory.Delete(folder);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        private void Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            var closing = MessageBox.Show("Do you want quit and discard all changes, if there are any?", "Exit Application", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (closing == DialogResult.Yes)
-            {
-                return;
-            }
-            else
-                e.Cancel = true;
-        }
-
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            newToolStripMenuItem_Click(sender, e);
-        }
-
-        private void btnOpen_Click(object sender, EventArgs e)
-        {
-            openToolStripMenuItem_Click(sender, e);
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            saveToolStripMenuItem_Click(sender, e);
+            { }
         }
     }
 }

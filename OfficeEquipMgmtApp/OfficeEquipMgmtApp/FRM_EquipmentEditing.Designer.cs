@@ -35,14 +35,6 @@ namespace OfficeEquipMgmtApp
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
-            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sortItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,11 +52,6 @@ namespace OfficeEquipMgmtApp
             this.btn_back = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn1 = new DatabaseManagementOperationsLibrary.CalendarColumn();
             this.grpbx_options = new System.Windows.Forms.GroupBox();
             this.itemPerPageUpDown = new System.Windows.Forms.NumericUpDown();
@@ -76,6 +63,14 @@ namespace OfficeEquipMgmtApp
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
@@ -138,81 +133,6 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dtgrd_equipment_DataError);
             this.dtgrd_equipment.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_equipment_EditingControlShowing);
-            // 
-            // col_ID
-            // 
-            this.col_ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.col_ID.DataPropertyName = "ID";
-            this.col_ID.HeaderText = "ID";
-            this.col_ID.Name = "col_ID";
-            this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_ID.Width = 43;
-            // 
-            // col_Name
-            // 
-            this.col_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Name.DataPropertyName = "Name";
-            this.col_Name.HeaderText = "Name";
-            this.col_Name.Name = "col_Name";
-            this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_Name.Width = 60;
-            // 
-            // col_Condition
-            // 
-            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Condition.DataPropertyName = "Condition";
-            this.col_Condition.HeaderText = "Condition";
-            this.col_Condition.Items.AddRange(new object[] {
-            "Good",
-            "Under Repair",
-            "Needs Replacement",
-            "Lost"});
-            this.col_Condition.Name = "col_Condition";
-            this.col_Condition.Width = 57;
-            // 
-            // col_Quantity
-            // 
-            this.col_Quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Quantity.DataPropertyName = "Quantity";
-            this.col_Quantity.HeaderText = "Quantity";
-            this.col_Quantity.Name = "col_Quantity";
-            this.col_Quantity.Width = 71;
-            // 
-            // col_Price
-            // 
-            this.col_Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Price.DataPropertyName = "Price";
-            this.col_Price.HeaderText = "Price";
-            this.col_Price.Name = "col_Price";
-            this.col_Price.Width = 56;
-            // 
-            // col_Department
-            // 
-            this.col_Department.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Department.DataPropertyName = "Department";
-            this.col_Department.HeaderText = "Department";
-            this.col_Department.MaxInputLength = 5;
-            this.col_Department.Name = "col_Department";
-            this.col_Department.Width = 87;
-            // 
-            // col_Manufacturer
-            // 
-            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Manufacturer.DataPropertyName = "Manufacturer";
-            this.col_Manufacturer.HeaderText = "Manufacturer";
-            this.col_Manufacturer.Items.AddRange(new object[] {
-            "Manuf 1",
-            "Manuf 2"});
-            this.col_Manufacturer.Name = "col_Manufacturer";
-            this.col_Manufacturer.Width = 76;
-            // 
-            // col_date_of_purchase
-            // 
-            this.col_date_of_purchase.DataPropertyName = "Date of Purchase";
-            this.col_date_of_purchase.HeaderText = "Date of Purchase";
-            this.col_date_of_purchase.Name = "col_date_of_purchase";
-            this.col_date_of_purchase.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_date_of_purchase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // menuStrip1
             // 
@@ -325,7 +245,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
             this.btn_forward.Location = new System.Drawing.Point(137, 339);
-            this.btn_forward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
             this.btn_forward.Name = "btn_forward";
             this.btn_forward.Size = new System.Drawing.Size(40, 40);
             this.btn_forward.TabIndex = 11;
@@ -337,7 +257,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
             this.btn_back.Location = new System.Drawing.Point(11, 339);
-            this.btn_back.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
             this.btn_back.Name = "btn_back";
             this.btn_back.Size = new System.Drawing.Size(40, 40);
             this.btn_back.TabIndex = 10;
@@ -349,7 +269,7 @@ namespace OfficeEquipMgmtApp
             // 
             this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
             this.saveBtn.Location = new System.Drawing.Point(8, 16);
-            this.saveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(40, 40);
             this.saveBtn.TabIndex = 8;
@@ -361,51 +281,13 @@ namespace OfficeEquipMgmtApp
             // 
             this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
             this.btn_Delete.Location = new System.Drawing.Point(56, 16);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Delete.Name = "btn_Delete";
             this.btn_Delete.Size = new System.Drawing.Size(40, 40);
             this.btn_Delete.TabIndex = 9;
             this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
             this.btn_Delete.UseVisualStyleBackColor = true;
             this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "ID";
-            this.dataGridViewTextBoxColumn1.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Quantity";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Quantity";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Price";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Price";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Department";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Department";
-            this.dataGridViewTextBoxColumn5.MaxInputLength = 5;
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             // 
             // calendarColumn1
             // 
@@ -420,9 +302,9 @@ namespace OfficeEquipMgmtApp
             this.grpbx_options.Controls.Add(this.btn_Delete);
             this.grpbx_options.Controls.Add(this.saveBtn);
             this.grpbx_options.Location = new System.Drawing.Point(9, 38);
-            this.grpbx_options.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpbx_options.Margin = new System.Windows.Forms.Padding(2);
             this.grpbx_options.Name = "grpbx_options";
-            this.grpbx_options.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpbx_options.Padding = new System.Windows.Forms.Padding(2);
             this.grpbx_options.Size = new System.Drawing.Size(168, 64);
             this.grpbx_options.TabIndex = 9;
             this.grpbx_options.TabStop = false;
@@ -517,9 +399,9 @@ namespace OfficeEquipMgmtApp
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
             this.groupBox1.Location = new System.Drawing.Point(17, 117);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(152, 101);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
@@ -533,7 +415,7 @@ namespace OfficeEquipMgmtApp
             this.textBox1.Enabled = false;
             this.textBox1.ForeColor = System.Drawing.Color.Red;
             this.textBox1.Location = new System.Drawing.Point(7, 25);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(136, 59);
@@ -549,6 +431,76 @@ namespace OfficeEquipMgmtApp
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 0;
+            // 
+            // col_ID
+            // 
+            this.col_ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.col_ID.DataPropertyName = "ID";
+            this.col_ID.HeaderText = "ID";
+            this.col_ID.Name = "col_ID";
+            this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.col_ID.Width = 43;
+            // 
+            // col_Name
+            // 
+            this.col_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Name.DataPropertyName = "Name";
+            this.col_Name.HeaderText = "Name";
+            this.col_Name.Name = "col_Name";
+            this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_Name.Width = 60;
+            // 
+            // col_Condition
+            // 
+            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Condition.DataPropertyName = "Condition";
+            this.col_Condition.HeaderText = "Condition";
+            this.col_Condition.Name = "col_Condition";
+            this.col_Condition.Width = 57;
+            // 
+            // col_Quantity
+            // 
+            this.col_Quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Quantity.DataPropertyName = "Quantity";
+            this.col_Quantity.HeaderText = "Quantity";
+            this.col_Quantity.Name = "col_Quantity";
+            this.col_Quantity.Width = 71;
+            // 
+            // col_Price
+            // 
+            this.col_Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Price.DataPropertyName = "Price";
+            this.col_Price.HeaderText = "Price";
+            this.col_Price.Name = "col_Price";
+            this.col_Price.Width = 56;
+            // 
+            // col_Department
+            // 
+            this.col_Department.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Department.DataPropertyName = "Department";
+            this.col_Department.HeaderText = "Department";
+            this.col_Department.MaxInputLength = 5;
+            this.col_Department.Name = "col_Department";
+            this.col_Department.Width = 87;
+            // 
+            // col_Manufacturer
+            // 
+            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Manufacturer.DataPropertyName = "Manufacturer";
+            this.col_Manufacturer.HeaderText = "Manufacturer";
+            this.col_Manufacturer.Items.AddRange(new object[] {
+            "Manuf 1",
+            "Manuf 2"});
+            this.col_Manufacturer.Name = "col_Manufacturer";
+            this.col_Manufacturer.Width = 76;
+            // 
+            // col_date_of_purchase
+            // 
+            this.col_date_of_purchase.DataPropertyName = "Date of Purchase";
+            this.col_date_of_purchase.HeaderText = "Date of Purchase";
+            this.col_date_of_purchase.Name = "col_date_of_purchase";
+            this.col_date_of_purchase.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_date_of_purchase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // frm_EquipmentEditing
             // 
@@ -605,21 +557,8 @@ namespace OfficeEquipMgmtApp
         private ToolStripStatusLabel stsstrplbl_currentSortDirection;
         private ToolTip ttip_optionHints;
         private Button saveBtn;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DatabaseManagementOperationsLibrary.CalendarColumn calendarColumn1;
         private GroupBox grpbx_options;
-        private DataGridViewTextBoxColumn col_ID;
-        private DataGridViewTextBoxColumn col_Name;
-        private DataGridViewComboBoxColumn col_Condition;
-        private DataGridViewTextBoxColumn col_Quantity;
-        private DataGridViewTextBoxColumn col_Price;
-        private DataGridViewTextBoxColumn col_Department;
-        private DataGridViewComboBoxColumn col_Manufacturer;
-        private DatabaseManagementOperationsLibrary.CalendarColumn col_date_of_purchase;
         private Button btn_back;
         private Button btn_forward;
         private Button btnRefresh;
@@ -632,5 +571,13 @@ namespace OfficeEquipMgmtApp
         private GroupBox groupBox1;
         private TextBox textBox1;
         private Label label4;
+        private DataGridViewTextBoxColumn col_ID;
+        private DataGridViewTextBoxColumn col_Name;
+        private DataGridViewComboBoxColumn col_Condition;
+        private DataGridViewTextBoxColumn col_Quantity;
+        private DataGridViewTextBoxColumn col_Price;
+        private DataGridViewTextBoxColumn col_Department;
+        private DataGridViewComboBoxColumn col_Manufacturer;
+        private DatabaseManagementOperationsLibrary.CalendarColumn col_date_of_purchase;
     }
 }
