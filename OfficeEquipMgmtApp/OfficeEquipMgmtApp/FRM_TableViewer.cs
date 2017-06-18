@@ -243,25 +243,20 @@ namespace OfficeEquipMgmtApp
             lbl_needsReplacement.Text = needsReplacement.ToString();
         }
 
+        public void establishManufacturingCompany(IManufacturerBuilder manufacturerBuilder)
+        {
+            manufacturerBuilder.establishUserCommunicationMethods();
+            manufacturerBuilder.identifyAddress();
+        }
+
         public void displayManufacturerInformation()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(connString))
-            {
-                sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM @table WHERE Name= @name", sqlConnection);
-                sqlCommand.Parameters.AddWithValue("@table", "Manufacturer");
-                sqlCommand.Parameters.AddWithValue("@name", dtgrd_Tables.SelectedRows[0].Cells[6].Value.ToString());
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                {
-                    address = new Address(dataReader["Country"].ToString(), dataReader["City"].ToString(), Convert.ToInt32(dataReader["Zip"].ToString()));
-                    manufacturer = new Manufacturer(dataReader["Name"].ToString(),address, dataReader["Email"].ToString(), dataReader["Number"].ToString());
-                }
-            }
+            IManufacturerBuilder manufacturerBuilder = null;
+            manufacturerBuilder = new EquipmentManufacturerBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[6].Value.ToString());
 
-            lbl_ManufName.Text = manufacturer.Name;
-            lbl_Manufemail.Text = manufacturer.Email_add;
-            lbl_CountryOfOrigin.Text = manufacturer.MnfctrrAdd.Country;
-            lbl_ManufContactNumber.Text = manufacturer.Contact_number;
+            lbl_ManufName.Text = manufacturerBuilder.Manufacturer.Name;
+            lbl_Manufemail.Text = manufacturerBuilder.Manufacturer.Email_add;
+            lbl_CountryOfOrigin.Text = manufacturerBuilder.Manufacturer.MnfctrrAdd.Country;
         }
 
         private void dtgrd_Tables_SelectionChanged(object sender, EventArgs e)

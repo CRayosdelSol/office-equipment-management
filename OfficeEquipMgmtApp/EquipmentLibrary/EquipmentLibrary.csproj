@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,9 +54,13 @@
     <Compile Include="Address.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Equipment.cs" />
+    <Compile Include="EquipmentBuilder.cs" />
     <Compile Include="EquipmentContext.cs" />
+    <Compile Include="IEquipmentBuilder.cs" />
+    <Compile Include="IManufacturerBuilder.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Manufacturer.cs" />
+    <Compile Include="EquipmentManufacturerBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
