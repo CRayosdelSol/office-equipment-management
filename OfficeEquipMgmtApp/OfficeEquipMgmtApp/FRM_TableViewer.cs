@@ -32,6 +32,7 @@ namespace OfficeEquipMgmtApp
         string dir;
         string file;
         protected string connString;
+        bool isEquipmentTable;
 
         public FRM_TableViewer()
         {
@@ -49,12 +50,20 @@ namespace OfficeEquipMgmtApp
         {
             displayTable("Equipment", connString, dtgrd_Tables);
             sttts_TableDisplayed.Text = "\"Equipment\"";
+            isEquipmentTable = true;
+            grpbx_GeneralEquipmentSummary.Visible = true;
+            grpbx_summaryPerDept.Visible = true;
+            grpbx_ManufacturerInfo.Visible = true;
         }
 
         private void manufacturersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             displayTable("Manufacturer", connString, dtgrd_Tables);
             sttts_TableDisplayed.Text = "\"Manufacturer\"";
+            isEquipmentTable = false;
+            grpbx_GeneralEquipmentSummary.Visible = false;
+            grpbx_summaryPerDept.Visible = false;
+            grpbx_ManufacturerInfo.Visible = false;
 
         }
 
@@ -257,13 +266,23 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_Tables_SelectionChanged(object sender, EventArgs e)
         {
-            DisplayDepartmentEquipmentConditionSummary();
-            displayManufacturerInformation();
+            if (isEquipmentTable)
+            {
+                DisplayDepartmentEquipmentConditionSummary();
+                displayManufacturerInformation();
+            }
         }
 
         private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             summarizeEquipmentConditions();
+        }
+
+        private void FRM_TableViewer_Load(object sender, EventArgs e)
+        {
+            initializeGrid(dtgrd_Tables);
+            displayTable("Equipment", connString, dtgrd_Tables);
+            DisplayEquipmentCondtionSummary();
         }
     }
 }

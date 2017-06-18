@@ -34,7 +34,7 @@
             this.lbl_LostCondition = new System.Windows.Forms.Label();
             this.lbl_UnderRepairCondition = new System.Windows.Forms.Label();
             this.lbl_GoodCondition = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpbx_ManufacturerInfo = new System.Windows.Forms.GroupBox();
             this.lbl_CountryOfOrigin = new System.Windows.Forms.Label();
             this.lbl_ManufContactNumber = new System.Windows.Forms.Label();
             this.lbl_Manufemail = new System.Windows.Forms.Label();
@@ -48,9 +48,10 @@
             this.loadTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manufacturersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpbx_GeneralEquipmentSummary = new System.Windows.Forms.GroupBox();
             this.lbl_GenNeedsReplacementCondition = new System.Windows.Forms.Label();
             this.lbl_TotalNumberOfEquipments = new System.Windows.Forms.Label();
             this.lbl_GenLostCondition = new System.Windows.Forms.Label();
@@ -60,14 +61,13 @@
             this.itemPerPageUpDown = new System.Windows.Forms.NumericUpDown();
             this.btn_forward = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
-            this.generateReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpbx_summaryPerDept.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grpbx_ManufacturerInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_Tables)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.grpbx_GeneralEquipmentSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -130,18 +130,18 @@
             this.lbl_GoodCondition.TabIndex = 0;
             this.lbl_GoodCondition.Text = "Good Conditon -";
             // 
-            // groupBox1
+            // grpbx_ManufacturerInfo
             // 
-            this.groupBox1.Controls.Add(this.lbl_CountryOfOrigin);
-            this.groupBox1.Controls.Add(this.lbl_ManufContactNumber);
-            this.groupBox1.Controls.Add(this.lbl_Manufemail);
-            this.groupBox1.Controls.Add(this.lbl_ManufName);
-            this.groupBox1.Location = new System.Drawing.Point(12, 430);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(275, 144);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Manufacturer Information";
+            this.grpbx_ManufacturerInfo.Controls.Add(this.lbl_CountryOfOrigin);
+            this.grpbx_ManufacturerInfo.Controls.Add(this.lbl_ManufContactNumber);
+            this.grpbx_ManufacturerInfo.Controls.Add(this.lbl_Manufemail);
+            this.grpbx_ManufacturerInfo.Controls.Add(this.lbl_ManufName);
+            this.grpbx_ManufacturerInfo.Location = new System.Drawing.Point(12, 430);
+            this.grpbx_ManufacturerInfo.Name = "grpbx_ManufacturerInfo";
+            this.grpbx_ManufacturerInfo.Size = new System.Drawing.Size(275, 144);
+            this.grpbx_ManufacturerInfo.TabIndex = 1;
+            this.grpbx_ManufacturerInfo.TabStop = false;
+            this.grpbx_ManufacturerInfo.Text = "Manufacturer Information";
             // 
             // lbl_CountryOfOrigin
             // 
@@ -186,7 +186,9 @@
             this.dtgrd_Tables.AllowUserToOrderColumns = true;
             this.dtgrd_Tables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_Tables.Location = new System.Drawing.Point(294, 65);
+            this.dtgrd_Tables.MultiSelect = false;
             this.dtgrd_Tables.Name = "dtgrd_Tables";
+            this.dtgrd_Tables.ReadOnly = true;
             this.dtgrd_Tables.RowTemplate.Height = 28;
             this.dtgrd_Tables.Size = new System.Drawing.Size(1039, 633);
             this.dtgrd_Tables.TabIndex = 2;
@@ -259,6 +261,13 @@
             this.manufacturersToolStripMenuItem.Text = "Manufacturers";
             this.manufacturersToolStripMenuItem.Click += new System.EventHandler(this.manufacturersToolStripMenuItem_Click);
             // 
+            // generateReportToolStripMenuItem
+            // 
+            this.generateReportToolStripMenuItem.Name = "generateReportToolStripMenuItem";
+            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(255, 30);
+            this.generateReportToolStripMenuItem.Text = "&Generate Report";
+            this.generateReportToolStripMenuItem.Click += new System.EventHandler(this.generateReportToolStripMenuItem_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -288,19 +297,19 @@
             0,
             0});
             // 
-            // groupBox2
+            // grpbx_GeneralEquipmentSummary
             // 
-            this.groupBox2.Controls.Add(this.lbl_GenNeedsReplacementCondition);
-            this.groupBox2.Controls.Add(this.lbl_TotalNumberOfEquipments);
-            this.groupBox2.Controls.Add(this.lbl_GenLostCondition);
-            this.groupBox2.Controls.Add(this.lbl_GenGoodCondition);
-            this.groupBox2.Controls.Add(this.lbl_GenUnderRepairCondition);
-            this.groupBox2.Location = new System.Drawing.Point(12, 65);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(265, 169);
-            this.groupBox2.TabIndex = 19;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Summary";
+            this.grpbx_GeneralEquipmentSummary.Controls.Add(this.lbl_GenNeedsReplacementCondition);
+            this.grpbx_GeneralEquipmentSummary.Controls.Add(this.lbl_TotalNumberOfEquipments);
+            this.grpbx_GeneralEquipmentSummary.Controls.Add(this.lbl_GenLostCondition);
+            this.grpbx_GeneralEquipmentSummary.Controls.Add(this.lbl_GenGoodCondition);
+            this.grpbx_GeneralEquipmentSummary.Controls.Add(this.lbl_GenUnderRepairCondition);
+            this.grpbx_GeneralEquipmentSummary.Location = new System.Drawing.Point(12, 65);
+            this.grpbx_GeneralEquipmentSummary.Name = "grpbx_GeneralEquipmentSummary";
+            this.grpbx_GeneralEquipmentSummary.Size = new System.Drawing.Size(265, 169);
+            this.grpbx_GeneralEquipmentSummary.TabIndex = 19;
+            this.grpbx_GeneralEquipmentSummary.TabStop = false;
+            this.grpbx_GeneralEquipmentSummary.Text = "Summary";
             // 
             // lbl_GenNeedsReplacementCondition
             // 
@@ -400,13 +409,6 @@
             this.btn_back.TabIndex = 11;
             this.btn_back.UseVisualStyleBackColor = true;
             // 
-            // generateReportToolStripMenuItem
-            // 
-            this.generateReportToolStripMenuItem.Name = "generateReportToolStripMenuItem";
-            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(255, 30);
-            this.generateReportToolStripMenuItem.Text = "&Generate Report";
-            this.generateReportToolStripMenuItem.Click += new System.EventHandler(this.generateReportToolStripMenuItem_Click);
-            // 
             // FRM_TableViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -414,7 +416,7 @@
             this.ClientSize = new System.Drawing.Size(1355, 735);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.itemPerPageUpDown);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.grpbx_GeneralEquipmentSummary);
             this.Controls.Add(this.pageSelector);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btn_forward);
@@ -422,23 +424,24 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.dtgrd_Tables);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpbx_ManufacturerInfo);
             this.Controls.Add(this.grpbx_summaryPerDept);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FRM_TableViewer";
             this.Text = "FRM_TableViewer";
+            this.Load += new System.EventHandler(this.FRM_TableViewer_Load);
             this.grpbx_summaryPerDept.ResumeLayout(false);
             this.grpbx_summaryPerDept.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpbx_ManufacturerInfo.ResumeLayout(false);
+            this.grpbx_ManufacturerInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_Tables)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.grpbx_GeneralEquipmentSummary.ResumeLayout(false);
+            this.grpbx_GeneralEquipmentSummary.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -448,7 +451,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox grpbx_summaryPerDept;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpbx_ManufacturerInfo;
         private System.Windows.Forms.DataGridView dtgrd_Tables;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -467,7 +470,7 @@
         private System.Windows.Forms.Label lbl_UnderRepairCondition;
         private System.Windows.Forms.Label lbl_GoodCondition;
         private System.Windows.Forms.Label lbl_totalNumberOfEquipmentOwned;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpbx_GeneralEquipmentSummary;
         private System.Windows.Forms.Label lbl_TotalNumberOfEquipments;
         private System.Windows.Forms.Label lbl_ManufName;
         private System.Windows.Forms.Label lbl_CountryOfOrigin;
