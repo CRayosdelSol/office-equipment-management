@@ -14,15 +14,8 @@ namespace EquipmentLibrary
 
         public string Condition
         {
-            get
-            {
-                return condition;
-            }
-
-            set
-            {
-                condition = value;
-            }
+            get { return condition; }
+            set { condition = value; }
         }
 
         /// <summary>

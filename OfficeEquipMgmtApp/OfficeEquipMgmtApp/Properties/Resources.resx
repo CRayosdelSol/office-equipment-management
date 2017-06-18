@@ -130,35 +130,20 @@
   <data name="SortAscending_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SortAscending_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Condition_Good" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Condition_Good.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Paste_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Paste_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ic_search_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_search_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SaveAs_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SaveAs_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ic_fast_forward_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ic_fast_forward_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Add_grey_8x_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Add_grey_8x_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_delete_forever_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_delete_forever_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_add_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_add_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Condition_UnderRepair" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Condition_UnderRepair.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Condition_NeedsReplacemnet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Condition_NeedsReplacemnet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DeleteTableRow_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeleteTableRow_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OpenfileDialog_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenfileDialog_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Condition_Lost" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Condition_Lost.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Save_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,31 +160,16 @@
   <data name="DeleteCell_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DeleteCell_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Add_grey_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Add_grey_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_border_color_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_border_color_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Close_12x_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close_12x_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Search_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Search_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Paste_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Paste_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="NewFile_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NewFile_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ic_fast_rewind_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ic_fast_rewind_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ic_save_black_18dp_1x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ic_save_black_18dp_1x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SaveAs_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SaveAs_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -23,32 +23,18 @@ namespace DatabaseManagementOperationsLibrary
 
         public DataSet Ds
         {
-            get
-            {
-                return ds;
-            }
-
-            set
-            {
-                ds = value;
-            }
+            get { return ds; }
+            set { ds = value; }
         }
 
         public DatabaseOperations Db
         {
-            get
-            {
-                return db;
-            }
-
-            set
-            {
-                db = value;
-            }
+            get { return db; }
+            set { db = value; }
         }
 
         public DBPagination(DatabaseOperations db, DataGridView datagrid, NumericUpDown itemPerPageUpDown, NumericUpDown pageSelector)
-        {            
+        {
             this.db = db;
             this.datagrid = datagrid;
             this.itemPerPageUpDown = itemPerPageUpDown;
@@ -88,7 +74,7 @@ namespace DatabaseManagementOperationsLibrary
             // Select only the n records.
             strSql = "SELECT TOP " + pageSize +
                 " * FROM " + tableName + " WHERE ID NOT IN " +
-                "(SELECT TOP " + intSkip + " ID FROM " + tableName +")";
+                "(SELECT TOP " + intSkip + " ID FROM " + tableName + ")";
 
             sqlPage = new SqlConnection(db.StrConn);
 

@@ -31,10 +31,18 @@ namespace OfficeEquipMgmtApp
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
+            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sortItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,37 +55,34 @@ namespace OfficeEquipMgmtApp
             this.statusStripA = new System.Windows.Forms.StatusStrip();
             this.stsstrplbl_currentSort = new System.Windows.Forms.ToolStripStatusLabel();
             this.stsstrplbl_currentSortDirection = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbl_Pages = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbl_RecordCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.ttip_optionHints = new System.Windows.Forms.ToolTip(this.components);
-            this.btn_forward = new System.Windows.Forms.Button();
+            this.btn_Last = new System.Windows.Forms.Button();
+            this.btn_First = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
-            this.saveBtn = new System.Windows.Forms.Button();
+            this.btn_forward = new System.Windows.Forms.Button();
             this.btn_Delete = new System.Windows.Forms.Button();
+            this.saveBtn = new System.Windows.Forms.Button();
             this.calendarColumn1 = new DatabaseManagementOperationsLibrary.CalendarColumn();
-            this.grpbx_options = new System.Windows.Forms.GroupBox();
+            this.grpbx_Actions = new System.Windows.Forms.GroupBox();
             this.itemPerPageUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.pageSelector = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.col_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Condition = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.col_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrd_equipment)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStripA.SuspendLayout();
-            this.grpbx_options.SuspendLayout();
+            this.grpbx_Actions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dtgrd_equipment
@@ -87,14 +92,14 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.AllowUserToResizeColumns = false;
             this.dtgrd_equipment.AllowUserToResizeRows = false;
             this.dtgrd_equipment.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dtgrd_equipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_equipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_ID,
@@ -105,25 +110,25 @@ namespace OfficeEquipMgmtApp
             this.col_Department,
             this.col_Manufacturer,
             this.col_date_of_purchase});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle8;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dtgrd_equipment.Location = new System.Drawing.Point(185, 32);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dtgrd_equipment.RowTemplate.Height = 28;
             this.dtgrd_equipment.Size = new System.Drawing.Size(680, 377);
             this.dtgrd_equipment.TabIndex = 1;
@@ -133,6 +138,76 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
             this.dtgrd_equipment.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dtgrd_equipment_DataError);
             this.dtgrd_equipment.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_equipment_EditingControlShowing);
+            // 
+            // col_ID
+            // 
+            this.col_ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.col_ID.DataPropertyName = "ID";
+            this.col_ID.HeaderText = "ID";
+            this.col_ID.Name = "col_ID";
+            this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.col_ID.Width = 43;
+            // 
+            // col_Name
+            // 
+            this.col_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Name.DataPropertyName = "Name";
+            this.col_Name.HeaderText = "Name";
+            this.col_Name.Name = "col_Name";
+            this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_Name.Width = 60;
+            // 
+            // col_Condition
+            // 
+            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Condition.DataPropertyName = "Condition";
+            this.col_Condition.HeaderText = "Condition";
+            this.col_Condition.Name = "col_Condition";
+            this.col_Condition.Width = 57;
+            // 
+            // col_Quantity
+            // 
+            this.col_Quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Quantity.DataPropertyName = "Quantity";
+            this.col_Quantity.HeaderText = "Quantity";
+            this.col_Quantity.Name = "col_Quantity";
+            this.col_Quantity.Width = 71;
+            // 
+            // col_Price
+            // 
+            this.col_Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Price.DataPropertyName = "Price";
+            this.col_Price.HeaderText = "Price";
+            this.col_Price.Name = "col_Price";
+            this.col_Price.Width = 56;
+            // 
+            // col_Department
+            // 
+            this.col_Department.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Department.DataPropertyName = "Department";
+            this.col_Department.HeaderText = "Department";
+            this.col_Department.MaxInputLength = 5;
+            this.col_Department.Name = "col_Department";
+            this.col_Department.Width = 87;
+            // 
+            // col_Manufacturer
+            // 
+            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_Manufacturer.DataPropertyName = "Manufacturer";
+            this.col_Manufacturer.HeaderText = "Manufacturer";
+            this.col_Manufacturer.Items.AddRange(new object[] {
+            "Manuf 1",
+            "Manuf 2"});
+            this.col_Manufacturer.Name = "col_Manufacturer";
+            this.col_Manufacturer.Width = 76;
+            // 
+            // col_date_of_purchase
+            // 
+            this.col_date_of_purchase.DataPropertyName = "Date of Purchase";
+            this.col_date_of_purchase.HeaderText = "Date of Purchase";
+            this.col_date_of_purchase.Name = "col_date_of_purchase";
+            this.col_date_of_purchase.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.col_date_of_purchase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // menuStrip1
             // 
@@ -221,7 +296,9 @@ namespace OfficeEquipMgmtApp
             this.statusStripA.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStripA.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stsstrplbl_currentSort,
-            this.stsstrplbl_currentSortDirection});
+            this.stsstrplbl_currentSortDirection,
+            this.lbl_Pages,
+            this.lbl_RecordCount});
             this.statusStripA.Location = new System.Drawing.Point(0, 419);
             this.statusStripA.Name = "statusStripA";
             this.statusStripA.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
@@ -241,45 +318,69 @@ namespace OfficeEquipMgmtApp
             this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(110, 17);
             this.stsstrplbl_currentSortDirection.Text = "Sorting Direction: - ";
             // 
-            // btn_forward
+            // lbl_Pages
             // 
-            this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
-            this.btn_forward.Location = new System.Drawing.Point(137, 339);
-            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_forward.Name = "btn_forward";
-            this.btn_forward.Size = new System.Drawing.Size(40, 40);
-            this.btn_forward.TabIndex = 11;
-            this.ttip_optionHints.SetToolTip(this.btn_forward, "Save the changes you made to the database.");
-            this.btn_forward.UseVisualStyleBackColor = true;
-            this.btn_forward.Click += new System.EventHandler(this.btn_forward_Click);
+            this.lbl_Pages.Name = "lbl_Pages";
+            this.lbl_Pages.Size = new System.Drawing.Size(99, 17);
+            this.lbl_Pages.Text = "Number of Pages";
+            // 
+            // lbl_RecordCount
+            // 
+            this.lbl_RecordCount.Name = "lbl_RecordCount";
+            this.lbl_RecordCount.Size = new System.Drawing.Size(110, 17);
+            this.lbl_RecordCount.Text = "Number of Records";
+            // 
+            // btn_Last
+            // 
+            this.btn_Last.Location = new System.Drawing.Point(144, 32);
+            this.btn_Last.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Last.Name = "btn_Last";
+            this.btn_Last.Size = new System.Drawing.Size(24, 24);
+            this.btn_Last.TabIndex = 18;
+            this.btn_Last.Text = "L";
+            this.ttip_optionHints.SetToolTip(this.btn_Last, "Go to Last Page");
+            this.btn_Last.UseVisualStyleBackColor = true;
+            this.btn_Last.Click += new System.EventHandler(this.btn_Last_Click);
+            // 
+            // btn_First
+            // 
+            this.btn_First.Location = new System.Drawing.Point(0, 32);
+            this.btn_First.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_First.Name = "btn_First";
+            this.btn_First.Size = new System.Drawing.Size(24, 24);
+            this.btn_First.TabIndex = 19;
+            this.btn_First.Text = "F";
+            this.ttip_optionHints.SetToolTip(this.btn_First, "Go to First Page");
+            this.btn_First.UseVisualStyleBackColor = true;
+            this.btn_First.Click += new System.EventHandler(this.btn_First_Click);
             // 
             // btn_back
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
-            this.btn_back.Location = new System.Drawing.Point(11, 339);
+            this.btn_back.Location = new System.Drawing.Point(32, 32);
             this.btn_back.Margin = new System.Windows.Forms.Padding(4);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(40, 40);
+            this.btn_back.Size = new System.Drawing.Size(24, 24);
             this.btn_back.TabIndex = 10;
-            this.ttip_optionHints.SetToolTip(this.btn_back, "Save the changes you made to the database.");
+            this.ttip_optionHints.SetToolTip(this.btn_back, "Go to Previous Page");
             this.btn_back.UseVisualStyleBackColor = true;
             this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
-            // saveBtn
+            // btn_forward
             // 
-            this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
-            this.saveBtn.Location = new System.Drawing.Point(8, 16);
-            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(40, 40);
-            this.saveBtn.TabIndex = 8;
-            this.ttip_optionHints.SetToolTip(this.saveBtn, "Save the changes you made to the database.");
-            this.saveBtn.UseVisualStyleBackColor = true;
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
+            this.btn_forward.Location = new System.Drawing.Point(112, 32);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_forward.Name = "btn_forward";
+            this.btn_forward.Size = new System.Drawing.Size(24, 24);
+            this.btn_forward.TabIndex = 11;
+            this.ttip_optionHints.SetToolTip(this.btn_forward, "Go to Next Page");
+            this.btn_forward.UseVisualStyleBackColor = true;
+            this.btn_forward.Click += new System.EventHandler(this.btn_forward_Click);
             // 
             // btn_Delete
             // 
-            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
+            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.DeleteTableRow_16x;
             this.btn_Delete.Location = new System.Drawing.Point(56, 16);
             this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Delete.Name = "btn_Delete";
@@ -289,6 +390,18 @@ namespace OfficeEquipMgmtApp
             this.btn_Delete.UseVisualStyleBackColor = true;
             this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
+            // saveBtn
+            // 
+            this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.Save_16x;
+            this.saveBtn.Location = new System.Drawing.Point(8, 16);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(40, 40);
+            this.saveBtn.TabIndex = 8;
+            this.ttip_optionHints.SetToolTip(this.saveBtn, "Save the changes you made to the database.");
+            this.saveBtn.UseVisualStyleBackColor = true;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
             // calendarColumn1
             // 
             this.calendarColumn1.DataPropertyName = "Date of Purchase";
@@ -297,22 +410,23 @@ namespace OfficeEquipMgmtApp
             this.calendarColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.calendarColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
-            // grpbx_options
+            // grpbx_Actions
             // 
-            this.grpbx_options.Controls.Add(this.btn_Delete);
-            this.grpbx_options.Controls.Add(this.saveBtn);
-            this.grpbx_options.Location = new System.Drawing.Point(9, 38);
-            this.grpbx_options.Margin = new System.Windows.Forms.Padding(2);
-            this.grpbx_options.Name = "grpbx_options";
-            this.grpbx_options.Padding = new System.Windows.Forms.Padding(2);
-            this.grpbx_options.Size = new System.Drawing.Size(168, 64);
-            this.grpbx_options.TabIndex = 9;
-            this.grpbx_options.TabStop = false;
-            this.grpbx_options.Text = "Options";
+            this.grpbx_Actions.Controls.Add(this.btn_Delete);
+            this.grpbx_Actions.Controls.Add(this.saveBtn);
+            this.grpbx_Actions.Location = new System.Drawing.Point(8, 24);
+            this.grpbx_Actions.Margin = new System.Windows.Forms.Padding(2);
+            this.grpbx_Actions.Name = "grpbx_Actions";
+            this.grpbx_Actions.Padding = new System.Windows.Forms.Padding(2);
+            this.grpbx_Actions.Size = new System.Drawing.Size(168, 64);
+            this.grpbx_Actions.TabIndex = 9;
+            this.grpbx_Actions.TabStop = false;
+            this.grpbx_Actions.Text = "Actions";
             // 
             // itemPerPageUpDown
             // 
-            this.itemPerPageUpDown.Location = new System.Drawing.Point(47, 302);
+            this.itemPerPageUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.itemPerPageUpDown.Location = new System.Drawing.Point(0, 0);
             this.itemPerPageUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -324,7 +438,7 @@ namespace OfficeEquipMgmtApp
             0,
             0});
             this.itemPerPageUpDown.Name = "itemPerPageUpDown";
-            this.itemPerPageUpDown.Size = new System.Drawing.Size(89, 20);
+            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 23);
             this.itemPerPageUpDown.TabIndex = 13;
             this.itemPerPageUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemPerPageUpDown.Value = new decimal(new int[] {
@@ -343,27 +457,17 @@ namespace OfficeEquipMgmtApp
             this.label2.TabIndex = 15;
             this.label2.Text = "Items per page:";
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(9, 382);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(168, 23);
-            this.btnRefresh.TabIndex = 12;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
             // pageSelector
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageSelector.Location = new System.Drawing.Point(57, 342);
+            this.pageSelector.Location = new System.Drawing.Point(64, 32);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.pageSelector.Name = "pageSelector";
-            this.pageSelector.Size = new System.Drawing.Size(75, 23);
+            this.pageSelector.Size = new System.Drawing.Size(40, 23);
             this.pageSelector.TabIndex = 14;
             this.pageSelector.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pageSelector.Value = new decimal(new int[] {
@@ -376,33 +480,23 @@ namespace OfficeEquipMgmtApp
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 322);
+            this.label1.Location = new System.Drawing.Point(8, 336);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 13);
+            this.label1.Size = new System.Drawing.Size(122, 13);
             this.label1.TabIndex = 15;
-            this.label1.Text = "# OF RECORDS PER PAGE";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(51, 366);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 13);
-            this.label3.TabIndex = 16;
-            this.label3.Text = "PAGE NUMBER";
+            this.label1.Text = "No. of records per page:";
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
-            this.groupBox1.Location = new System.Drawing.Point(17, 117);
+            this.groupBox1.Location = new System.Drawing.Point(8, 88);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(152, 101);
+            this.groupBox1.Size = new System.Drawing.Size(168, 104);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input Error";
@@ -432,90 +526,39 @@ namespace OfficeEquipMgmtApp
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 0;
             // 
-            // col_ID
+            // panel1
             // 
-            this.col_ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.col_ID.DataPropertyName = "ID";
-            this.col_ID.HeaderText = "ID";
-            this.col_ID.Name = "col_ID";
-            this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_ID.Width = 43;
+            this.panel1.Controls.Add(this.btn_Last);
+            this.panel1.Controls.Add(this.btn_First);
+            this.panel1.Controls.Add(this.btn_back);
+            this.panel1.Controls.Add(this.itemPerPageUpDown);
+            this.panel1.Controls.Add(this.btn_forward);
+            this.panel1.Controls.Add(this.btnRefresh);
+            this.panel1.Controls.Add(this.pageSelector);
+            this.panel1.Location = new System.Drawing.Point(8, 352);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(168, 56);
+            this.panel1.TabIndex = 20;
             // 
-            // col_Name
+            // btnRefresh
             // 
-            this.col_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Name.DataPropertyName = "Name";
-            this.col_Name.HeaderText = "Name";
-            this.col_Name.Name = "col_Name";
-            this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_Name.Width = 60;
-            // 
-            // col_Condition
-            // 
-            this.col_Condition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Condition.DataPropertyName = "Condition";
-            this.col_Condition.HeaderText = "Condition";
-            this.col_Condition.Name = "col_Condition";
-            this.col_Condition.Width = 57;
-            // 
-            // col_Quantity
-            // 
-            this.col_Quantity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Quantity.DataPropertyName = "Quantity";
-            this.col_Quantity.HeaderText = "Quantity";
-            this.col_Quantity.Name = "col_Quantity";
-            this.col_Quantity.Width = 71;
-            // 
-            // col_Price
-            // 
-            this.col_Price.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Price.DataPropertyName = "Price";
-            this.col_Price.HeaderText = "Price";
-            this.col_Price.Name = "col_Price";
-            this.col_Price.Width = 56;
-            // 
-            // col_Department
-            // 
-            this.col_Department.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Department.DataPropertyName = "Department";
-            this.col_Department.HeaderText = "Department";
-            this.col_Department.MaxInputLength = 5;
-            this.col_Department.Name = "col_Department";
-            this.col_Department.Width = 87;
-            // 
-            // col_Manufacturer
-            // 
-            this.col_Manufacturer.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_Manufacturer.DataPropertyName = "Manufacturer";
-            this.col_Manufacturer.HeaderText = "Manufacturer";
-            this.col_Manufacturer.Items.AddRange(new object[] {
-            "Manuf 1",
-            "Manuf 2"});
-            this.col_Manufacturer.Name = "col_Manufacturer";
-            this.col_Manufacturer.Width = 76;
-            // 
-            // col_date_of_purchase
-            // 
-            this.col_date_of_purchase.DataPropertyName = "Date of Purchase";
-            this.col_date_of_purchase.HeaderText = "Date of Purchase";
-            this.col_date_of_purchase.Name = "col_date_of_purchase";
-            this.col_date_of_purchase.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_date_of_purchase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.btnRefresh.Location = new System.Drawing.Point(88, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(80, 23);
+            this.btnRefresh.TabIndex = 12;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // frm_EquipmentEditing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(873, 441);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.pageSelector);
-            this.Controls.Add(this.itemPerPageUpDown);
-            this.Controls.Add(this.btnRefresh);
-            this.Controls.Add(this.btn_forward);
-            this.Controls.Add(this.btn_back);
-            this.Controls.Add(this.grpbx_options);
+            this.Controls.Add(this.grpbx_Actions);
             this.Controls.Add(this.statusStripA);
             this.Controls.Add(this.dtgrd_equipment);
             this.Controls.Add(this.menuStrip1);
@@ -530,11 +573,12 @@ namespace OfficeEquipMgmtApp
             this.menuStrip1.PerformLayout();
             this.statusStripA.ResumeLayout(false);
             this.statusStripA.PerformLayout();
-            this.grpbx_options.ResumeLayout(false);
+            this.grpbx_Actions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pageSelector)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -558,7 +602,7 @@ namespace OfficeEquipMgmtApp
         private ToolTip ttip_optionHints;
         private Button saveBtn;
         private DatabaseManagementOperationsLibrary.CalendarColumn calendarColumn1;
-        private GroupBox grpbx_options;
+        private GroupBox grpbx_Actions;
         private Button btn_back;
         private Button btn_forward;
         private Button btnRefresh;
@@ -567,7 +611,6 @@ namespace OfficeEquipMgmtApp
         private Label label2;
         private Button btn_Delete;
         private Label label1;
-        private Label label3;
         private GroupBox groupBox1;
         private TextBox textBox1;
         private Label label4;
@@ -579,5 +622,10 @@ namespace OfficeEquipMgmtApp
         private DataGridViewTextBoxColumn col_Department;
         private DataGridViewComboBoxColumn col_Manufacturer;
         private DatabaseManagementOperationsLibrary.CalendarColumn col_date_of_purchase;
+        private Button btn_Last;
+        private Button btn_First;
+        private Panel panel1;
+        private ToolStripStatusLabel lbl_Pages;
+        private ToolStripStatusLabel lbl_RecordCount;
     }
 }

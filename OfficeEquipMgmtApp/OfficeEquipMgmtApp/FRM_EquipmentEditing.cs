@@ -32,54 +32,26 @@ namespace OfficeEquipMgmtApp
         #region Properties
         public DatabaseOperations Db
         {
-            get
-            {
-                return db;
-            }
-
-            set
-            {
-                db = value;
-            }
+            get { return db; }
+            set { db = value; }
         }
 
         public DBPagination Page
         {
-            get
-            {
-                return page;
-            }
-
-            set
-            {
-                page = value;
-            }
+            get { return page; }
+            set { page = value; }
         }
 
         public string Filepath
         {
-            get
-            {
-                return filepath;
-            }
-
-            set
-            {
-                filepath = value;
-            }
+            get { return filepath; }
+            set { filepath = value; }
         }
 
         public bool IsNewDB
         {
-            get
-            {
-                return isNewDB;
-            }
-
-            set
-            {
-                isNewDB = value;
-            }
+            get { return isNewDB; }
+            set { isNewDB = value; }
         }
         #endregion
 
@@ -274,6 +246,9 @@ namespace OfficeEquipMgmtApp
             Page.pageSize = (int)itemPerPageUpDown.Value;
             Page.ReCount("Equipment");
             Page.currPage = 0; // do this so the viewport goes to the first page 
+
+            lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
         }
 
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
@@ -351,10 +326,13 @@ namespace OfficeEquipMgmtApp
                     }
 
                     scaleDatagrid(dtgrd_equipment);
-                    page.Db.UpdateEquipDataSet(page.Ds,"Equipment"); // perform necessarry operations to the DB based on the changes in the DS
+                    page.Db.UpdateEquipDataSet(page.Ds, "Equipment"); // perform necessarry operations to the DB based on the changes in the DS
                     page.Ds.Dispose();
                     page.Db.Dispose(true);
                     page.loadPage("Equipment");
+
+                    lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
                 {
@@ -501,8 +479,10 @@ namespace OfficeEquipMgmtApp
         {
             try
             {
-                page.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource,"Equipment");
+                page.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource, "Equipment");
                 Page.ReCount("Equipment");
+                lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+                lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
             }
             catch (Exception)
             {
@@ -560,6 +540,9 @@ namespace OfficeEquipMgmtApp
         {
             Page.ReCount("Equipment");
             Page.currPage = 0;
+            lbl_Pages.Text = page.pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+
         }
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
@@ -586,6 +569,16 @@ namespace OfficeEquipMgmtApp
         internal DataGridView getDGV()
         {
             return dtgrd_equipment;
+        }
+
+        private void btn_First_Click(object sender, EventArgs e)
+        {
+            page.goFirst("Equipment");
+        }
+
+        private void btn_Last_Click(object sender, EventArgs e)
+        {
+            page.goLast("Equipment");
         }
     }
 }

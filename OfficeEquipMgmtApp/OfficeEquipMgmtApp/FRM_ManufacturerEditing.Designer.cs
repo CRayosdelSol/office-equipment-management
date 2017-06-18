@@ -101,7 +101,7 @@
             // 
             // btn_Delete
             // 
-            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_delete_forever_black_18dp_1x;
+            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.DeleteTableRow_16x;
             this.btn_Delete.Location = new System.Drawing.Point(84, 24);
             this.btn_Delete.Margin = new System.Windows.Forms.Padding(6);
             this.btn_Delete.Name = "btn_Delete";
@@ -112,7 +112,7 @@
             // 
             // saveBtn
             // 
-            this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_save_black_18dp_1x;
+            this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.Save_16x;
             this.saveBtn.Location = new System.Drawing.Point(12, 24);
             this.saveBtn.Margin = new System.Windows.Forms.Padding(6);
             this.saveBtn.Name = "saveBtn";

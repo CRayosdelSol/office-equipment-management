@@ -133,9 +133,7 @@ namespace OfficeEquipMgmtApp
                             tempForm.Page.loadPage("Equipment");
                         }
                         catch (Exception)
-                        {
-
-                        }
+                        { }
                     }
                     else if (result == DialogResult.OK && tempForm.IsNewDB == false)
                     {
@@ -178,7 +176,7 @@ namespace OfficeEquipMgmtApp
 
         /// <summary>
         /// Deletes all temp files generated during runtime
-        /// </summary>
+        /// </summary>s
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             try
@@ -200,8 +198,7 @@ namespace OfficeEquipMgmtApp
                 }
             }
             catch (Exception)
-            {
-            }
+            { }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -308,6 +305,11 @@ namespace OfficeEquipMgmtApp
             }
             catch (Exception)
             { }
+        }
+
+        private void btnSaveAs_Click(object sender, EventArgs e)
+        {
+            saveAsToolStripMenuItem_Click(sender, e);
         }
     }
 }

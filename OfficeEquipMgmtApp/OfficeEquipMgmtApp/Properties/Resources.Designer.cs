@@ -63,69 +63,9 @@ namespace OfficeEquipMgmtApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Add_grey_16x {
-            get {
-                object obj = ResourceManager.GetObject("Add_grey_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Add_grey_8x_16x {
-            get {
-                object obj = ResourceManager.GetObject("Add_grey_8x_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Close_12x_16x {
             get {
                 object obj = ResourceManager.GetObject("Close_12x_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Condition_Good {
-            get {
-                object obj = ResourceManager.GetObject("Condition_Good", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Condition_Lost {
-            get {
-                object obj = ResourceManager.GetObject("Condition_Lost", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Condition_NeedsReplacemnet {
-            get {
-                object obj = ResourceManager.GetObject("Condition_NeedsReplacemnet", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Condition_UnderRepair {
-            get {
-                object obj = ResourceManager.GetObject("Condition_UnderRepair", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,39 +103,19 @@ namespace OfficeEquipMgmtApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DeleteTableRow_16x {
+            get {
+                object obj = ResourceManager.GetObject("DeleteTableRow_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Edit_grey_16x {
             get {
                 object obj = ResourceManager.GetObject("Edit_grey_16x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ic_add_black_18dp_1x {
-            get {
-                object obj = ResourceManager.GetObject("ic_add_black_18dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ic_border_color_black_18dp_1x {
-            get {
-                object obj = ResourceManager.GetObject("ic_border_color_black_18dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ic_delete_forever_black_18dp_1x {
-            get {
-                object obj = ResourceManager.GetObject("ic_delete_forever_black_18dp_1x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -216,26 +136,6 @@ namespace OfficeEquipMgmtApp.Properties {
         internal static System.Drawing.Bitmap ic_fast_rewind_black_18dp_1x {
             get {
                 object obj = ResourceManager.GetObject("ic_fast_rewind_black_18dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ic_save_black_18dp_1x {
-            get {
-                object obj = ResourceManager.GetObject("ic_save_black_18dp_1x", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ic_search_black_18dp_1x {
-            get {
-                object obj = ResourceManager.GetObject("ic_search_black_18dp_1x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -156,21 +156,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ic_search_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_border_color_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_add_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_delete_forever_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_system_update_alt_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Resources\icons\" />
   </ItemGroup>
   <ItemGroup>
@@ -222,15 +207,6 @@
     <None Include="Resources\Condition_Good.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Save_16x1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\OpenFolder_16x1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_save_black_18dp_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\ic_fast_rewind_black_18dp_1x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +215,7 @@
   <ItemGroup>
     <Content Include="checklist.ico" />
     <Content Include="Database.ico" />
+    <None Include="Resources\DeleteTableRow_16x.png" />
     <None Include="Resources\SaveAs_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
