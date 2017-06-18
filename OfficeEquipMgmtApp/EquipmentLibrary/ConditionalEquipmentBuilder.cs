@@ -9,35 +9,35 @@ using DatabaseManagementOperationsLibrary;
 
 namespace EquipmentLibrary
 {
-    public class DepartmentEquipmentBuilder : IEquipmentBuilder
+    public class ConditionalEquipmentBuilder:IEquipmentBuilder
     {
-
         SqlDataReader reader;
         SqlConnection sqlConnection;
         SqlCommand sqlComm;
-        string connString, selectCommand, deptName;
+
+        string connString, selectCommand,condition;
         Equipment equip;
-
-
-        public DepartmentEquipmentBuilder(string connectionString,string deptName)
-        {
-            connString = connectionString;
-            equip = Equipment.createEquipment();
-            this.deptName = deptName;
-        }
 
         public Equipment Equip
         {
             get { return equip; }
         }
 
+        public ConditionalEquipmentBuilder(string connString,string condition)
+        {
+            this.connString = connString;
+            this.condition = condition;
+            equip = Equipment.createEquipment();
+        }
+
         public void identifyCondition()
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
+                selectCommand = "SELECT * FROM equip WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
-                sqlComm.Parameters.AddWithValue("@departmentName", deptName);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
                 using (reader = sqlComm.ExecuteReader())
                 {
                     while (reader.Read())
@@ -48,13 +48,32 @@ namespace EquipmentLibrary
             }
         }
 
+        public void identifyDepartment()
+        {
+            using (sqlConnection = new SqlConnection(connString))
+            {
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
+                sqlComm = new SqlCommand(selectCommand, sqlConnection);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
+                using (reader = sqlComm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        equip.DepartmentID = reader["Department"].ToString();
+                    }
+                }
+            }
+        }
+
         public void identifyManufacturer()
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
-                sqlComm.Parameters.AddWithValue("@departmentName", deptName);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
                 using (reader = sqlComm.ExecuteReader())
                 {
                     while (reader.Read())
@@ -69,9 +88,10 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
-                sqlComm.Parameters.AddWithValue("@departmentName", deptName);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
                 using (reader = sqlComm.ExecuteReader())
                 {
                     while (reader.Read())
@@ -86,9 +106,10 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
-                sqlComm.Parameters.AddWithValue("@departmentName", deptName);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
                 using (reader = sqlComm.ExecuteReader())
                 {
                     while (reader.Read())
@@ -99,18 +120,14 @@ namespace EquipmentLibrary
             }
         }
 
-        public void identifyDepartment()
-        {
-            //This is not to be implemented here.
-        }
-
         public void nameItem()
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
-                sqlComm.Parameters.AddWithValue("@departmentName", deptName);
+                sqlComm.Parameters.AddWithValue("@condition", condition);
+
                 using (reader = sqlComm.ExecuteReader())
                 {
                     while (reader.Read())

@@ -13,6 +13,7 @@ namespace EquipmentLibrary
         void identifyPrice();
         void identifyManufacturer();
         void identifyQuantity();
-        Equipment Equipment { get; }
+        void identifyDepartment();
+        Equipment Equip { get; }
     }
 }

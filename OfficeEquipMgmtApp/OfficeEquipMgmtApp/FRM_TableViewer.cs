@@ -109,7 +109,7 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_Tables.RowHeadersWidth : 0) + 3;
         }
 
-        public void summarizeEquipmentConditions()
+        public void summarizeEquipmentPerDepartment()
         {
             List<string> DepartmentList = new List<string>();
 
@@ -142,29 +142,55 @@ namespace OfficeEquipMgmtApp
         public void DisplayEquipmentCondtionSummary()
         {
             int good = 0, underRepair = 0, needsReplacement = 0, lost = 0;
-            using (SqlConnection sqlConnection = new SqlConnection(connString))
-            {
-                sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM @table", sqlConnection);
-                sqlCommand.Parameters.AddWithValue("@table", "Equipment");
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        department = new Department();
-                        manufacturer = new Manufacturer(dataReader["Manufacturer"].ToString());
-                        equipment = new Equipment(manufacturer, Convert.ToInt32(dataReader["Quantity"]), department.DepartmentID, Convert.ToDecimal(dataReader["Price"]), dataReader["Name"].ToString(), Convert.ToInt32(dataReader["ID"]), dataReader["Condition"].ToString());
-                    }
 
-                    if (equipment.Condition == "Good")
+            foreach (DataGridViewRow row in dtgrd_Tables.Rows)
+            {
+                IEquipmentBuilder equipmentBuilder = new ConditionalEquipmentBuilder(connString,row.Cells[2].Value.ToString());
+                buildConditionSpecificEquipment(equipmentBuilder);
+                if (equipmentBuilder.Equip.Condition == "Good")
+                {
+                    good++;
+                }
+                else if (equipmentBuilder.Equip.Condition == "Under Repair")
+                {
+                    underRepair++;
+                }
+                else if (equipmentBuilder.Equip.Condition == "Needs Replacement")
+                {
+                    needsReplacement++;
+                }
+                else
+                {
+                    lost++;
+                }
+
+            }
+
+            lbl_GenGoodCondition.Text = good.ToString();
+            lbl_GenLostCondition.Text = lost.ToString();
+            lbl_GenNeedsReplacementCondition.Text = needsReplacement.ToString();
+            lbl_GenUnderRepairCondition.Text = underRepair.ToString();
+        }
+
+        public void DisplayDepartmentEquipmentConditionSummary()
+        {
+            int good = 0, underRepair = 0, needsReplacement = 0, lost = 0;
+
+            foreach (DataGridViewRow row in dtgrd_Tables.Rows)
+            {
+                if (row.Cells[5].Value.ToString() == dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString())
+                {
+                    IEquipmentBuilder equipmentBuilder = new DepartmentEquipmentBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString());
+                    buildDepartmentSpecificEquipment(equipmentBuilder);
+                    if (equipmentBuilder.Equip.Condition == "Good")
                     {
                         good++;
                     }
-                    else if (equipment.Condition == "Under Repair")
+                    else if (equipmentBuilder.Equip.Condition == "Under Repair")
                     {
                         underRepair++;
                     }
-                    else if (equipment.Condition == "Needs Replacement")
+                    else if (equipmentBuilder.Equip.Condition == "Needs Replacement")
                     {
                         needsReplacement++;
                     }
@@ -175,74 +201,7 @@ namespace OfficeEquipMgmtApp
                 }
             }
 
-            lbl_GenGoodCondition.Text = good.ToString();
-            lbl_GenLostCondition.Text = lost.ToString();
-            lbl_GenNeedsReplacementCondition.Text = needsReplacement.ToString();
-            lbl_GenUnderRepairCondition.Text = underRepair.ToString();
-
-        }
-
-        public void DisplayDepartmentEquipmentConditionSummary()
-        {
-            List<string> DepartmentList = new List<string>();
-            int good=0, underRepair=0, needsReplacement=0, lost=0;
-            using (SqlConnection sqlConnection = new SqlConnection(connString))
-            {
-                sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM @table", sqlConnection);
-                sqlCommand.Parameters.AddWithValue("@table", "departments");
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        department = new Department(dataReader["Name"].ToString());
-                        DepartmentList.Add(department.DepartmentID);
-                    }
-                }
-            }
-            //    foreach (string departmentName in DepartmentList)
-            //    {
-            //        sqlCommand = new SqlCommand("SELECT * FROM @table", sqlConnection);
-            //        sqlCommand.Parameters.AddWithValue("@table", "equipment");
-            //        using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-            //        {
-            //            while (dataReader.Read())
-            //            {
-            //                if (departmentName == dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString())
-            //                {
-            //                    department = new Department(departmentName);
-            //                    manufacturer = new Manufacturer(dataReader["Manufacturer"].ToString());
-            //                    equipment = new Equipment(manufacturer, Convert.ToInt32(dataReader["Quantity"]), departmentName, Convert.ToDecimal(dataReader["Price"]), dataReader["Name"].ToString(), Convert.ToInt32(dataReader["ID"]), dataReader["Condition"].ToString());
-
-            //                    if (equipment.Condition == "Good")
-            //                    {
-            //                        good++;
-            //                    }
-            //                    else if (equipment.Condition == "Under Repair")
-            //                    {
-            //                        underRepair++;
-            //                    }
-            //                    else if (equipment.Condition == "Needs Replacement")
-            //                    {
-            //                        needsReplacement++;
-            //                    }
-            //                    else
-            //                    {
-            //                        lost++;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-                foreach(string departmentName in DepartmentList)
-                {
-                    IEquipmentBuilder equipmentBuilder = new DepartmentEquipmentBuilder(connString, "", departmentName);
-
-                }
-
-            grpbx_summaryPerDept.Text = department.DepartmentID;
+            grpbx_summaryPerDept.Text = dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString();
             lbl_GoodCondition.Text = good.ToString();
             lbl_UnderRepairCondition.Text = underRepair.ToString();
             lbl_LostCondition.Text = lost.ToString();
@@ -258,6 +217,16 @@ namespace OfficeEquipMgmtApp
             equipmentBuilder.identifyQuantity();
         }
 
+        public void buildConditionSpecificEquipment(IEquipmentBuilder equipmentBuilder)
+        {
+            equipmentBuilder.identifyCondition();
+            equipmentBuilder.identifyManufacturer();
+            equipmentBuilder.identifyPrice();
+            equipmentBuilder.nameItem();
+            equipmentBuilder.identifyQuantity();
+            equipmentBuilder.identifyDepartment();
+        }
+
         public void establishManufacturingCompany(IManufacturerBuilder manufacturerBuilder)
         {
             manufacturerBuilder.establishUserCommunicationMethods();
@@ -266,12 +235,13 @@ namespace OfficeEquipMgmtApp
 
         public void displayManufacturerInformation()
         {
-            IManufacturerBuilder manufacturerBuilder = null;
-            manufacturerBuilder = new EquipmentManufacturerBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[6].Value.ToString());
+            IManufacturerBuilder manufacturerBuilder = new EquipmentManufacturerBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[6].Value.ToString());
+            establishManufacturingCompany(manufacturerBuilder);
 
             lbl_ManufName.Text = manufacturerBuilder.Manufacturer.Name;
             lbl_Manufemail.Text = manufacturerBuilder.Manufacturer.Email_add;
             lbl_CountryOfOrigin.Text = manufacturerBuilder.Manufacturer.MnfctrrAdd.Country;
+            lbl_ManufContactNumber.Text = manufacturerBuilder.Manufacturer.Contact_number;
         }
 
         private void dtgrd_Tables_SelectionChanged(object sender, EventArgs e)
@@ -285,7 +255,7 @@ namespace OfficeEquipMgmtApp
 
         private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            summarizeEquipmentConditions();
+            summarizeEquipmentPerDepartment();
         }
 
         private void FRM_TableViewer_Load(object sender, EventArgs e)
