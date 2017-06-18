@@ -7,7 +7,8 @@
     {
         Manufacturer manufacturer;
         int quantity;
-        double departmentID;
+        string departmentID;
+        static Equipment equipmentInstance;
 
         /// <summary>
         /// Creates an instance of the equipment class
@@ -18,11 +19,22 @@
         /// <param name="price">How much money was spent to buy this piece of equipment.</param>
         /// <param name="equipmentName">The name of this equipment.</param>
         /// <param name="equipmentID">The serial number or model number of this item.</param>
-        public Equipment(Manufacturer manufacturer, int quantity, double departmentID, decimal price, string equipmentName, string equipmentID) : base(price, equipmentName, equipmentID)
+        public Equipment(Manufacturer manufacturer, int quantity, string departmentID, decimal price, string equipmentName, int equipmentID, string equipmentCondition) : base(price, equipmentName, equipmentID, equipmentCondition)
         {
             this.manufacturer = manufacturer;
             this.quantity = quantity;
             this.departmentID = departmentID;
         }
+        
+        public static Equipment createEquipment(Manufacturer manufacturer, int quantity, string departmentID, decimal price, string equipmentName, int equipmentID, string equipmentCondition)
+        {
+            if(equipmentInstance == null)
+            {
+                equipmentInstance = new Equipment(manufacturer,quantity,departmentID,price,equipmentName,equipmentID,equipmentCondition);
+            }
+
+            return equipmentInstance;
+        }
+
     }
 }

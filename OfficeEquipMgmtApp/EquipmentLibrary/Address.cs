@@ -21,6 +21,11 @@
             zipcode = zip;
         }
 
+        /// <summary>
+        /// Creates an instance of the address class
+        /// </summary>
+        public Address() { }
+
         public string City
         {
             get

@@ -1,26 +1,25 @@
 ﻿using System;
-using System.IO;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
+using System.Data.Entity;
 using DatabaseManagementOperationsLibrary;
-using EquipmentLibrary;
 
 namespace OfficeEquipMgmtApp
 {
-    public partial class frm_EquipmentEditing : Form
+    public partial class FRM_ManufacturerEditing : Form
     {
         Main mainForm;
         bool isNewDB;
-        ConditionList condList = new ConditionList();
 
         // Database variables
-        SqlDataAdapter dataAdapter;
-        DataSet ds;
         DatabaseOperations db;
         string dir;
         string filepath;
@@ -83,69 +82,61 @@ namespace OfficeEquipMgmtApp
         }
         #endregion
 
-        /// <summary>
-        /// Default form opening behavior, used for creating new databases
-        /// </summary>
-        internal frm_EquipmentEditing()
+        public FRM_ManufacturerEditing()
         {
             InitializeComponent();
-            isNewDB = true;
         }
 
-        /// <summary>
-        /// Called when opening an already existing DB 
-        /// </summary>
-        /// <param name="filepath"></param>
-        internal frm_EquipmentEditing(string filepath)
+        public FRM_ManufacturerEditing(string filepath)
         {
             InitializeComponent();
             isNewDB = false;
             this.filepath = filepath;
         }
 
+        public void scaleDatagrid(DataGridView grid)
+        {
+            //Scale the datagridview so that all of its contents are properly shown to the user.
+            grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
+            (grid.RowHeadersVisible ? grid.RowHeadersWidth : 0) + 3;
+        }
+
         #region Sorting
         private void ascendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Ascending);
+            this.dtgrd_manufacturer.Sort(this.dtgrd_manufacturer.Columns["Name"], ListSortDirection.Ascending);
             stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
             stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
         }
 
         private void descendingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Descending);
+            this.dtgrd_manufacturer.Sort(this.dtgrd_manufacturer.Columns["Name"], ListSortDirection.Descending);
             stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
             stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
         }
 
         private void conditionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Condition"], ListSortDirection.Descending);
+            this.dtgrd_manufacturer.Sort(this.dtgrd_manufacturer.Columns["Condition"], ListSortDirection.Descending);
             stsstrplbl_currentSort.Text = "Currently Sorted by: Condition";
             stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
         }
 
         private void ascendingToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Ascending);
+            this.dtgrd_manufacturer.Sort(this.dtgrd_manufacturer.Columns["Manufacturer"], ListSortDirection.Ascending);
             stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
             stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
         }
 
         private void descendingToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Descending);
+            this.dtgrd_manufacturer.Sort(this.dtgrd_manufacturer.Columns["Manufacturer"], ListSortDirection.Descending);
             stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
             stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
         }
         #endregion
-
-        public void scaleDatagrid(DataGridView grid)
-        {
-            //Scale the datagridview so that all of its contents are properly shown to the user.
-            grid.Width = grid.Columns.Cast<DataGridViewColumn>().Sum(x => x.Width) +
-            (grid.RowHeadersVisible ? dtgrd_equipment.RowHeadersWidth : 0) + 3;
-        }
 
         /// <summary>
         /// Opens an existing mdf file, called by the form constructor with 1 overload
@@ -160,17 +151,10 @@ namespace OfficeEquipMgmtApp
             Db = new DatabaseOperations(connString);
             Db.OpenDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            page = new DBPagination(db, dtgrd_manufacturer, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             page.currPage = 0; // make sure the form shows the first page
 
             Text = Path.GetFileNameWithoutExtension(filepath);
-
-            DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
-            conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
-            conditionCol.DefaultCellStyle.NullValue = condList.conditionList[0].Value;
-            conditionCol.DisplayMember = "Value";
-            conditionCol.ValueMember = "Value";
-            conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
 
             try
             {
@@ -201,36 +185,29 @@ namespace OfficeEquipMgmtApp
         public void initializeDefGrid(DataGridView grid)
         {
             mainForm = ((Main)MdiParent);
-            dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
-            filepath = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
+            //dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
+            //filepath = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
 
-            Text = string.Format("New Database {0}", mainForm.fileCounter);
+            //Text = string.Format("New Database {0}", mainForm.fileCounter);
 
-            // Create temporary directory and make it hidden
-            DirectoryInfo dirInf = Directory.CreateDirectory(dir);
-            dirInf.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            //// Create temporary directory and make it hidden
+            //DirectoryInfo dirInf = Directory.CreateDirectory(dir);
+            //dirInf.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
 
             // DB Connection Setup
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + filepath + "; Integrated Security=True;Connect Timeout=30";
             Db = new DatabaseOperations(connString);
             Db.CreateDatabase(filepath);
 
-            page = new DBPagination(db, dtgrd_equipment, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
+            page = new DBPagination(db, dtgrd_manufacturer, itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             page.currPage = 0; // make sure the form shows the first page
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
-
-            DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
-            conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
-            conditionCol.DefaultCellStyle.NullValue = condList.conditionList[0].Value;
-            conditionCol.DisplayMember = "Value";
-            conditionCol.ValueMember = "Value";
-            conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY","Name","VARCHAR(255)","Email","VARCHAR(255)","Number","VARCHAR(255)","Country","VARCHAR(255)","City", "VARCHAR(255)","Zip", "VARCHAR(255)");
 
             try
             {
-                page.loadPage("Equipment"); // database binding
+                page.loadPage("Manufacturer"); // database binding
             }
             catch (Exception e)
             {
@@ -250,20 +227,12 @@ namespace OfficeEquipMgmtApp
             Db.Dispose(true);
         }
 
-        /// <summary>
-        /// Determines what type of operation was started by the user
-        /// </summary>
-        private void frm_EquipmentView_Load(object sender, EventArgs e)
+        private void FRM_ManufacturerEditing_Load(object sender, EventArgs e)
         {
-            condList.conditionList.Add(new Condition { value = "Good", priority = 1 });
-            condList.conditionList.Add(new Condition { value = "Under Repair", priority = 2 });
-            condList.conditionList.Add(new Condition { value = "Needs Replacement", priority = 3 });
-            condList.conditionList.Add(new Condition { value = "Lost", priority = 4 });
-
             if (isNewDB)
-                initializeDefGrid(dtgrd_equipment);
+                initializeDefGrid(dtgrd_manufacturer);
             else
-                initalizeDataGrid(dtgrd_equipment);
+                initalizeDataGrid(dtgrd_manufacturer);
 
             //Scale the form so that all of its contents are shown properly.
             this.MinimumSize = new Size(this.Width, this.Height);
@@ -276,21 +245,17 @@ namespace OfficeEquipMgmtApp
             Page.currPage = 0; // do this so the viewport goes to the first page 
         }
 
-        private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
+        private void FRM_ManufacturerEditing_FormClosing(object sender, FormClosingEventArgs e)
         {
             Db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
 
             if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
             {
-                var close = MessageBox.Show("Do you want to discard changes?", "Unsaved Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var close = MessageBox.Show("Do you want to discard changes?", "Unsaved Table", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (close == DialogResult.Yes)
                 {
-                    if (File.Exists(filepath) && isNewDB == true) // deletes temp files generated along with the mdf in case it exists
-                    {
-                        File.Delete(filepath);
-                        File.Delete(dir + string.Format("temp_{0}_log.ldf", mainForm.fileCounter));
-                    }
+                    db.DropTable("Manufacturer");
                     e.Cancel = false;
                 }
                 else
@@ -298,82 +263,46 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-        private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dtgrd_manufacturer_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            scaleDatagrid(dtgrd_equipment);
-            /*If the user fills up one cell in a row, assume that he'll fill everything up. 
-             if that's the case then DATE OF PURCHASE column will have a value of today's date.*/
-            foreach (DataGridViewRow gridRow in dtgrd_equipment.Rows)
-            {
-                if (gridRow.Cells[7].Value == null || gridRow.Cells[7].Value == DBNull.Value || String.IsNullOrWhiteSpace(gridRow.Cells[7].Value.ToString()))
-                {
-                    gridRow.Cells[7].Value = DateTime.Now;
-                }
-            }
+            scaleDatagrid(dtgrd_manufacturer);
         }
 
         #region Page Navigation
-        private void btn_back_Click(object sender, EventArgs e)
-        {
-            Page.goPrevious("Equipment");
-        }
-
-        private void btn_forward_Click(object sender, EventArgs e)
-        {
-            Page.goNext("Equipment");
-        }
-
-        private void pageSelector_ValueChanged(object sender, EventArgs e)
-        {
-            Page.currPage = (int)pageSelector.Value - 1;
-            Page.loadPage("Equipment");
-        }
         #endregion
-
-        private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            Page.pageSize = (int)itemPerPageUpDown.Value;
-        }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
-            // TODO: Add multiple row deletion dialog box
-
-            DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_manufacturer.Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialogResult == DialogResult.Yes)
             {
                 try
                 {
-                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
-                    {
-                        page.Ds.Tables["Equipment"].Rows[index].Delete();
-                    }
-
-                    scaleDatagrid(dtgrd_equipment);
-                    page.Db.UpdateEquipDataSet(page.Ds,"Equipment"); // perform necessarry operations to the DB based on the changes in the DS
+                    page.Ds.Tables["Manufacturer"].Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Delete();
+                    scaleDatagrid(dtgrd_manufacturer);
+                    page.Db.UpdateEquipDataSet(page.Ds, "Manufacturer"); // perform necessarry operations to the DB based on the changes in the DS
                     page.Ds.Dispose();
                     page.Db.Dispose(true);
-                    page.loadPage("Equipment");
+                    page.loadPage("Manufacturer");
                 }
                 catch (Exception err)
                 {
                     MessageBox.Show(err.Message);
+
                 }
             }
         }
 
-        private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void dtgrd_manufacturer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            //TODO: Add option to show row colors based on condtition of item
-
             //Draw only grid content cells not ColumnHeader cells nor RowHeader cells
             if (e.ColumnIndex > -1 & e.RowIndex > -1)
             {
                 //Pen for left and top borders
                 using (var backGroundPen = new Pen(e.CellStyle.BackColor, 1))
                 //Pen for bottom and right borders
-                using (var gridlinePen = new Pen(dtgrd_equipment.GridColor, 1))
+                using (var gridlinePen = new Pen(dtgrd_manufacturer.GridColor, 1))
                 //Pen for selected cell borders
                 using (var selectedPen = new Pen(Color.ForestGreen, 1))
                 {
@@ -384,7 +313,7 @@ namespace OfficeEquipMgmtApp
 
 
                     //draw selected cells here
-                    if (this.dtgrd_equipment[e.ColumnIndex, e.RowIndex].Selected)
+                    if (this.dtgrd_manufacturer[e.ColumnIndex, e.RowIndex].Selected)
                     {
                         //Paint all parts except borders.
                         e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
@@ -410,13 +339,13 @@ namespace OfficeEquipMgmtApp
                             e.Graphics.DrawLine(backGroundPen, topLeftPoint, bottomleftPoint);
 
                         //Bottom border of last row cells should be in gridLine color
-                        if (e.RowIndex == dtgrd_equipment.RowCount - 1)
+                        if (e.RowIndex == dtgrd_manufacturer.RowCount - 1)
                             e.Graphics.DrawLine(gridlinePen, bottomRightPoint, bottomleftPoint);
                         else  //Bottom border of non-last row cells should be in background color
                             e.Graphics.DrawLine(backGroundPen, bottomRightPoint, bottomleftPoint);
 
                         //Right border of last column cells should be in gridLine color
-                        if (e.ColumnIndex == dtgrd_equipment.ColumnCount - 1)
+                        if (e.ColumnIndex == dtgrd_manufacturer.ColumnCount - 1)
                             e.Graphics.DrawLine(gridlinePen, bottomRightPoint, topRightPoint);
                         else //Right border of non-last column cells should be in background color
                             e.Graphics.DrawLine(backGroundPen, bottomRightPoint, topRightPoint);
@@ -436,72 +365,11 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-        private void dtgrd_equipment_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            if (e.RowIndex == dtgrd_equipment.NewRowIndex)
-                return;
-
-            if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Name")
-            {
-                if (e.FormattedValue.ToString().Length < 2)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Item name must at least be 2 characters long!";
-                    e.Cancel = true;
-                }
-            }
-
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Department")
-            {
-                if (e.FormattedValue.ToString().Length <= 0)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Assigned Department must not be empty!";
-                    e.Cancel = true;
-                }
-            }
-
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Condition")
-            {
-                if (e.FormattedValue.ToString() == String.Empty)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
-                    e.Cancel = true;
-                }
-            }
-
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Manufacturer")
-            {
-                if (e.FormattedValue.ToString() == String.Empty)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
-                    e.Cancel = true;
-                }
-            }
-
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Quantity")
-            {
-                if (e.FormattedValue.ToString() == DBNull.Value.ToString() || int.Parse(e.FormattedValue.ToString()) < 0)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Item Quantity cannot be negative or empty!";
-                    e.Cancel = true;
-                }
-            }
-
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Price")
-            {
-                if (e.FormattedValue.ToString() == DBNull.Value.ToString() || e.FormattedValue.ToString() == "0.00")
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Item Price cannot be 0 or empty!";
-                    e.Cancel = true;
-                }
-            }
-
-        }
-
-        internal void saveBtn_Click(object sender, EventArgs e)
+        private void saveBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                page.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource,"Equipment");
+                page.Db.UpdateEquipDataSet((DataSet)dtgrd_manufacturer.DataSource, "Manufacturer");
                 Page.ReCount("Equipment");
             }
             catch (Exception)
@@ -511,7 +379,7 @@ namespace OfficeEquipMgmtApp
             page.Db.Dispose(true);
         }
 
-        private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void dtgrd_manufacturer_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show("Error happened " + e.Context.ToString());
 
@@ -542,10 +410,10 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-        private void dtgrd_equipment_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        private void dtgrd_manufacturer_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             e.Control.KeyPress -= new KeyPressEventHandler(NumericColumn_KeyPress);
-            if (dtgrd_equipment.CurrentCell.ColumnIndex == 4 || dtgrd_equipment.CurrentCell.ColumnIndex == 3)
+            if (dtgrd_manufacturer.CurrentCell.ColumnIndex == 2 || dtgrd_manufacturer.CurrentCell.ColumnIndex == 5)
             {
                 TextBox tb = e.Control as TextBox;
                 if (tb != null)
@@ -567,7 +435,7 @@ namespace OfficeEquipMgmtApp
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
-                //dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[4].ErrorText = "Letters and special characters are not allowed.";
+                //dtgrd_manufacturer.Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Cells[4].ErrorText = "Letters and special characters are not allowed.";
                 groupBox1.Visible = true;
             }
             else
@@ -577,15 +445,36 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-        private void dtgrd_equipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void dtgrd_manufacturer_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             // discard edits made by the user
-            dtgrd_equipment.Rows[e.RowIndex].ErrorText = string.Empty;
+            dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = string.Empty;
         }
 
-        internal DataGridView getDGV()
+        public DataGridView getDGV()
         {
-            return dtgrd_equipment;
+            return dtgrd_manufacturer;
+        }
+
+        private void btn_forward_Click(object sender, EventArgs e)
+        {
+            Page.goNext("Manufacturer");
+        }
+
+        private void btn_back_Click(object sender, EventArgs e)
+        {
+            Page.goPrevious("Manufacturer");
+        }
+
+        private void PageSelector_ValueChanged(object sender, EventArgs e)
+        {
+            Page.currPage = (int)pageSelector.Value - 1;
+            Page.loadPage("Manufacturer");
+        }
+
+        private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Page.pageSize = (int)itemPerPageUpDown.Value;
         }
     }
 }

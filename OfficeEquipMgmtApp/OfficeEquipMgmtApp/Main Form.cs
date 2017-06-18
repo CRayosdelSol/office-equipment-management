@@ -96,6 +96,72 @@ namespace OfficeEquipMgmtApp
                     frm_EquipmentEditing tempform = (frm_EquipmentEditing)ActiveMdiChild;
 
                     tempform.saveBtn_Click(sender, e);
+                    // get the active mdi child and determine if it is an equipment form
+                    frm_EquipmentEditing tempForm = (frm_EquipmentEditing)ActiveMdiChild;
+
+                    if (tempForm.Page.getResultCount("Equipment") == 0)
+                    {
+                        MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
+                    SaveFileDialog save = new SaveFileDialog();
+                    save.Filter = "SQL Server Database Files|*.mdf";
+                    save.Title = "Save Inventory File";
+                    save.FileName = "Equipment_Record";
+
+                    DialogResult result = save.ShowDialog();
+
+                    if (result == DialogResult.OK && tempForm.IsNewDB == true)
+                    {
+                        try
+                        {
+                            if (File.Exists(save.FileName)) // overwrite the existing file
+                            {
+                                File.Delete(save.FileName);
+                                string str = Path.GetFileNameWithoutExtension(save.FileName);
+                                str += "_log.ldf";
+                                string str2 = Path.GetDirectoryName(save.FileName);
+                                File.Delete(str2 + @"\\" + str); // delete the ldf file
+                            }
+                            tempForm.Db.Dispose(true);
+                            File.Move(tempForm.Db.fileName, save.FileName);
+
+                            tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
+                            tempForm.initalizeDataGrid(tempForm.getDGV());
+                            tempForm.Page.ReCount("Equipment");
+                            tempForm.Page.loadPage("Equipment");
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                    else if (result == DialogResult.OK && tempForm.IsNewDB == false)
+                    {
+                        try
+                        {
+                            if (File.Exists(save.FileName)) // overwrite if the file is exisiting
+                            {
+                                File.Delete(save.FileName);
+                                string str = Path.GetFileNameWithoutExtension(save.FileName);
+                                str += "_log.ldf";
+                                string str2 = Path.GetDirectoryName(save.FileName);
+                                File.Delete(str2 + @"\\" + str); // delete the ldf file
+                            }
+                            File.Copy(tempForm.Db.fileName, save.FileName); // copy DB to the new DIR
+                            tempForm.Db.Dispose(true);
+
+                            tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
+                            tempForm.initalizeDataGrid(tempForm.getDGV());
+                            tempForm.Page.ReCount("Equipment");
+                            tempForm.Page.loadPage("Equipment");
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Failed to Save file, are you trying to overwrite a locked DB?", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -175,7 +241,7 @@ namespace OfficeEquipMgmtApp
                     // get the active mdi child and determine if it is an equipment form
                     frm_EquipmentEditing tempForm = (frm_EquipmentEditing)ActiveMdiChild;
 
-                    if (tempForm.Page.getResultCount() == 0)
+                    if (tempForm.Page.getResultCount("Equipment") == 0)
                     {
                         MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
@@ -206,8 +272,8 @@ namespace OfficeEquipMgmtApp
                             tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.Page.ReCount("Equipment");
+                            tempForm.Page.loadPage("Equipment");
                         }
                         catch (Exception)
                         { }
@@ -230,8 +296,8 @@ namespace OfficeEquipMgmtApp
                             tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.Page.ReCount("Equipment");
+                            tempForm.Page.loadPage("Equipment");
                         }
                         catch (Exception)
                         {
