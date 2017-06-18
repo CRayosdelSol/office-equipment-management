@@ -199,48 +199,63 @@ namespace OfficeEquipMgmtApp
                         DepartmentList.Add(department.DepartmentID);
                     }
                 }
-
-                foreach (string departmentName in DepartmentList)
-                {
-                    sqlCommand = new SqlCommand("SELECT * FROM @table", sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("@table", "equipment");
-                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                    {
-                        while (dataReader.Read())
-                        {
-                            if (departmentName == dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString())
-                            {
-                                department = new Department(departmentName);
-                                manufacturer = new Manufacturer(dataReader["Manufacturer"].ToString());
-                                equipment = new Equipment(manufacturer, Convert.ToInt32(dataReader["Quantity"]), departmentName, Convert.ToDecimal(dataReader["Price"]), dataReader["Name"].ToString(), Convert.ToInt32(dataReader["ID"]), dataReader["Condition"].ToString());
-
-                                if (equipment.Condition == "Good")
-                                {
-                                    good++;
-                                }
-                                else if (equipment.Condition == "Under Repair")
-                                {
-                                    underRepair++;
-                                }
-                                else if (equipment.Condition == "Needs Replacement")
-                                {
-                                    needsReplacement++;
-                                }
-                                else
-                                {
-                                    lost++;
-                                }
-                            }
-                        }
-                    }
-                }
             }
+            //    foreach (string departmentName in DepartmentList)
+            //    {
+            //        sqlCommand = new SqlCommand("SELECT * FROM @table", sqlConnection);
+            //        sqlCommand.Parameters.AddWithValue("@table", "equipment");
+            //        using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+            //        {
+            //            while (dataReader.Read())
+            //            {
+            //                if (departmentName == dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString())
+            //                {
+            //                    department = new Department(departmentName);
+            //                    manufacturer = new Manufacturer(dataReader["Manufacturer"].ToString());
+            //                    equipment = new Equipment(manufacturer, Convert.ToInt32(dataReader["Quantity"]), departmentName, Convert.ToDecimal(dataReader["Price"]), dataReader["Name"].ToString(), Convert.ToInt32(dataReader["ID"]), dataReader["Condition"].ToString());
+
+            //                    if (equipment.Condition == "Good")
+            //                    {
+            //                        good++;
+            //                    }
+            //                    else if (equipment.Condition == "Under Repair")
+            //                    {
+            //                        underRepair++;
+            //                    }
+            //                    else if (equipment.Condition == "Needs Replacement")
+            //                    {
+            //                        needsReplacement++;
+            //                    }
+            //                    else
+            //                    {
+            //                        lost++;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+                foreach(string departmentName in DepartmentList)
+                {
+                    IEquipmentBuilder equipmentBuilder = new DepartmentEquipmentBuilder(connString, "", departmentName);
+
+                }
 
             grpbx_summaryPerDept.Text = department.DepartmentID;
             lbl_GoodCondition.Text = good.ToString();
             lbl_UnderRepairCondition.Text = underRepair.ToString();
             lbl_LostCondition.Text = lost.ToString();
             lbl_needsReplacement.Text = needsReplacement.ToString();
+        }
+
+        public void buildDepartmentSpecificEquipment(IEquipmentBuilder equipmentBuilder)
+        {
+            equipmentBuilder.identifyCondition();
+            equipmentBuilder.identifyManufacturer();
+            equipmentBuilder.identifyPrice();
+            equipmentBuilder.nameItem();
+            equipmentBuilder.identifyQuantity();
         }
 
         public void establishManufacturingCompany(IManufacturerBuilder manufacturerBuilder)
