@@ -11,10 +11,9 @@ namespace EquipmentLibrary
         void nameItem();
         void identifyCondition();
         void identifyPrice();
-        void assignUniqueIdentifier();
         void identifyManufacturer();
         void identifyQuantity();
-        void assignDepartment();
-        Equipment Equipment { get; }
+        void identifyDepartment();
+        Equipment Equip { get; }
     }
 }

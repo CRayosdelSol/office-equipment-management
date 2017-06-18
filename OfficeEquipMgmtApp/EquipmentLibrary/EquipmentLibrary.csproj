@@ -55,7 +55,8 @@
     <Compile Include="Condition.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Equipment.cs" />
-    <Compile Include="EquipmentBuilder.cs" />
+    <Compile Include="DepartmentEquipmentBuilder.cs" />
+    <Compile Include="ConditionalEquipmentBuilder.cs" />
     <Compile Include="EquipmentContext.cs" />
     <Compile Include="IEquipmentBuilder.cs" />
     <Compile Include="IManufacturerBuilder.cs" />

@@ -14,9 +14,14 @@ namespace EquipmentLibrary
 
         public string Condition
         {
-            get { return condition; }
-            set { condition = value; }
+            get { return Condition1; }
+            set { Condition1 = value; }
         }
+
+        public int ItemID { get => itemID; set => itemID = value; }
+        public string Condition1 { get => condition; set => condition = value; }
+        public string Name { get => name; set => name = value; }
+        public decimal Price { get => price; set => price = value; }
 
         /// <summary>
         /// Creates an instance of the item class.
@@ -27,10 +32,10 @@ namespace EquipmentLibrary
         /// <param name="condition">The current state of the equipment.</param>
         public Item(decimal price, string name, int id, string condition)
         {
-            this.price = price;
-            this.name = name;
-            this.condition = condition;
-            itemID = id;
+            this.Price = price;
+            this.Name = name;
+            this.Condition1 = condition;
+            ItemID = id;
         }
 
         public Item() { }

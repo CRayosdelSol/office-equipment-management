@@ -10,6 +10,11 @@
         string departmentID;
         static Equipment equipmentInstance;
 
+        public Manufacturer Manufacturer { get => manufacturer; set => manufacturer = value; }
+        public int Quantity { get => quantity; set => quantity = value; }
+        public string DepartmentID { get => departmentID; set => departmentID = value; }
+        public static Equipment EquipmentInstance { get => equipmentInstance; set => equipmentInstance = value; }
+
         /// <summary>
         /// Creates an instance of the equipment class
         /// </summary>
@@ -26,11 +31,23 @@
             this.departmentID = departmentID;
         }
         
+        public Equipment() { }
+
         public static Equipment createEquipment(Manufacturer manufacturer, int quantity, string departmentID, decimal price, string equipmentName, int equipmentID, string equipmentCondition)
         {
             if(equipmentInstance == null)
             {
                 equipmentInstance = new Equipment(manufacturer,quantity,departmentID,price,equipmentName,equipmentID,equipmentCondition);
+            }
+
+            return equipmentInstance;
+        }
+
+        public static Equipment createEquipment()
+        {
+            if (equipmentInstance == null)
+            {
+                equipmentInstance = new Equipment();
             }
 
             return equipmentInstance;
