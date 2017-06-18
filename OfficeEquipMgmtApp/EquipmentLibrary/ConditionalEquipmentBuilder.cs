@@ -34,7 +34,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
-                selectCommand = "SELECT * FROM equip WHERE Condition= @condition";
+                selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
 
