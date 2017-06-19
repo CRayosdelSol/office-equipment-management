@@ -145,6 +145,31 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
+
+        public void updateDeptTable(string tableName,string valA,string valB,string valC,string valD,string valE,string valF,string valG)
+        {
+            using (SqlConnection conn = new SqlConnection(strConn))
+            {
+                conn.Open();
+                string command = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values (@p1,@p2,@p3,@p4,@p5,@p6,@p7)";
+                SqlCommand sqlcomm = new SqlCommand(command, conn);
+                SqlParameter[] pInsert = new SqlParameter[7];
+
+                pInsert[0] = new SqlParameter("@p1",valA);
+                pInsert[1] = new SqlParameter("@p2",valB);
+                pInsert[2] = new SqlParameter("@p3",valC);
+                pInsert[3] = new SqlParameter("@p4",valD);
+                pInsert[4] = new SqlParameter("@p5",valE);
+                pInsert[5] = new SqlParameter("@p6",valF);
+                pInsert[6] = new SqlParameter("@p7",valG);
+
+                sqlcomm.Parameters.AddRange(pInsert);
+
+                sqlcomm.ExecuteNonQuery();
+            }
+        }
+
+
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG)
         {
             using (SqlConnection connectionString = new SqlConnection(StrConn))

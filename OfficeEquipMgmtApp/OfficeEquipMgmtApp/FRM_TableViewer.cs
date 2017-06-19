@@ -118,30 +118,21 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_Tables.RowHeadersWidth : 0) + 3;
         }
 
-        public void summarizeEquipmentPerDepartment()
+        public void summarizeEquipmentPerDepartment(string departmentName)
         {
-            List<string> DepartmentList = new List<string>();
-
             using (SqlConnection sqlConnection = new SqlConnection(connString))
             {
                 sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM departments", sqlConnection);
-                SqlDataReader dataReader = sqlCommand.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    department = new Department(dataReader["Name"].ToString());
-                    DepartmentList.Add(department.DepartmentID);
-                }
 
-                foreach (string departmentName in DepartmentList)
+                db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+                string selectCommand = "SELECT * FROM Equipment WHERE Department=" + departmentName;
+                SqlCommand sqlCommand = new SqlCommand(selectCommand, sqlConnection);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
                 {
-                    db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
-                    string selectCommand = "SELECT * FROM Equipment WHERE Department= " + departmentName;
-                    sqlCommand = new SqlCommand(selectCommand, sqlConnection);
-                    SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
-                    ds = new DataSet();
-                    da.Fill(ds, departmentName);
+                    db.updateDeptTable(departmentName, reader["Name"].ToString(), reader["Condition"].ToString(), reader["Quantity"].ToString(), reader["Price"].ToString(), reader["Department"].ToString(), reader["Manufacturer"].ToString(), reader["Date of Purchase"].ToString());
                 }
+                
             }
         }
 
@@ -261,7 +252,10 @@ namespace OfficeEquipMgmtApp
 
         private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            summarizeEquipmentPerDepartment();
+            foreach (DataGridViewRow row in dtgrd_Tables.Rows)
+            {
+                summarizeEquipmentPerDepartment(row.Cells[5].Value.ToString());
+            }
         }
 
         private void FRM_TableViewer_Load(object sender, EventArgs e)
