@@ -17,12 +17,15 @@ namespace EquipmentLibrary
         SqlCommand sqlComm;
         string connString, selectCommand, deptName;
         Equipment equip;
+        Manufacturer manufac;
 
 
-        public DepartmentEquipmentBuilder(string connectionString,string deptName)
+        public DepartmentEquipmentBuilder(string connectionString, string deptName)
         {
+            Address address = new Address();
             connString = connectionString;
-            equip = Equipment.createEquipment();
+            manufac = Manufacturer.CreateManufacturer("", address);
+            equip = Equipment.createEquipment(manufac);
             this.deptName = deptName;
         }
 
@@ -35,15 +38,14 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@departmentName", deptName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        equip.Condition = reader["Condition"].ToString();
-                    }
+                    equip.Condition = reader["Condition"].ToString();
                 }
             }
         }
@@ -52,15 +54,14 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@departmentName", deptName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        equip.Manufacturer.Name = reader["Manufacturer"].ToString();
-                    }
+                    equip.Manufacturer.Name = reader["Manufacturer"].ToString();
                 }
             }
         }
@@ -69,15 +70,14 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@departmentName", deptName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        equip.Price = Convert.ToDecimal(reader["Price"].ToString());
-                    }
+                    equip.Price = Convert.ToDecimal(reader["Price"].ToString());
                 }
             }
         }
@@ -86,15 +86,14 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@departmentName", deptName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        equip.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
-                    }
+                    equip.Quantity = Convert.ToInt32(reader["Quantity"].ToString());
                 }
             }
         }
@@ -108,15 +107,14 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @departmentName";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@departmentName", deptName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        equip.Name = reader["Name"].ToString();
-                    }
+                    equip.Name = reader["Name"].ToString();
                 }
             }
         }

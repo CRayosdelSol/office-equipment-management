@@ -247,6 +247,7 @@ namespace OfficeEquipMgmtApp
         private void viewTablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FRM_TableViewer tableViewer_frm = new FRM_TableViewer(openFileName);
+            tableViewer_frm.MdiParent = this;
             tableViewer_frm.Show();
         }
     }

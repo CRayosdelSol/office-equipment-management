@@ -44,7 +44,6 @@
             this.sttts_TableDisplayed = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openTableInEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.equipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manufacturersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,9 +189,11 @@
             this.dtgrd_Tables.Name = "dtgrd_Tables";
             this.dtgrd_Tables.ReadOnly = true;
             this.dtgrd_Tables.RowTemplate.Height = 28;
+            this.dtgrd_Tables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgrd_Tables.Size = new System.Drawing.Size(1039, 633);
             this.dtgrd_Tables.TabIndex = 2;
             this.dtgrd_Tables.SelectionChanged += new System.EventHandler(this.dtgrd_Tables_SelectionChanged);
+            this.dtgrd_Tables.Click += new System.EventHandler(this.dtgrd_Tables_Click);
             // 
             // statusStrip1
             // 
@@ -225,18 +226,11 @@
             // databaseToolStripMenuItem
             // 
             this.databaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openTableInEditorToolStripMenuItem,
             this.loadTableToolStripMenuItem,
             this.generateReportToolStripMenuItem});
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
             this.databaseToolStripMenuItem.Size = new System.Drawing.Size(98, 29);
             this.databaseToolStripMenuItem.Text = "&Database";
-            // 
-            // openTableInEditorToolStripMenuItem
-            // 
-            this.openTableInEditorToolStripMenuItem.Name = "openTableInEditorToolStripMenuItem";
-            this.openTableInEditorToolStripMenuItem.Size = new System.Drawing.Size(255, 30);
-            this.openTableInEditorToolStripMenuItem.Text = "Open table in editor";
             // 
             // loadTableToolStripMenuItem
             // 
@@ -244,27 +238,27 @@
             this.equipmentToolStripMenuItem,
             this.manufacturersToolStripMenuItem});
             this.loadTableToolStripMenuItem.Name = "loadTableToolStripMenuItem";
-            this.loadTableToolStripMenuItem.Size = new System.Drawing.Size(255, 30);
+            this.loadTableToolStripMenuItem.Size = new System.Drawing.Size(224, 30);
             this.loadTableToolStripMenuItem.Text = "Load Table";
             // 
             // equipmentToolStripMenuItem
             // 
             this.equipmentToolStripMenuItem.Name = "equipmentToolStripMenuItem";
-            this.equipmentToolStripMenuItem.Size = new System.Drawing.Size(209, 30);
+            this.equipmentToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.equipmentToolStripMenuItem.Text = "Equipment";
             this.equipmentToolStripMenuItem.Click += new System.EventHandler(this.equipmentToolStripMenuItem_Click);
             // 
             // manufacturersToolStripMenuItem
             // 
             this.manufacturersToolStripMenuItem.Name = "manufacturersToolStripMenuItem";
-            this.manufacturersToolStripMenuItem.Size = new System.Drawing.Size(209, 30);
+            this.manufacturersToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.manufacturersToolStripMenuItem.Text = "Manufacturers";
             this.manufacturersToolStripMenuItem.Click += new System.EventHandler(this.manufacturersToolStripMenuItem_Click);
             // 
             // generateReportToolStripMenuItem
             // 
             this.generateReportToolStripMenuItem.Name = "generateReportToolStripMenuItem";
-            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(255, 30);
+            this.generateReportToolStripMenuItem.Size = new System.Drawing.Size(224, 30);
             this.generateReportToolStripMenuItem.Text = "&Generate Report";
             this.generateReportToolStripMenuItem.Click += new System.EventHandler(this.generateReportToolStripMenuItem_Click);
             // 
@@ -456,7 +450,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openTableInEditorToolStripMenuItem;
         private System.Windows.Forms.Button btn_back;
         private System.Windows.Forms.Button btn_forward;
         private System.Windows.Forms.Label label3;

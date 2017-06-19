@@ -80,23 +80,28 @@
             this.departmentID = departmentID;
         }
 
+        public Equipment(Manufacturer manufacturer)
+        {
+            this.manufacturer = manufacturer;
+        }
+
         public Equipment() { }
 
         public static Equipment createEquipment(Manufacturer manufacturer, int quantity, string departmentID, decimal price, string equipmentName, int equipmentID, string equipmentCondition)
         {
             if (equipmentInstance == null)
             {
-                equipmentInstance = new Equipment(manufacturer, quantity, departmentID, price, equipmentName, equipmentID, equipmentCondition);
+                EquipmentInstance = new Equipment(manufacturer, quantity, departmentID, price, equipmentName, equipmentID, equipmentCondition);
             }
 
             return equipmentInstance;
         }
 
-        public static Equipment createEquipment()
+        public static Equipment createEquipment(Manufacturer manufacturer)
         {
             if (equipmentInstance == null)
             {
-                equipmentInstance = new Equipment();
+                equipmentInstance = new Equipment(manufacturer);
             }
 
             return equipmentInstance;
