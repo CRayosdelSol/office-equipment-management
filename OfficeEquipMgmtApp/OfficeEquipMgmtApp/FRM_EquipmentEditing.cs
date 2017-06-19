@@ -42,6 +42,12 @@ namespace OfficeEquipMgmtApp
             set { equipmentPage = value; }
         }
 
+        public DBPagination PageMnf
+        {
+            get { return manufacturersPage; }
+            set { manufacturersPage = value; }
+        }
+
         public string Filepath
         {
             get { return filepath; }
@@ -135,6 +141,10 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
+            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturersPage.currPage = 0;
+
+
             Text = Path.GetFileNameWithoutExtension(filepath);
 
             DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
@@ -147,6 +157,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
+                manufacturersPage.loadPage(); //database binding for manufacturers
             }
             catch (Exception e)
             {
@@ -190,10 +201,14 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
+            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturersPage.currPage = 0;
+
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
-            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "VARCHAR(255)", "Email", "VARCHAR(255)", "Number", "VARCHAR(255)", "Country", "VARCHAR(255)", "City", "VARCHAR(255)", "Zip", "VARCHAR(255)");
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
+
 
             DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
             conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
@@ -205,6 +220,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
+                manufacturersPage.loadPage();//database binding (manufacturer)
             }
             catch (Exception e)
             {
@@ -235,10 +251,16 @@ namespace OfficeEquipMgmtApp
             condList.conditionList.Add(new Condition { value = "Needs Replacement", priority = 3 });
             condList.conditionList.Add(new Condition { value = "Lost", priority = 4 });
 
+            //#MANUFdgv
             if (isNewDB)
+            {
                 initializeDefGrid(dtgrd_equipment);
+            }
             else
+            {
                 initalizeDataGrid(dtgrd_equipment);
+                initializeDefGrid(dtgrd_manufacturer);
+            }
 
             //Scale the form so that all of its contents are shown properly.
             this.MinimumSize = new Size(this.Width, this.Height);
@@ -325,7 +347,7 @@ namespace OfficeEquipMgmtApp
             catch (Exception)
             { }
 
-            if (dialogResult == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabEquipment")
             {
                 try
                 {
@@ -348,8 +370,32 @@ namespace OfficeEquipMgmtApp
                     MessageBox.Show(err.Message);
                 }
             }
-        }
 
+            else if(dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabManufacturer")
+            {
+                try
+                {
+                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    {
+                        manufacturersPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                    }
+
+                    scaleDatagrid(dtgrd_manufacturer);
+                    manufacturersPage.Db.UpdateEquipDataSet(manufacturersPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                    manufacturersPage.Ds.Dispose();
+                    manufacturersPage.Db.Dispose(true);
+                    manufacturersPage.loadPage();
+
+                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
+                    lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message);
+                }
+            }
+        }
+#region equipmentDGVPainting
         private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             //TODO: Add option to show row colors based on condtition of item
@@ -422,6 +468,9 @@ namespace OfficeEquipMgmtApp
                 }
             }
         }
+
+#endregion
+
 
         private void dtgrd_equipment_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -501,8 +550,23 @@ namespace OfficeEquipMgmtApp
                 }
                 equipmentPage.Db.Dispose(true);
             }
-            else if (tab_Tables.SelectedTab.Name == "tabManufacturers")
+
+            else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
             {
+                try
+                {
+                    manufacturersPage.Db.updateManufacturerDataSet((DataSet)dtgrd_manufacturer.DataSource);
+                    PageMnf.ReCount();
+                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
+                    lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                manufacturersPage.Db.Dispose(true);
+
+                MessageBox.Show(dtgrd_manufacturer.Rows[0].Cells[6].Value.ToString()); 
             }
 
         }
@@ -590,6 +654,11 @@ namespace OfficeEquipMgmtApp
         private void btn_First_Click(object sender, EventArgs e)
         {
             equipmentPage.goFirst();
+        }
+
+        private void dtgrd_manufacturer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+
         }
 
         private void btn_Last_Click(object sender, EventArgs e)

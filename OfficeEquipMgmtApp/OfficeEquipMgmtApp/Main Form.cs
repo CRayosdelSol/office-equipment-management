@@ -25,6 +25,7 @@ namespace OfficeEquipMgmtApp
     {
         // this keeps track of how many times the "New" menu item has been pressed 
         public int fileCounter = 0;
+        string openFileName;
 
         public Main()
         {
@@ -154,6 +155,8 @@ namespace OfficeEquipMgmtApp
                             tempForm.initalizeDataGrid(tempForm.getDGV());
                             tempForm.Page.ReCount();
                             tempForm.Page.loadPage();
+
+
                         }
                         catch (Exception)
                         {
@@ -310,6 +313,11 @@ namespace OfficeEquipMgmtApp
         private void btnSaveAs_Click(object sender, EventArgs e)
         {
             saveAsToolStripMenuItem_Click(sender, e);
+        }
+
+        private void viewTablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FRM_TableViewer tableViewer_frm = new FRM_TableViewer();
         }
     }
 }

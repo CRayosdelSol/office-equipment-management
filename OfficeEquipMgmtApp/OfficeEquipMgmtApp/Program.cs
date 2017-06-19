@@ -8,7 +8,7 @@ namespace OfficeEquipMgmtApp
 {
     static class Program
     {
-        /// <summary>
+        /// <summary>B
         /// The main entry point for the application.
         /// </summary>
         [STAThread]

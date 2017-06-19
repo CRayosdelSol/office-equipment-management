@@ -38,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,14 +53,6 @@
     <ApplicationIcon>Database.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -80,11 +73,23 @@
     <Compile Include="FRM_EquipmentEditing.Designer.cs">
       <DependentUpon>FRM_EquipmentEditing.cs</DependentUpon>
     </Compile>
+    <Compile Include="FRM_EquipmentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_EquipmentView.Designer.cs">
+      <DependentUpon>FRM_EquipmentView.cs</DependentUpon>
+    </Compile>
     <Compile Include="FRM_Manufacturer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FRM_Manufacturer.Designer.cs">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRM_ManufacturerEditing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_ManufacturerEditing.Designer.cs">
+      <DependentUpon>FRM_ManufacturerEditing.cs</DependentUpon>
     </Compile>
     <Compile Include="FRM_TableViewer.cs">
       <SubType>Form</SubType>
@@ -106,6 +111,9 @@
     <EmbeddedResource Include="FRM_Manufacturer.resx">
       <DependentUpon>FRM_Manufacturer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FRM_ManufacturerEditing.resx">
+      <DependentUpon>FRM_ManufacturerEditing.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FRM_TableViewer.resx">
       <DependentUpon>FRM_TableViewer.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,7 +125,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,16 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj">
-      <Project>{31ded398-74ab-40ad-b64e-189e654e341d}</Project>
-      <Name>DatabaseManagementOperationsLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EquipmentLibrary\EquipmentLibrary.csproj">
-      <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
-      <Name>EquipmentLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\icons\" />
@@ -220,6 +217,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj">
+      <Project>{31ded398-74ab-40ad-b64e-189e654e341d}</Project>
+      <Name>DatabaseManagementOperationsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EquipmentLibrary\EquipmentLibrary.csproj">
+      <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
+      <Name>EquipmentLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
