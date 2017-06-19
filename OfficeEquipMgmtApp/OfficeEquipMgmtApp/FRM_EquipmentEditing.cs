@@ -82,43 +82,6 @@ namespace OfficeEquipMgmtApp
             this.filepath = filepath;
         }
 
-        #region Sorting
-        private void ascendingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Ascending);
-            stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
-            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
-        }
-
-        private void descendingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Descending);
-            stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
-            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
-        }
-
-        private void conditionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Condition"], ListSortDirection.Descending);
-            stsstrplbl_currentSort.Text = "Currently Sorted by: Condition";
-            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
-        }
-
-        private void ascendingToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Ascending);
-            stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
-            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
-        }
-
-        private void descendingToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Descending);
-            stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
-            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
-        }
-        #endregion
-
         public void scaleDatagrid(DataGridView grid)
         {
             //Scale the datagridview so that all of its contents are properly shown to the user.
@@ -159,6 +122,11 @@ namespace OfficeEquipMgmtApp
             conditionCol.DisplayMember = "Value";
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
+
+            //DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)grid.Columns[6];
+            //manufCol.DataSource = dtgrd_manufacturer.Columns[1];
+            //conditionCol.DisplayMember = "Name";
+            //conditionCol.ValueMember = "Name";
 
             try
             {
@@ -226,6 +194,16 @@ namespace OfficeEquipMgmtApp
             conditionCol.DisplayMember = "Value";
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
+
+
+            //foreach (DataGridViewRow row in dtgrd_manufacturer.Rows)
+            //{
+            //    DataGridViewComboBoxCell Row = (DataGridViewComboBoxCell)row.Cells[1];
+            //    Row.DataSource = row.Cells[1];
+            //    Row.DisplayMember = "Name";
+            //    Row.ValueMember = "Name";
+            //}
+
 
             try
             {
@@ -365,6 +343,7 @@ namespace OfficeEquipMgmtApp
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+
             // TODO: Add multiple row deletion dialog box
             //DialogResult dialogResult = DialogResult.No;
             DialogResult dialogResult;
@@ -383,11 +362,9 @@ namespace OfficeEquipMgmtApp
                     dialogResult = MessageBox.Show("Are you sure you want to remove the selected item(s) from the table? This action cannot be undone.", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialogResult == DialogResult.Yes)
                     {
-                        foreach (DataGridViewRow row in dtgrd_equipment.Rows)
+                        foreach (DataGridViewRow row in dtgrd_equipment.SelectedRows)
                         {
-                            if (row.Selected == true)
-                                equipmentPage.Ds.Tables["Equipment"].Rows[row.Index].Delete();
-
+                            equipmentPage.Ds.Tables["Equipment"].Rows[row.Index].Delete();
                         }
 
                         scaleDatagrid(dtgrd_equipment);
@@ -416,11 +393,9 @@ namespace OfficeEquipMgmtApp
                     if (dialogResult == DialogResult.Yes)
                     {
 
-                        foreach (DataGridViewRow row in dtgrd_manufacturer.Rows)
+                        foreach (DataGridViewRow row in dtgrd_manufacturer.SelectedRows)
                         {
-                            if (row.Selected == true)
-                                manufacturerPage.Ds.Tables["Manufacturer"].Rows[row.Index].Delete();
-
+                            manufacturerPage.Ds.Tables["Manufacturer"].Rows[row.Index].Delete();
                         }
 
                         scaleDatagrid(dtgrd_manufacturer);
@@ -895,6 +870,11 @@ namespace OfficeEquipMgmtApp
             pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
             pagedTabs[tabIndex].ReCount();
             pagedTabs[tabIndex].currPage = 0; // do this so the viewport goes to the first page 
+
+            DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)dtgrd_equipment.Columns[6];
+            manufCol.DataSource = dtgrd_manufacturer.Columns[1];
+            manufCol.DisplayMember = "Name";
+            manufCol.ValueMember = "Name";
 
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
