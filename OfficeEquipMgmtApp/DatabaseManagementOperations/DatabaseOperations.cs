@@ -134,8 +134,7 @@ namespace DatabaseManagementOperationsLibrary
                     string temp = string.Format(
                         "CREATE TABLE {0}(" +
                         "{1} {2}," +
-                        "{3} {4}," +
-                        "PRIMARY KEY ({1}) );",
+                        "{3} {4});",
                         tableName, attributeA, dataTypeA, attributeB, dataTypeB);
 
                     string createTableCommand = temp;

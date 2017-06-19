@@ -213,6 +213,8 @@ namespace OfficeEquipMgmtApp
 
             Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
 
+            Db.CreateTable("Department", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)");
+
             //DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
             DataGridViewComboBoxColumn conditionCol = dtgrd_equipment.Columns[2] as DataGridViewComboBoxColumn;
             conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
