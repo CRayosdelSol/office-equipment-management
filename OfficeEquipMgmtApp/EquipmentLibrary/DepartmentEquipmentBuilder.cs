@@ -20,11 +20,11 @@ namespace EquipmentLibrary
         Manufacturer manufac;
 
 
-        public DepartmentEquipmentBuilder(string connectionString,string deptName)
+        public DepartmentEquipmentBuilder(string connectionString, string deptName)
         {
             Address address = new Address();
             connString = connectionString;
-            manufac = Manufacturer.CreateManufacturer("",address);
+            manufac = Manufacturer.CreateManufacturer("", address);
             equip = Equipment.createEquipment(manufac);
             this.deptName = deptName;
         }

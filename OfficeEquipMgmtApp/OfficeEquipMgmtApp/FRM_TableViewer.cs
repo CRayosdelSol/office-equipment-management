@@ -197,7 +197,7 @@ namespace OfficeEquipMgmtApp
 
             }
 
-            grpbx_summaryPerDept.Text = "Department: " +dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString();
+            grpbx_summaryPerDept.Text = "Department: " + dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString();
             lbl_totalNumberOfEquipmentOwned.Text = "Equipment owned: " + total.ToString();
             lbl_GoodCondition.Text = "Good Conditon: " + good.ToString();
             lbl_UnderRepairCondition.Text = "Under Repair: " + underRepair.ToString();

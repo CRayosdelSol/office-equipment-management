@@ -67,11 +67,11 @@
             return manufacturerInstance;
         }
 
-        public static Manufacturer CreateManufacturer(string name,Address address)
+        public static Manufacturer CreateManufacturer(string name, Address address)
         {
             if (manufacturerInstance == null)
             {
-                manufacturerInstance = new Manufacturer(name,address);
+                manufacturerInstance = new Manufacturer(name, address);
             }
 
             return manufacturerInstance;

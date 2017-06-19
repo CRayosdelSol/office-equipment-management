@@ -23,7 +23,6 @@ namespace OfficeEquipMgmtApp
         string dir;
         protected string filepath;
         protected string connString;
-        DataSet ds;
 
         //DB Pagination
         DBPagination equipmentPage, manufacturerPage;
@@ -81,6 +80,43 @@ namespace OfficeEquipMgmtApp
             isNewDB = false;
             this.filepath = filepath;
         }
+
+        #region Sorting
+        private void ascendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Ascending);
+            stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
+            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
+        }
+
+        private void descendingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Name"], ListSortDirection.Descending);
+            stsstrplbl_currentSort.Text = "Currently Sorted by: Name";
+            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
+        }
+
+        private void conditionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Condition"], ListSortDirection.Descending);
+            stsstrplbl_currentSort.Text = "Currently Sorted by: Condition";
+            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
+        }
+
+        private void ascendingToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Ascending);
+            stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
+            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Ascending";
+        }
+
+        private void descendingToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.dtgrd_equipment.Sort(this.dtgrd_equipment.Columns["Manufacturer"], ListSortDirection.Descending);
+            stsstrplbl_currentSort.Text = "Currently Sorted by: Manufacturer";
+            stsstrplbl_currentSortDirection.Text = "Sorting Direction: Descending";
+        }
+        #endregion
 
         public void scaleDatagrid(DataGridView grid)
         {
@@ -176,8 +212,6 @@ namespace OfficeEquipMgmtApp
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
             Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
-
-            Db.CreateTable("Department", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)");
 
             //DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
             DataGridViewComboBoxColumn conditionCol = dtgrd_equipment.Columns[2] as DataGridViewComboBoxColumn;
@@ -841,14 +875,6 @@ namespace OfficeEquipMgmtApp
 
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
-        }
-
-        private void addNewDepartmentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ds = new DataSet();
-            FRM_AddDepartment frm = new FRM_AddDepartment(connString,ds);
-            frm.MdiParent = this.MdiParent;
-            frm.Show();
         }
 
         private void btn_Last_Click(object sender, EventArgs e)

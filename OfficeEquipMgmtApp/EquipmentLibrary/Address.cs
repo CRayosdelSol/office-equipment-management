@@ -24,9 +24,7 @@
         /// <summary>
         /// Creates an instance of the address class
         /// </summary>
-        public Address()
-        {
-        }
+        public Address() { }
 
         public string City
         {

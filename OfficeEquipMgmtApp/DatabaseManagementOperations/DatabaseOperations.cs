@@ -134,7 +134,8 @@ namespace DatabaseManagementOperationsLibrary
                     string temp = string.Format(
                         "CREATE TABLE {0}(" +
                         "{1} {2}," +
-                        "{3} {4});",
+                        "{3} {4}," +
+                        "PRIMARY KEY ({1}) );",
                         tableName, attributeA, dataTypeA, attributeB, dataTypeB);
 
                     string createTableCommand = temp;
@@ -271,47 +272,6 @@ namespace DatabaseManagementOperationsLibrary
             ds.AcceptChanges();
         }
 
-        public void UpdateDeptDataSet(DataSet ds)
-        {
-            SqlConnection conn = new SqlConnection(StrConn);
-
-            string sInsert, sUpdate, sDelete;
-
-            sInsert = "INSERT INTO Department (Name) values(@p2)";
-
-            sUpdate = "UPDATE Department SET Name=@p2 where ID=@p1";
-
-            sDelete = "DELETE FROM Department WHERE ID=@p1";
-
-            SqlParameter[] pInsert = new SqlParameter[1];
-            SqlParameter[] pUpdate = new SqlParameter[2];
-            SqlParameter[] pDelete = new SqlParameter[1];
-
-            pInsert[0] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
-
-            pUpdate[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
-            pUpdate[1] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
-
-            pDelete[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
-
-            var cmdInsert = new SqlCommand(sInsert, conn);
-            var cmdUpdate = new SqlCommand(sUpdate, conn);
-            var cmdDelete = new SqlCommand(sDelete, conn);
-
-            cmdInsert.Parameters.AddRange(pInsert);
-            cmdUpdate.Parameters.AddRange(pUpdate);
-            cmdDelete.Parameters.AddRange(pDelete);
-
-            SqlDataAdapter da = new SqlDataAdapter();
-            da.InsertCommand = cmdInsert;
-            da.UpdateCommand = cmdUpdate;
-            da.DeleteCommand = cmdDelete;
-            da.Update(ds, "Department");
-            ds.AcceptChanges();
-        }
-
-
-
         public void updateManufacturerDataSet(DataSet ds)
         {
             SqlConnection conn = new SqlConnection(StrConn);
@@ -359,17 +319,6 @@ namespace DatabaseManagementOperationsLibrary
             da.DeleteCommand = cmdDelete;
             da.Update(ds, "Manufacturer");
             ds.AcceptChanges();
-        }
-
-        public void fillDeptDataset(DataSet ds)
-        {
-            using (SqlConnection sqlConn = new SqlConnection(strConn))
-            {
-                string selectCommand = "SELECT * FROM Department";
-                SqlCommand sqlComm = new SqlCommand(selectCommand, sqlConn);
-                SqlDataAdapter da = new SqlDataAdapter(sqlComm);
-                da.Fill(ds, "Department");
-            }
         }
 
         public void DetachDB(string filename)

@@ -33,7 +33,7 @@ namespace EquipmentLibrary
             Address address = new Address();
             connString = connectionString;
             this.manufName = manufName;
-            manufacturer = Manufacturer.CreateManufacturer(manufName,address);
+            manufacturer = Manufacturer.CreateManufacturer(manufName, address);
         }
 
         public void establishUserCommunicationMethods()

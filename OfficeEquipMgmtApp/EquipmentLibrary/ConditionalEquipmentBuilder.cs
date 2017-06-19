@@ -9,13 +9,13 @@ using DatabaseManagementOperationsLibrary;
 
 namespace EquipmentLibrary
 {
-    public class ConditionalEquipmentBuilder:IEquipmentBuilder
+    public class ConditionalEquipmentBuilder : IEquipmentBuilder
     {
         SqlDataReader reader;
         SqlConnection sqlConnection;
         SqlCommand sqlComm;
 
-        string connString, selectCommand,condition;
+        string connString, selectCommand, condition;
         Equipment equip;
         Manufacturer manufac;
 
@@ -24,12 +24,12 @@ namespace EquipmentLibrary
             get { return equip; }
         }
 
-        public ConditionalEquipmentBuilder(string connString,string condition)
+        public ConditionalEquipmentBuilder(string connString, string condition)
         {
             Address address = new Address();
             this.connString = connString;
             this.condition = condition;
-            manufac = Manufacturer.CreateManufacturer("",address);
+            manufac = Manufacturer.CreateManufacturer("", address);
             equip = Equipment.createEquipment(manufac);
         }
 
@@ -63,7 +63,7 @@ namespace EquipmentLibrary
                     equip.DepartmentID = reader["Department"].ToString();
                 }
             }
-            
+
         }
 
         public void identifyManufacturer()
