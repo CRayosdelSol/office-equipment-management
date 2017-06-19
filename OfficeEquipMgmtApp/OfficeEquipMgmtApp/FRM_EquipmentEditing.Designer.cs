@@ -511,9 +511,12 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.RowTemplate.Height = 28;
             this.dtgrd_equipment.Size = new System.Drawing.Size(674, 344);
             this.dtgrd_equipment.TabIndex = 2;
+            this.dtgrd_equipment.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellEndEdit);
             this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
             this.dtgrd_equipment.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_equipment_CellValidating);
             this.dtgrd_equipment.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_CellValueChanged);
+            this.dtgrd_equipment.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_equipment_EditingControlShowing);
+            this.dtgrd_equipment.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_equipment_RowLeave);
             // 
             // col_ID
             // 
@@ -598,6 +601,7 @@ namespace OfficeEquipMgmtApp
             // 
             // dtgrd_manufacturer
             // 
+            this.dtgrd_manufacturer.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.dtgrd_manufacturer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_manufacturer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
@@ -614,7 +618,10 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_manufacturer.RowTemplate.Height = 28;
             this.dtgrd_manufacturer.Size = new System.Drawing.Size(674, 344);
             this.dtgrd_manufacturer.TabIndex = 1;
+            this.dtgrd_manufacturer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_manufacturer_CellEndEdit);
             this.dtgrd_manufacturer.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_manufacturer_CellPainting);
+            this.dtgrd_manufacturer.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_manufacturer_CellValidating);
+            this.dtgrd_manufacturer.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dtgrd_manufacturer_EditingControlShowing);
             // 
             // ID
             // 

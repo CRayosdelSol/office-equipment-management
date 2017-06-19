@@ -24,12 +24,8 @@ namespace OfficeEquipMgmtApp
         DataSet ds;
         DatabaseOperations db;
 
-        Manufacturer manufacturer;
-        Address address;
-        Equipment equipment;
         Department department;
 
-        string dir;
         string file;
         protected string connString;
         bool isEquipmentTable;
@@ -39,10 +35,9 @@ namespace OfficeEquipMgmtApp
             InitializeComponent();
         }
 
-        public FRM_TableViewer(string filepath, string dir)
+        public FRM_TableViewer(string filepath)
         {
             InitializeComponent();
-            this.dir = dir;
             file = filepath;
         }
 
