@@ -10,10 +10,59 @@
         string departmentID;
         static Equipment equipmentInstance;
 
-        public Manufacturer Manufacturer { get => manufacturer; set => manufacturer = value; }
-        public int Quantity { get => quantity; set => quantity = value; }
-        public string DepartmentID { get => departmentID; set => departmentID = value; }
-        public static Equipment EquipmentInstance { get => equipmentInstance; set => equipmentInstance = value; }
+        public Manufacturer Manufacturer
+        {
+            get
+            {
+                return manufacturer;
+            }
+
+            set
+            {
+                manufacturer = value;
+            }
+        }
+
+        public int Quantity
+        {
+            get
+            {
+                return quantity;
+            }
+
+            set
+            {
+                quantity = value;
+            }
+        }
+
+        public string DepartmentID
+        {
+            get
+            {
+                return departmentID;
+            }
+
+            set
+            {
+                departmentID = value;
+            }
+        }
+
+        public static Equipment EquipmentInstance
+        {
+            get
+            {
+                return equipmentInstance;
+            }
+
+            set
+            {
+                equipmentInstance = value;
+            }
+        }
+
+
 
         /// <summary>
         /// Creates an instance of the equipment class
@@ -30,14 +79,14 @@
             this.quantity = quantity;
             this.departmentID = departmentID;
         }
-        
+
         public Equipment() { }
 
         public static Equipment createEquipment(Manufacturer manufacturer, int quantity, string departmentID, decimal price, string equipmentName, int equipmentID, string equipmentCondition)
         {
-            if(equipmentInstance == null)
+            if (equipmentInstance == null)
             {
-                equipmentInstance = new Equipment(manufacturer,quantity,departmentID,price,equipmentName,equipmentID,equipmentCondition);
+                equipmentInstance = new Equipment(manufacturer, quantity, departmentID, price, equipmentName, equipmentID, equipmentCondition);
             }
 
             return equipmentInstance;

@@ -18,10 +18,45 @@ namespace EquipmentLibrary
             set { Condition1 = value; }
         }
 
-        public int ItemID { get => itemID; set => itemID = value; }
-        public string Condition1 { get => condition; set => condition = value; }
-        public string Name { get => name; set => name = value; }
-        public decimal Price { get => price; set => price = value; }
+        public decimal Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string Condition1
+        {
+            get
+            {
+                return condition;
+            }
+
+            set
+            {
+                condition = value;
+            }
+        }
+
+        public int ItemID
+        {
+            get
+            {
+                return itemID;
+            }
+
+            set
+            {
+                itemID = value;
+            }
+        }
+
+
 
         /// <summary>
         /// Creates an instance of the item class.

@@ -7,8 +7,8 @@
     <ProjectGuid>{31DED398-74AB-40AD-B64E-189E654E341D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DatabaseManagementOperations</RootNamespace>
-    <AssemblyName>DatabaseManagementOperations</AssemblyName>
+    <RootNamespace>DatabaseManagementOperationsLibrary</RootNamespace>
+    <AssemblyName>DatabaseManagementOperationsLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -47,6 +48,9 @@
     <Compile Include="DatabaseOperations.cs" />
     <Compile Include="DBPagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

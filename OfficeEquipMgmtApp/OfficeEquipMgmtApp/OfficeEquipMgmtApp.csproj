@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -38,6 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,14 +53,6 @@
     <ApplicationIcon>Database.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -79,6 +72,12 @@
     </Compile>
     <Compile Include="FRM_EquipmentEditing.Designer.cs">
       <DependentUpon>FRM_EquipmentEditing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FRM_EquipmentView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_EquipmentView.Designer.cs">
+      <DependentUpon>FRM_EquipmentView.cs</DependentUpon>
     </Compile>
     <Compile Include="FRM_Manufacturer.cs">
       <SubType>Form</SubType>
@@ -126,7 +125,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,16 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj">
-      <Project>{31ded398-74ab-40ad-b64e-189e654e341d}</Project>
-      <Name>DatabaseManagementOperationsLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EquipmentLibrary\EquipmentLibrary.csproj">
-      <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
-      <Name>EquipmentLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\icons\" />
@@ -217,6 +205,28 @@
     <Content Include="Database.ico" />
     <None Include="Resources\DeleteTableRow_16x.png" />
     <None Include="Resources\SaveAs_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj">
+      <Project>{31ded398-74ab-40ad-b64e-189e654e341d}</Project>
+      <Name>DatabaseManagementOperationsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EquipmentLibrary\EquipmentLibrary.csproj">
+      <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
+      <Name>EquipmentLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

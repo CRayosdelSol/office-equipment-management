@@ -13,6 +13,7 @@ namespace DatabaseManagementOperationsLibrary
         protected SqlConnection sqlPage;
         public int totalRecords, pageSize, pageCount;
         public int currPage = 1;
+        public string tableName;
 
         // Form Controls
         DatabaseOperations db;
@@ -33,38 +34,39 @@ namespace DatabaseManagementOperationsLibrary
             set { db = value; }
         }
 
-        public DBPagination(DatabaseOperations db, DataGridView datagrid, NumericUpDown itemPerPageUpDown, NumericUpDown pageSelector)
+        public DBPagination(DatabaseOperations db, DataGridView datagrid, string tableName, NumericUpDown itemPerPageUpDown, NumericUpDown pageSelector)
         {
             this.db = db;
             this.datagrid = datagrid;
+            this.tableName = tableName;
             this.itemPerPageUpDown = itemPerPageUpDown;
             this.pageSelector = pageSelector;
         }
 
-        public void ReCount(string tableName)
+        public void ReCount()
         {
             //DB Pagination Initalizers
             // For Page view.
             pageSize = int.Parse(itemPerPageUpDown.Text);
-            totalRecords = getResultCount(tableName);
+            totalRecords = getResultCount();
             pageCount = totalRecords / pageSize;
 
             // Adjust page count if the last page contains partial page.
             if (totalRecords % pageSize > 0)
                 this.pageCount++;
 
-            if (getResultCount(tableName) == 0)
+            if (getResultCount() == 0)
                 pageSelector.Maximum = 1;
             else
                 pageSelector.Maximum = pageCount;
 
-            loadPage(tableName);
+            loadPage();
         }
 
         /// <summary>
         /// Fills the DS with the user-specifide parameters
         /// </summary>
-        public void loadPage(string tableName)
+        public void loadPage()
         {
             string strSql;
             int intSkip = 0;
@@ -98,7 +100,7 @@ namespace DatabaseManagementOperationsLibrary
             SqlConnection.ClearAllPools();
         }
 
-        public int getResultCount(string tableName)
+        public int getResultCount()
         {
             // This select statement is very fast compared to SELECT COUNT(*)
             string strSql = "SELECT rows FROM sys.sysindexes " +
@@ -121,9 +123,9 @@ namespace DatabaseManagementOperationsLibrary
             return intCount;
         }
 
-        public void goFirst(string tableName)
+        public void goFirst()
         {
-            if (getResultCount(tableName) == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage = 0;
@@ -131,9 +133,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goPrevious(string tableName)
+        public void goPrevious()
         {
-            if (getResultCount(tableName) == 0)
+            if (getResultCount() == 0)
                 return;
 
             if (currPage == pageCount)
@@ -147,9 +149,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goNext(string tableName)
+        public void goNext()
         {
-            if (getResultCount(tableName) == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage++;
@@ -160,9 +162,9 @@ namespace DatabaseManagementOperationsLibrary
             pageSelector.Value = currPage + 1;
         }
 
-        public void goLast(string tableName)
+        public void goLast()
         {
-            if (getResultCount(tableName) == 0)
+            if (getResultCount() == 0)
                 return;
 
             currPage = pageCount - 1;
