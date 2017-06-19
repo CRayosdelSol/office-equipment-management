@@ -25,11 +25,19 @@ namespace OfficeEquipMgmtApp
         DatabaseOperations db;
 
         Department department;
+        DBPagination tablePage;
+
+        public DBPagination pageTable
+        {
+            get { return tablePage; }
+            set { tablePage = value; }
+        }
 
         string file;
         string connString;
         bool isEquipmentTable;
-        List<string> labeltext = new List<string>();
+
+
 
         public FRM_TableViewer()
         {
@@ -73,16 +81,21 @@ namespace OfficeEquipMgmtApp
             db = new DatabaseOperations(connString);
 
             displayTable("Equipment", connString, dtgrd_Tables);
+
         }
 
         public void displayTable(string tableName, string connString, DataGridView grid)
         {
+            tablePage = new DBPagination(db, dtgrd_Tables, tableName, itemPerPageUpDown, pageSelector);
+            tablePage.currPage = 0;
+
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 string selectCommand = string.Format("SELECT * FROM {0}", tableName);
 
                 try // database binding happens here
                 {
+                    tablePage.loadPage();
                     dataAdapter = new SqlDataAdapter(selectCommand, connString);
                     ds = new DataSet();
                     dataAdapter.Fill(ds, tableName);
@@ -259,9 +272,9 @@ namespace OfficeEquipMgmtApp
             isEquipmentTable = true;
 
             //Scale the form so that all of its contents are shown properly.
-            //this.MinimumSize = new Size(this.Width, this.Height);
-            //this.AutoSize = true;
-            //this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.MinimumSize = new Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void dtgrd_Tables_Click(object sender, EventArgs e)

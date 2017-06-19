@@ -271,6 +271,43 @@ namespace DatabaseManagementOperationsLibrary
             ds.AcceptChanges();
         }
 
+
+        public bool checkIfManufacturerIsInUse(string record)
+        {
+            using(SqlConnection sqlConn = new SqlConnection(strConn))
+            {
+                sqlConn.Open();
+                string command = "SELECT COUNT(*) FROM Equipment WHERE Manufacturer LIKE '" + record + "'";
+                SqlCommand sqlComm = new SqlCommand(command, sqlConn);
+                int matches = int.Parse(sqlComm.ExecuteScalar().ToString());
+                if(matches > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public bool checkIfTableHasContent()
+        {
+            using(SqlConnection sqlConn = new SqlConnection(strConn))
+            {
+                sqlConn.Open();
+                string command = "SELECT COUNT(*) FROM Manufacturer";
+                SqlCommand sqlComm = new SqlCommand(command, sqlConn);
+                int rowCount = int.Parse(sqlComm.ExecuteScalar().ToString());
+                if(rowCount == 0)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
+        }
+
         public void updateManufacturerDataSet(DataSet ds)
         {
             SqlConnection conn = new SqlConnection(StrConn);
