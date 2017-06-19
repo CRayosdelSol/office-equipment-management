@@ -21,6 +21,7 @@ namespace OfficeEquipMgmtApp
 
         // Database variables
         DatabaseOperations db;
+        DataSet manufDS = new DataSet();
         string dir;
         protected string filepath;
         protected string connString;
@@ -82,6 +83,19 @@ namespace OfficeEquipMgmtApp
             this.filepath = filepath;
         }
 
+        public void refreshManufCol()
+        {
+            DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)dtgrd_equipment.Columns[6];
+            SqlConnection conn = new SqlConnection(db.StrConn);
+            var cmd = new SqlCommand("SELECT * FROM Manufacturer", conn);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            manufDS = new DataSet();
+            da.Fill(manufDS, "Manufacturer");            
+            manufCol.DataSource = manufDS.Tables[0];
+            manufCol.DisplayMember = "Name";
+            manufCol.ValueMember = "Name";
+        }
+
         public void scaleDatagrid(DataGridView grid)
         {
             //Scale the datagridview so that all of its contents are properly shown to the user.
@@ -123,10 +137,7 @@ namespace OfficeEquipMgmtApp
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
 
-            //DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)grid.Columns[6];
-            //manufCol.DataSource = dtgrd_manufacturer.Columns[1];
-            //conditionCol.DisplayMember = "Name";
-            //conditionCol.ValueMember = "Name";
+            refreshManufCol();
 
             try
             {
@@ -194,16 +205,6 @@ namespace OfficeEquipMgmtApp
             conditionCol.DisplayMember = "Value";
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
-
-
-            //foreach (DataGridViewRow row in dtgrd_manufacturer.Rows)
-            //{
-            //    DataGridViewComboBoxCell Row = (DataGridViewComboBoxCell)row.Cells[1];
-            //    Row.DataSource = row.Cells[1];
-            //    Row.DisplayMember = "Name";
-            //    Row.ValueMember = "Name";
-            //}
-
 
             try
             {
@@ -373,6 +374,8 @@ namespace OfficeEquipMgmtApp
                         equipmentPage.Db.Dispose(true);
                         equipmentPage.loadPage();
                         colorRowsByCondition();
+
+                        refreshManufCol();
 
                         lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
                         lbl_RecordCount.Text = equipmentPage.totalRecords.ToString() + " Records present";
@@ -563,6 +566,7 @@ namespace OfficeEquipMgmtApp
                 pagedTabs[tabIndex].ReCount();
                 lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
                 lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+                refreshManufCol();
 
                 if (isNewDB)
                 {
@@ -870,11 +874,6 @@ namespace OfficeEquipMgmtApp
             pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
             pagedTabs[tabIndex].ReCount();
             pagedTabs[tabIndex].currPage = 0; // do this so the viewport goes to the first page 
-
-            DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)dtgrd_equipment.Columns[6];
-            manufCol.DataSource = dtgrd_manufacturer.Columns[1];
-            manufCol.DisplayMember = "Name";
-            manufCol.ValueMember = "Name";
 
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
