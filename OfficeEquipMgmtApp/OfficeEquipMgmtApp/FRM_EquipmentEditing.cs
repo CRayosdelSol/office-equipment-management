@@ -588,6 +588,13 @@ namespace OfficeEquipMgmtApp
                 pagedTabs[tabIndex].ReCount();
                 lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
                 lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+
+                if (isNewDB)
+                {
+                    Main tempform = Application.OpenForms[0] as Main;
+                    tempform.btnSaveAs_Click(sender, e);
+                }
+
                 isSaved = true;
             }
             catch (Exception)
