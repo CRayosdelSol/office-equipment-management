@@ -16,6 +16,7 @@ namespace OfficeEquipMgmtApp
     {
         Main mainForm;
         bool isNewDB;
+        bool isSaved = false;
         ConditionList condList = new ConditionList();
 
         // Database variables
@@ -131,6 +132,7 @@ namespace OfficeEquipMgmtApp
         /// <param name="grid">The datagrid to bind the DB to</param>
         public void initalizeDataGrid(DataGridView grid)
         {
+            isSaved = true;
             mainForm = ((Main)MdiParent);
 
             // DB Connection Setup
@@ -187,6 +189,8 @@ namespace OfficeEquipMgmtApp
         /// <param name="grid"></param>
         public void initializeDefGrid(DataGridView grid)
         {
+            isSaved = false;
+
             mainForm = ((Main)MdiParent);
             dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\managementapp\";
             filepath = dir + string.Format("temp_{0}.mdf", mainForm.fileCounter);
@@ -291,7 +295,7 @@ namespace OfficeEquipMgmtApp
         {
             Db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
 
-            if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
+            if (e.CloseReason == CloseReason.UserClosing && isSaved == false) // if the user clicked on the local X button 
             {
                 var close = MessageBox.Show("Do you want to save changes?", "Unsaved Database", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
@@ -323,6 +327,7 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_equipment_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            isSaved = false;
             scaleDatagrid(dtgrd_equipment);
             /*If the user fills up one cell in a row, assume that he'll fill everything up. 
              if that's the case then DATE OF PURCHASE column will have a value of today's date.*/
@@ -364,16 +369,25 @@ namespace OfficeEquipMgmtApp
             //DialogResult dialogResult = DialogResult.No;
             DialogResult dialogResult;
 
+            if (!isSaved)
+            {
+                MessageBox.Show("Can't proceed with deletion, attempting to save changes instead", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                saveBtn_Click(sender, e);
+                return;
+            }
+
             if (tab_Tables.SelectedTab.Name == "tabEquipment")
             {
                 try
                 {
-                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dialogResult = MessageBox.Show("Are you sure you want to remove the selected item(s) from the table? This action cannot be undone.", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialogResult == DialogResult.Yes)
                     {
-                        for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                        foreach (DataGridViewRow row in dtgrd_equipment.Rows)
                         {
-                            equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
+                            if (row.Selected == true)
+                                equipmentPage.Ds.Tables["Equipment"].Rows[row.Index].Delete();
+
                         }
 
                         scaleDatagrid(dtgrd_equipment);
@@ -398,12 +412,15 @@ namespace OfficeEquipMgmtApp
             {
                 try
                 {
-                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_manufacturer.Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    dialogResult = MessageBox.Show("Are you sure you want to remove the selected item(s) from the table? This action cannot be undone.", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialogResult == DialogResult.Yes)
                     {
-                        for (int index = 0; index <= dtgrd_manufacturer.SelectedRows.Count; index++) // deletes all selected row indices
+
+                        foreach (DataGridViewRow row in dtgrd_manufacturer.Rows)
                         {
-                            manufacturerPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                            if (row.Selected == true)
+                                manufacturerPage.Ds.Tables["Manufacturer"].Rows[row.Index].Delete();
+
                         }
 
                         scaleDatagrid(dtgrd_manufacturer);
@@ -571,10 +588,12 @@ namespace OfficeEquipMgmtApp
                 pagedTabs[tabIndex].ReCount();
                 lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
                 lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+                isSaved = true;
             }
             catch (Exception)
             {
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                isSaved = false;
             }
             pagedTabs[tabIndex].Db.Dispose(true);
         }
@@ -857,11 +876,6 @@ namespace OfficeEquipMgmtApp
             dtgrd_manufacturer.Refresh();
         }
 
-        private void dtgrd_manufacturer_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
-        {
-
-        }
-
         private void dtgrd_equipment_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -877,6 +891,11 @@ namespace OfficeEquipMgmtApp
 
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+        }
+
+        private void dtgrd_manufacturer_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            isSaved = false;
         }
 
         private void btn_Last_Click(object sender, EventArgs e)
