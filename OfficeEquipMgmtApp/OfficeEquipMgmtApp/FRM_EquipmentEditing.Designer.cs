@@ -107,8 +107,7 @@ namespace OfficeEquipMgmtApp
             this.sortItemsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1311, 35);
+            this.menuStrip1.Size = new System.Drawing.Size(874, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -119,7 +118,7 @@ namespace OfficeEquipMgmtApp
             this.conditionToolStripMenuItem,
             this.manufacturerToolStripMenuItem});
             this.sortItemsToolStripMenuItem.Name = "sortItemsToolStripMenuItem";
-            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(57, 29);
+            this.sortItemsToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.sortItemsToolStripMenuItem.Text = "&Sort";
             // 
             // nameToolStripMenuItem
@@ -128,7 +127,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem,
             this.descendingToolStripMenuItem});
             this.nameToolStripMenuItem.Name = "nameToolStripMenuItem";
-            this.nameToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
+            this.nameToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.nameToolStripMenuItem.Text = "&Name";
             // 
             // ascendingToolStripMenuItem
@@ -136,7 +135,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
             this.ascendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ascendingToolStripMenuItem.Name = "ascendingToolStripMenuItem";
-            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
+            this.ascendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.ascendingToolStripMenuItem.Text = "Ascending";
             this.ascendingToolStripMenuItem.Click += new System.EventHandler(this.ascendingToolStripMenuItem_Click);
             // 
@@ -145,14 +144,14 @@ namespace OfficeEquipMgmtApp
             this.descendingToolStripMenuItem.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
             this.descendingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.descendingToolStripMenuItem.Name = "descendingToolStripMenuItem";
-            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(189, 30);
+            this.descendingToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.descendingToolStripMenuItem.Text = "Descending";
             this.descendingToolStripMenuItem.Click += new System.EventHandler(this.descendingToolStripMenuItem_Click);
             // 
             // conditionToolStripMenuItem
             // 
             this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
-            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.conditionToolStripMenuItem.Text = "&Condition";
             this.conditionToolStripMenuItem.Click += new System.EventHandler(this.conditionToolStripMenuItem_Click);
             // 
@@ -162,7 +161,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1,
             this.descendingToolStripMenuItem1});
             this.manufacturerToolStripMenuItem.Name = "manufacturerToolStripMenuItem";
-            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
+            this.manufacturerToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.manufacturerToolStripMenuItem.Text = "&Manufacturer";
             // 
             // ascendingToolStripMenuItem1
@@ -170,7 +169,7 @@ namespace OfficeEquipMgmtApp
             this.ascendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortAscending_16x;
             this.ascendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ascendingToolStripMenuItem1.Name = "ascendingToolStripMenuItem1";
-            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
+            this.ascendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
             this.ascendingToolStripMenuItem1.Text = "Ascending";
             this.ascendingToolStripMenuItem1.Click += new System.EventHandler(this.ascendingToolStripMenuItem1_Click);
             // 
@@ -179,7 +178,7 @@ namespace OfficeEquipMgmtApp
             this.descendingToolStripMenuItem1.Image = global::OfficeEquipMgmtApp.Properties.Resources.SortDescending_16x;
             this.descendingToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.descendingToolStripMenuItem1.Name = "descendingToolStripMenuItem1";
-            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(189, 30);
+            this.descendingToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
             this.descendingToolStripMenuItem1.Text = "Descending";
             this.descendingToolStripMenuItem1.Click += new System.EventHandler(this.descendingToolStripMenuItem1_Click);
             // 
@@ -191,43 +190,43 @@ namespace OfficeEquipMgmtApp
             this.stsstrplbl_currentSortDirection,
             this.lbl_Pages,
             this.lbl_RecordCount});
-            this.statusStripA.Location = new System.Drawing.Point(0, 632);
+            this.statusStripA.Location = new System.Drawing.Point(0, 419);
             this.statusStripA.Name = "statusStripA";
-            this.statusStripA.Padding = new System.Windows.Forms.Padding(3, 0, 21, 0);
-            this.statusStripA.Size = new System.Drawing.Size(1311, 30);
+            this.statusStripA.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
+            this.statusStripA.Size = new System.Drawing.Size(874, 22);
             this.statusStripA.TabIndex = 5;
             this.statusStripA.Text = "statusStrip1";
             // 
             // stsstrplbl_currentSort
             // 
             this.stsstrplbl_currentSort.Name = "stsstrplbl_currentSort";
-            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(181, 25);
+            this.stsstrplbl_currentSort.Size = new System.Drawing.Size(120, 17);
             this.stsstrplbl_currentSort.Text = "Currently Sorted By: -";
             // 
             // stsstrplbl_currentSortDirection
             // 
             this.stsstrplbl_currentSortDirection.Name = "stsstrplbl_currentSortDirection";
-            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(167, 25);
+            this.stsstrplbl_currentSortDirection.Size = new System.Drawing.Size(110, 17);
             this.stsstrplbl_currentSortDirection.Text = "Sorting Direction: - ";
             // 
             // lbl_Pages
             // 
             this.lbl_Pages.Name = "lbl_Pages";
-            this.lbl_Pages.Size = new System.Drawing.Size(150, 25);
+            this.lbl_Pages.Size = new System.Drawing.Size(99, 17);
             this.lbl_Pages.Text = "Number of Pages";
             // 
             // lbl_RecordCount
             // 
             this.lbl_RecordCount.Name = "lbl_RecordCount";
-            this.lbl_RecordCount.Size = new System.Drawing.Size(167, 25);
+            this.lbl_RecordCount.Size = new System.Drawing.Size(110, 17);
             this.lbl_RecordCount.Text = "Number of Records";
             // 
             // btn_Last
             // 
-            this.btn_Last.Location = new System.Drawing.Point(216, 48);
-            this.btn_Last.Margin = new System.Windows.Forms.Padding(6);
+            this.btn_Last.Location = new System.Drawing.Point(144, 32);
+            this.btn_Last.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Last.Name = "btn_Last";
-            this.btn_Last.Size = new System.Drawing.Size(36, 36);
+            this.btn_Last.Size = new System.Drawing.Size(24, 24);
             this.btn_Last.TabIndex = 18;
             this.btn_Last.Text = "L";
             this.ttip_optionHints.SetToolTip(this.btn_Last, "Go to Last Page");
@@ -236,10 +235,10 @@ namespace OfficeEquipMgmtApp
             // 
             // btn_First
             // 
-            this.btn_First.Location = new System.Drawing.Point(0, 48);
-            this.btn_First.Margin = new System.Windows.Forms.Padding(6);
+            this.btn_First.Location = new System.Drawing.Point(0, 32);
+            this.btn_First.Margin = new System.Windows.Forms.Padding(4);
             this.btn_First.Name = "btn_First";
-            this.btn_First.Size = new System.Drawing.Size(36, 36);
+            this.btn_First.Size = new System.Drawing.Size(24, 24);
             this.btn_First.TabIndex = 19;
             this.btn_First.Text = "F";
             this.ttip_optionHints.SetToolTip(this.btn_First, "Go to First Page");
@@ -249,10 +248,10 @@ namespace OfficeEquipMgmtApp
             // btn_back
             // 
             this.btn_back.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_rewind_black_18dp_1x;
-            this.btn_back.Location = new System.Drawing.Point(48, 48);
-            this.btn_back.Margin = new System.Windows.Forms.Padding(6);
+            this.btn_back.Location = new System.Drawing.Point(32, 32);
+            this.btn_back.Margin = new System.Windows.Forms.Padding(4);
             this.btn_back.Name = "btn_back";
-            this.btn_back.Size = new System.Drawing.Size(36, 36);
+            this.btn_back.Size = new System.Drawing.Size(24, 24);
             this.btn_back.TabIndex = 10;
             this.ttip_optionHints.SetToolTip(this.btn_back, "Go to Previous Page");
             this.btn_back.UseVisualStyleBackColor = true;
@@ -261,10 +260,10 @@ namespace OfficeEquipMgmtApp
             // btn_forward
             // 
             this.btn_forward.Image = global::OfficeEquipMgmtApp.Properties.Resources.ic_fast_forward_black_18dp_1x;
-            this.btn_forward.Location = new System.Drawing.Point(168, 48);
-            this.btn_forward.Margin = new System.Windows.Forms.Padding(6);
+            this.btn_forward.Location = new System.Drawing.Point(112, 32);
+            this.btn_forward.Margin = new System.Windows.Forms.Padding(4);
             this.btn_forward.Name = "btn_forward";
-            this.btn_forward.Size = new System.Drawing.Size(36, 36);
+            this.btn_forward.Size = new System.Drawing.Size(24, 24);
             this.btn_forward.TabIndex = 11;
             this.ttip_optionHints.SetToolTip(this.btn_forward, "Go to Next Page");
             this.btn_forward.UseVisualStyleBackColor = true;
@@ -273,10 +272,10 @@ namespace OfficeEquipMgmtApp
             // btn_Delete
             // 
             this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.DeleteTableRow_16x;
-            this.btn_Delete.Location = new System.Drawing.Point(84, 24);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(6);
+            this.btn_Delete.Location = new System.Drawing.Point(56, 16);
+            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
             this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(60, 60);
+            this.btn_Delete.Size = new System.Drawing.Size(40, 40);
             this.btn_Delete.TabIndex = 9;
             this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
             this.btn_Delete.UseVisualStyleBackColor = true;
@@ -285,10 +284,10 @@ namespace OfficeEquipMgmtApp
             // saveBtn
             // 
             this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.Save_16x;
-            this.saveBtn.Location = new System.Drawing.Point(12, 24);
-            this.saveBtn.Margin = new System.Windows.Forms.Padding(6);
+            this.saveBtn.Location = new System.Drawing.Point(8, 16);
+            this.saveBtn.Margin = new System.Windows.Forms.Padding(4);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(60, 60);
+            this.saveBtn.Size = new System.Drawing.Size(40, 40);
             this.saveBtn.TabIndex = 8;
             this.ttip_optionHints.SetToolTip(this.saveBtn, "Save the changes you made to the database.");
             this.saveBtn.UseVisualStyleBackColor = true;
@@ -306,9 +305,11 @@ namespace OfficeEquipMgmtApp
             // 
             this.grpbx_Actions.Controls.Add(this.saveBtn);
             this.grpbx_Actions.Controls.Add(this.btn_Delete);
-            this.grpbx_Actions.Location = new System.Drawing.Point(12, 36);
+            this.grpbx_Actions.Location = new System.Drawing.Point(8, 24);
+            this.grpbx_Actions.Margin = new System.Windows.Forms.Padding(2);
             this.grpbx_Actions.Name = "grpbx_Actions";
-            this.grpbx_Actions.Size = new System.Drawing.Size(252, 96);
+            this.grpbx_Actions.Padding = new System.Windows.Forms.Padding(2);
+            this.grpbx_Actions.Size = new System.Drawing.Size(168, 64);
             this.grpbx_Actions.TabIndex = 9;
             this.grpbx_Actions.TabStop = false;
             this.grpbx_Actions.Text = "Actions";
@@ -317,7 +318,6 @@ namespace OfficeEquipMgmtApp
             // 
             this.itemPerPageUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.itemPerPageUpDown.Location = new System.Drawing.Point(0, 0);
-            this.itemPerPageUpDown.Margin = new System.Windows.Forms.Padding(4);
             this.itemPerPageUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -329,7 +329,7 @@ namespace OfficeEquipMgmtApp
             0,
             0});
             this.itemPerPageUpDown.Name = "itemPerPageUpDown";
-            this.itemPerPageUpDown.Size = new System.Drawing.Size(108, 30);
+            this.itemPerPageUpDown.Size = new System.Drawing.Size(72, 23);
             this.itemPerPageUpDown.TabIndex = 13;
             this.itemPerPageUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemPerPageUpDown.Value = new decimal(new int[] {
@@ -351,15 +351,14 @@ namespace OfficeEquipMgmtApp
             // pageSelector
             // 
             this.pageSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pageSelector.Location = new System.Drawing.Point(96, 48);
-            this.pageSelector.Margin = new System.Windows.Forms.Padding(4);
+            this.pageSelector.Location = new System.Drawing.Point(64, 32);
             this.pageSelector.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.pageSelector.Name = "pageSelector";
-            this.pageSelector.Size = new System.Drawing.Size(60, 30);
+            this.pageSelector.Size = new System.Drawing.Size(40, 23);
             this.pageSelector.TabIndex = 14;
             this.pageSelector.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.pageSelector.Value = new decimal(new int[] {
@@ -372,9 +371,10 @@ namespace OfficeEquipMgmtApp
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 504);
+            this.label1.Location = new System.Drawing.Point(8, 336);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(179, 20);
+            this.label1.Size = new System.Drawing.Size(122, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "No. of records per page:";
             // 
@@ -383,9 +383,11 @@ namespace OfficeEquipMgmtApp
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
-            this.groupBox1.Location = new System.Drawing.Point(12, 132);
+            this.groupBox1.Location = new System.Drawing.Point(8, 88);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(252, 156);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(168, 104);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input Error";
@@ -397,19 +399,22 @@ namespace OfficeEquipMgmtApp
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Enabled = false;
             this.textBox1.ForeColor = System.Drawing.Color.Red;
-            this.textBox1.Location = new System.Drawing.Point(10, 38);
+            this.textBox1.Location = new System.Drawing.Point(7, 25);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(204, 88);
+            this.textBox1.Size = new System.Drawing.Size(136, 59);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "This cell only accepts numerical input. Letters and special characters are not allowed.";
+            this.textBox1.Text = "This cell only accepts numerical input. Letters and special characters are not al" +
+    "lowed.";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 44);
+            this.label4.Location = new System.Drawing.Point(9, 29);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 20);
+            this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 0;
             // 
             // panel1
@@ -421,18 +426,16 @@ namespace OfficeEquipMgmtApp
             this.panel1.Controls.Add(this.btn_forward);
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.pageSelector);
-            this.panel1.Location = new System.Drawing.Point(12, 528);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Location = new System.Drawing.Point(8, 352);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(252, 84);
+            this.panel1.Size = new System.Drawing.Size(168, 56);
             this.panel1.TabIndex = 20;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(132, 0);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRefresh.Location = new System.Drawing.Point(88, 0);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(120, 34);
+            this.btnRefresh.Size = new System.Drawing.Size(80, 23);
             this.btnRefresh.TabIndex = 12;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -442,21 +445,20 @@ namespace OfficeEquipMgmtApp
             // 
             this.tab_Tables.Controls.Add(this.tabEquipment);
             this.tab_Tables.Controls.Add(this.tabManufacturer);
-            this.tab_Tables.Location = new System.Drawing.Point(276, 48);
-            this.tab_Tables.Margin = new System.Windows.Forms.Padding(4);
+            this.tab_Tables.Location = new System.Drawing.Point(184, 32);
             this.tab_Tables.Name = "tab_Tables";
             this.tab_Tables.SelectedIndex = 0;
-            this.tab_Tables.Size = new System.Drawing.Size(1032, 564);
+            this.tab_Tables.Size = new System.Drawing.Size(688, 376);
             this.tab_Tables.TabIndex = 21;
+            this.tab_Tables.SelectedIndexChanged += new System.EventHandler(this.tab_Tables_SelectedIndexChanged);
             // 
             // tabEquipment
             // 
             this.tabEquipment.Controls.Add(this.dtgrd_equipment);
-            this.tabEquipment.Location = new System.Drawing.Point(4, 29);
-            this.tabEquipment.Margin = new System.Windows.Forms.Padding(4);
+            this.tabEquipment.Location = new System.Drawing.Point(4, 22);
             this.tabEquipment.Name = "tabEquipment";
-            this.tabEquipment.Padding = new System.Windows.Forms.Padding(4);
-            this.tabEquipment.Size = new System.Drawing.Size(1024, 531);
+            this.tabEquipment.Padding = new System.Windows.Forms.Padding(3);
+            this.tabEquipment.Size = new System.Drawing.Size(680, 350);
             this.tabEquipment.TabIndex = 0;
             this.tabEquipment.Text = "Equipment";
             this.tabEquipment.UseVisualStyleBackColor = true;
@@ -496,8 +498,7 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgrd_equipment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dtgrd_equipment.Location = new System.Drawing.Point(4, 4);
-            this.dtgrd_equipment.Margin = new System.Windows.Forms.Padding(4);
+            this.dtgrd_equipment.Location = new System.Drawing.Point(3, 3);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -508,7 +509,7 @@ namespace OfficeEquipMgmtApp
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgrd_equipment.RowTemplate.Height = 28;
-            this.dtgrd_equipment.Size = new System.Drawing.Size(1016, 523);
+            this.dtgrd_equipment.Size = new System.Drawing.Size(674, 344);
             this.dtgrd_equipment.TabIndex = 2;
             this.dtgrd_equipment.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_equipment_CellPainting);
             this.dtgrd_equipment.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_equipment_CellValidating);
@@ -521,7 +522,7 @@ namespace OfficeEquipMgmtApp
             this.col_ID.HeaderText = "ID";
             this.col_ID.Name = "col_ID";
             this.col_ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.col_ID.Width = 62;
+            this.col_ID.Width = 43;
             // 
             // col_Name
             // 
@@ -530,7 +531,7 @@ namespace OfficeEquipMgmtApp
             this.col_Name.HeaderText = "Name";
             this.col_Name.Name = "col_Name";
             this.col_Name.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.col_Name.Width = 89;
+            this.col_Name.Width = 60;
             // 
             // col_Condition
             // 
@@ -538,7 +539,7 @@ namespace OfficeEquipMgmtApp
             this.col_Condition.DataPropertyName = "Condition";
             this.col_Condition.HeaderText = "Condition";
             this.col_Condition.Name = "col_Condition";
-            this.col_Condition.Width = 85;
+            this.col_Condition.Width = 57;
             // 
             // col_Quantity
             // 
@@ -546,7 +547,7 @@ namespace OfficeEquipMgmtApp
             this.col_Quantity.DataPropertyName = "Quantity";
             this.col_Quantity.HeaderText = "Quantity";
             this.col_Quantity.Name = "col_Quantity";
-            this.col_Quantity.Width = 107;
+            this.col_Quantity.Width = 71;
             // 
             // col_Price
             // 
@@ -554,7 +555,7 @@ namespace OfficeEquipMgmtApp
             this.col_Price.DataPropertyName = "Price";
             this.col_Price.HeaderText = "Price";
             this.col_Price.Name = "col_Price";
-            this.col_Price.Width = 84;
+            this.col_Price.Width = 56;
             // 
             // col_Department
             // 
@@ -563,7 +564,7 @@ namespace OfficeEquipMgmtApp
             this.col_Department.HeaderText = "Department";
             this.col_Department.MaxInputLength = 5;
             this.col_Department.Name = "col_Department";
-            this.col_Department.Width = 133;
+            this.col_Department.Width = 87;
             // 
             // col_Manufacturer
             // 
@@ -574,7 +575,7 @@ namespace OfficeEquipMgmtApp
             "Manuf 1",
             "Manuf 2"});
             this.col_Manufacturer.Name = "col_Manufacturer";
-            this.col_Manufacturer.Width = 114;
+            this.col_Manufacturer.Width = 76;
             // 
             // col_date_of_purchase
             // 
@@ -587,11 +588,10 @@ namespace OfficeEquipMgmtApp
             // tabManufacturer
             // 
             this.tabManufacturer.Controls.Add(this.dtgrd_manufacturer);
-            this.tabManufacturer.Location = new System.Drawing.Point(4, 29);
-            this.tabManufacturer.Margin = new System.Windows.Forms.Padding(4);
+            this.tabManufacturer.Location = new System.Drawing.Point(4, 22);
             this.tabManufacturer.Name = "tabManufacturer";
-            this.tabManufacturer.Padding = new System.Windows.Forms.Padding(4);
-            this.tabManufacturer.Size = new System.Drawing.Size(1024, 531);
+            this.tabManufacturer.Padding = new System.Windows.Forms.Padding(3);
+            this.tabManufacturer.Size = new System.Drawing.Size(680, 350);
             this.tabManufacturer.TabIndex = 1;
             this.tabManufacturer.Text = "Manufacturers";
             this.tabManufacturer.UseVisualStyleBackColor = true;
@@ -608,10 +608,11 @@ namespace OfficeEquipMgmtApp
             this.col_manufCity,
             this.col_manufZip});
             this.dtgrd_manufacturer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtgrd_manufacturer.Location = new System.Drawing.Point(4, 4);
+            this.dtgrd_manufacturer.Location = new System.Drawing.Point(3, 3);
+            this.dtgrd_manufacturer.Margin = new System.Windows.Forms.Padding(2);
             this.dtgrd_manufacturer.Name = "dtgrd_manufacturer";
             this.dtgrd_manufacturer.RowTemplate.Height = 28;
-            this.dtgrd_manufacturer.Size = new System.Drawing.Size(1016, 523);
+            this.dtgrd_manufacturer.Size = new System.Drawing.Size(674, 344);
             this.dtgrd_manufacturer.TabIndex = 1;
             this.dtgrd_manufacturer.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_manufacturer_CellPainting);
             // 
@@ -622,7 +623,7 @@ namespace OfficeEquipMgmtApp
             this.ID.HeaderText = "ID";
             this.ID.Name = "ID";
             this.ID.ReadOnly = true;
-            this.ID.Width = 62;
+            this.ID.Width = 43;
             // 
             // col_manufName
             // 
@@ -630,7 +631,7 @@ namespace OfficeEquipMgmtApp
             this.col_manufName.DataPropertyName = "Name";
             this.col_manufName.HeaderText = "Name";
             this.col_manufName.Name = "col_manufName";
-            this.col_manufName.Width = 87;
+            this.col_manufName.Width = 60;
             // 
             // col_manufEmailAdd
             // 
@@ -638,7 +639,7 @@ namespace OfficeEquipMgmtApp
             this.col_manufEmailAdd.DataPropertyName = "Email Address";
             this.col_manufEmailAdd.HeaderText = "Email Address";
             this.col_manufEmailAdd.Name = "col_manufEmailAdd";
-            this.col_manufEmailAdd.Width = 135;
+            this.col_manufEmailAdd.Width = 90;
             // 
             // col_manufContactNumber
             // 
@@ -646,7 +647,6 @@ namespace OfficeEquipMgmtApp
             this.col_manufContactNumber.DataPropertyName = "Contact Number";
             this.col_manufContactNumber.HeaderText = "Contact Number";
             this.col_manufContactNumber.Name = "col_manufContactNumber";
-            this.col_manufContactNumber.Width = 148;
             // 
             // col_manufCountry
             // 
@@ -654,7 +654,7 @@ namespace OfficeEquipMgmtApp
             this.col_manufCountry.DataPropertyName = "Country of Origin";
             this.col_manufCountry.HeaderText = "Country of Origin";
             this.col_manufCountry.Name = "col_manufCountry";
-            this.col_manufCountry.Width = 113;
+            this.col_manufCountry.Width = 77;
             // 
             // col_manufCity
             // 
@@ -662,7 +662,7 @@ namespace OfficeEquipMgmtApp
             this.col_manufCity.DataPropertyName = "City";
             this.col_manufCity.HeaderText = "City";
             this.col_manufCity.Name = "col_manufCity";
-            this.col_manufCity.Width = 71;
+            this.col_manufCity.Width = 49;
             // 
             // col_manufZip
             // 
@@ -670,13 +670,13 @@ namespace OfficeEquipMgmtApp
             this.col_manufZip.DataPropertyName = "Zip Code";
             this.col_manufZip.HeaderText = "Zip Code";
             this.col_manufZip.Name = "col_manufZip";
-            this.col_manufZip.Width = 101;
+            this.col_manufZip.Width = 69;
             // 
             // FRM_EquipmentEditing
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1311, 662);
+            this.ClientSize = new System.Drawing.Size(874, 441);
             this.Controls.Add(this.tab_Tables);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
@@ -685,7 +685,6 @@ namespace OfficeEquipMgmtApp
             this.Controls.Add(this.statusStripA);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FRM_EquipmentEditing";
             this.ShowIcon = false;
             this.Text = " ";

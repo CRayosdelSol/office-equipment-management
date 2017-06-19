@@ -19,15 +19,8 @@ namespace DatabaseManagementOperationsLibrary
 
         public string StrConn
         {
-            get
-            {
-                return strConn;
-            }
-
-            set
-            {
-                strConn = value;
-            }
+            get { return strConn; }
+            set { strConn = value; }
         }
 
         public DatabaseOperations(string connString)
@@ -289,7 +282,7 @@ namespace DatabaseManagementOperationsLibrary
 
             sUpdate = "UPDATE Manufacturer SET Name=@p2,[Email Address]=@p3,[Contact Number]=@p4,[Country of Origin]=@p5,City=@p6,[Zip Code]=@p7 WHERE ID=@p1";
 
-            sDelete = "DELETE FROM Equipment WHERE ID=@p1";
+            sDelete = "DELETE FROM Manufacturer WHERE ID=@p1";
 
             SqlParameter[] pInsert = new SqlParameter[6];
             SqlParameter[] pUpdate = new SqlParameter[7];
@@ -302,9 +295,6 @@ namespace DatabaseManagementOperationsLibrary
             pInsert[4] = new SqlParameter("@p6", SqlDbType.VarChar, 255, "City");
             pInsert[5] = new SqlParameter("@p7", SqlDbType.Int, 1000, "Zip Code");
 
-            
-
-
             pUpdate[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
             pUpdate[1] = new SqlParameter("@p2", SqlDbType.VarChar, 255, "Name");
             pUpdate[2] = new SqlParameter("@p3", SqlDbType.VarChar, 255, "Email Address");
@@ -312,7 +302,6 @@ namespace DatabaseManagementOperationsLibrary
             pUpdate[4] = new SqlParameter("@p5", SqlDbType.VarChar, 255, "Country of Origin");
             pUpdate[5] = new SqlParameter("@p6", SqlDbType.VarChar, 255, "City");
             pUpdate[6] = new SqlParameter("@p7", SqlDbType.Int, 1000, "Zip Code");
-
 
             pDelete[0] = new SqlParameter("@p1", SqlDbType.Int, 1000, "ID");
 

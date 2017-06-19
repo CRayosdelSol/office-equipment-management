@@ -19,15 +19,15 @@ namespace OfficeEquipMgmtApp
         ConditionList condList = new ConditionList();
 
         // Database variables
-        SqlDataAdapter dataAdapter;
-        DataSet ds;
         DatabaseOperations db;
         string dir;
         string filepath;
         protected string connString;
 
         //DB Pagination
-        DBPagination equipmentPage, manufacturersPage;
+        DBPagination equipmentPage, manufacturerPage;
+        List<DBPagination> pagedTabs = new List<DBPagination>(); // agregate all pages to this list so that a universal code fragment can be used
+        int tabIndex = 0;
 
         #region Properties
         public DatabaseOperations Db
@@ -36,7 +36,7 @@ namespace OfficeEquipMgmtApp
             set { db = value; }
         }
 
-        public DBPagination Page
+        public DBPagination PageEquip
         {
             get { return equipmentPage; }
             set { equipmentPage = value; }
@@ -44,8 +44,8 @@ namespace OfficeEquipMgmtApp
 
         public DBPagination PageMnf
         {
-            get { return manufacturersPage; }
-            set { manufacturersPage = value; }
+            get { return manufacturerPage; }
+            set { manufacturerPage = value; }
         }
 
         public string Filepath
@@ -141,9 +141,13 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
-            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
-            manufacturersPage.currPage = 0;
+            manufacturerPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturerPage.currPage = 0;
 
+            // refresh the list
+            pagedTabs = new List<DBPagination>();
+            pagedTabs.Add(equipmentPage);
+            pagedTabs.Add(manufacturerPage);
 
             Text = Path.GetFileNameWithoutExtension(filepath);
 
@@ -157,7 +161,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
-                manufacturersPage.loadPage(); //database binding for manufacturers
+                manufacturerPage.loadPage(); //database binding for manufacturers
             }
             catch (Exception e)
             {
@@ -201,14 +205,13 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
-            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
-            manufacturersPage.currPage = 0;
+            manufacturerPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturerPage.currPage = 0;
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
             Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
-
 
             DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
             conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
@@ -220,7 +223,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
-                manufacturersPage.loadPage();//database binding (manufacturer)
+                manufacturerPage.loadPage();//database binding (manufacturer)
             }
             catch (Exception e)
             {
@@ -259,7 +262,7 @@ namespace OfficeEquipMgmtApp
             else
             {
                 initalizeDataGrid(dtgrd_equipment);
-                initializeDefGrid(dtgrd_manufacturer);
+                //initializeDefGrid(dtgrd_manufacturer);
             }
 
             //Scale the form so that all of its contents are shown properly.
@@ -268,12 +271,17 @@ namespace OfficeEquipMgmtApp
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 
             // Grid View page handler
-            Page.pageSize = (int)itemPerPageUpDown.Value;
-            Page.ReCount();
-            Page.currPage = 0; // do this so the viewport goes to the first page 
+            pagedTabs.Add(equipmentPage);
+            pagedTabs.Add(manufacturerPage);
 
-            lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
-            lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+            tabIndex = tab_Tables.SelectedIndex;
+
+            pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
+            pagedTabs[tabIndex].ReCount();
+            pagedTabs[tabIndex].currPage = 0; // do this so the viewport goes to the first page 
+
+            lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
         }
 
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
@@ -315,79 +323,82 @@ namespace OfficeEquipMgmtApp
         #region Page Navigation
         private void btn_back_Click(object sender, EventArgs e)
         {
-            Page.goPrevious();
+            pagedTabs[tabIndex].goPrevious();
         }
 
         private void btn_forward_Click(object sender, EventArgs e)
         {
-            Page.goNext();
+            pagedTabs[tabIndex].goNext();
         }
 
         private void pageSelector_ValueChanged(object sender, EventArgs e)
         {
-            Page.currPage = (int)pageSelector.Value - 1;
-            Page.loadPage();
+            pagedTabs[tabIndex].currPage = (int)pageSelector.Value - 1;
+            pagedTabs[tabIndex].loadPage();
         }
         #endregion
 
         private void itemPerPageUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Page.pageSize = (int)itemPerPageUpDown.Value;
+            pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
         }
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             // TODO: Add multiple row deletion dialog box
-            DialogResult dialogResult = DialogResult.No;
+            //DialogResult dialogResult = DialogResult.No;
+            DialogResult dialogResult;
 
-            try
-            {
-                dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            }
-            catch (Exception)
-            { }
-
-            if (dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabEquipment")
+            if (tab_Tables.SelectedTab.Name == "tabEquipment")
             {
                 try
                 {
-                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
+                        for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                        {
+                            equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
+                        }
+
+                        scaleDatagrid(dtgrd_equipment);
+                        equipmentPage.Db.UpdateEquipDataSet(equipmentPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                        equipmentPage.Ds.Dispose();
+                        equipmentPage.Db.Dispose(true);
+                        equipmentPage.loadPage();
+
+                        lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
+                        lbl_RecordCount.Text = equipmentPage.totalRecords.ToString() + " Records present";
                     }
-
-                    scaleDatagrid(dtgrd_equipment);
-                    equipmentPage.Db.UpdateEquipDataSet(equipmentPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
-                    equipmentPage.Ds.Dispose();
-                    equipmentPage.Db.Dispose(true);
-                    equipmentPage.loadPage();
-
-                    lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
                 {
                     MessageBox.Show(err.Message);
                 }
+
             }
 
-            else if(dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabManufacturer")
+            else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
             {
                 try
                 {
-                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_manufacturer.Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        manufacturersPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                        for (int index = 0; index <= dtgrd_manufacturer.SelectedRows.Count; index++) // deletes all selected row indices
+                        {
+                            manufacturerPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                        }
+
+                        scaleDatagrid(dtgrd_manufacturer);
+                        manufacturerPage.Db.updateManufacturerDataSet(manufacturerPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                        manufacturerPage.Ds.Dispose();
+                        manufacturerPage.Db.Dispose(true);
+                        manufacturerPage.loadPage();
+
+                        lbl_Pages.Text = manufacturerPage.pageCount.ToString() + " Page(s) in total";
+                        lbl_RecordCount.Text = manufacturerPage.totalRecords.ToString() + " Records present";
                     }
-
-                    scaleDatagrid(dtgrd_manufacturer);
-                    manufacturersPage.Db.UpdateEquipDataSet(manufacturersPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
-                    manufacturersPage.Ds.Dispose();
-                    manufacturersPage.Db.Dispose(true);
-                    manufacturersPage.loadPage();
-
-                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
                 {
@@ -395,7 +406,7 @@ namespace OfficeEquipMgmtApp
                 }
             }
         }
-#region equipmentDGVPainting
+        #region equipmentDGVPainting
         private void dtgrd_equipment_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             //TODO: Add option to show row colors based on condtition of item
@@ -469,7 +480,7 @@ namespace OfficeEquipMgmtApp
             }
         }
 
-#endregion
+        #endregion
 
 
         private void dtgrd_equipment_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -535,40 +546,22 @@ namespace OfficeEquipMgmtApp
 
         internal void saveBtn_Click(object sender, EventArgs e)
         {
-            if (tab_Tables.SelectedTab.Name == "tabEquipment")
+            try
             {
-                try
-                {
-                    equipmentPage.Db.UpdateEquipDataSet((DataSet)dtgrd_equipment.DataSource);
-                    Page.ReCount();
-                    lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                equipmentPage.Db.Dispose(true);
-            }
+                if (tabIndex == 0)
+                    pagedTabs[tabIndex].Db.UpdateEquipDataSet(pagedTabs[tabIndex].Ds);
+                else
+                    pagedTabs[tabIndex].Db.updateManufacturerDataSet(pagedTabs[tabIndex].Ds);
 
-            else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
+                pagedTabs[tabIndex].ReCount();
+                lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
+                lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+            }
+            catch (Exception)
             {
-                try
-                {
-                    manufacturersPage.Db.updateManufacturerDataSet((DataSet)dtgrd_manufacturer.DataSource);
-                    PageMnf.ReCount();
-                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                manufacturersPage.Db.Dispose(true);
-
-                MessageBox.Show(dtgrd_manufacturer.Rows[0].Cells[6].Value.ToString()); 
+                MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
+            pagedTabs[tabIndex].Db.Dispose(true);
         }
 
         private void dtgrd_equipment_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -618,26 +611,16 @@ namespace OfficeEquipMgmtApp
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Page.ReCount();
-            Page.currPage = 0;
-            lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
-            lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
+            pagedTabs[tabIndex].ReCount();
+            pagedTabs[tabIndex].currPage = 0;
+            lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
 
         }
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                //dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[4].ErrorText = "Letters and special characters are not allowed.";
-                groupBox1.Visible = true;
-            }
-            else
-            {
-                e.Handled = false;
-                groupBox1.Visible = false;
-            }
+
         }
 
         private void dtgrd_equipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -653,7 +636,7 @@ namespace OfficeEquipMgmtApp
 
         private void btn_First_Click(object sender, EventArgs e)
         {
-            equipmentPage.goFirst();
+            pagedTabs[tabIndex].goFirst();
         }
 
         private void dtgrd_manufacturer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -661,9 +644,20 @@ namespace OfficeEquipMgmtApp
 
         }
 
+        private void tab_Tables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tabIndex = tab_Tables.SelectedIndex;
+            pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
+            pagedTabs[tabIndex].ReCount();
+            pagedTabs[tabIndex].currPage = 0; // do this so the viewport goes to the first page 
+
+            lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
+            lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+        }
+
         private void btn_Last_Click(object sender, EventArgs e)
         {
-            equipmentPage.goLast();
+            pagedTabs[tabIndex].goLast();
         }
     }
 }

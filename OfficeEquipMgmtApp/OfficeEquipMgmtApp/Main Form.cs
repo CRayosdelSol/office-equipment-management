@@ -100,7 +100,7 @@ namespace OfficeEquipMgmtApp
                     // get the active mdi child and determine if it is an equipment form
                     FRM_EquipmentEditing tempForm = (FRM_EquipmentEditing)ActiveMdiChild;
 
-                    if (tempForm.Page.getResultCount() == 0)
+                    if (tempForm.PageEquip.getResultCount() == 0)
                     {
                         MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
@@ -130,8 +130,8 @@ namespace OfficeEquipMgmtApp
 
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.PageEquip.ReCount();
+                            tempForm.PageEquip.loadPage();
                         }
                         catch (Exception)
                         { }
@@ -153,8 +153,8 @@ namespace OfficeEquipMgmtApp
 
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.PageEquip.ReCount();
+                            tempForm.PageEquip.loadPage();
 
 
                         }
@@ -241,7 +241,7 @@ namespace OfficeEquipMgmtApp
                     // get the active mdi child and determine if it is an equipment form
                     FRM_EquipmentEditing tempForm = (FRM_EquipmentEditing)ActiveMdiChild;
 
-                    if (tempForm.Page.getResultCount() == 0)
+                    if (tempForm.PageEquip.getResultCount() == 0)
                     {
                         MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
@@ -271,9 +271,12 @@ namespace OfficeEquipMgmtApp
 
                             tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
+
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.PageEquip.ReCount();
+                            tempForm.PageEquip.loadPage();
+                            tempForm.PageMnf.ReCount();
+                            tempForm.PageMnf.loadPage();
                         }
                         catch (Exception)
                         { }
@@ -296,8 +299,8 @@ namespace OfficeEquipMgmtApp
                             tempForm.IsNewDB = false;
                             tempForm.Filepath = save.FileName; // load the saved Database and bind it to the DGV
                             tempForm.initalizeDataGrid(tempForm.getDGV());
-                            tempForm.Page.ReCount();
-                            tempForm.Page.loadPage();
+                            tempForm.PageEquip.ReCount();
+                            tempForm.PageEquip.loadPage();
                         }
                         catch (Exception)
                         {
