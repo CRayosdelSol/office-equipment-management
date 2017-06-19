@@ -44,7 +44,7 @@ namespace DatabaseManagementOperationsLibrary
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        string.Format("CREATE DATABASE {0} ON PRIMARY (NAME={0}, FILENAME='{1}')", databaseName, path);
+                        string.Format("CREATE DATABASE [{0}] ON PRIMARY (NAME=[{0}], FILENAME='{1}')", databaseName, path);
                     command.ExecuteNonQuery();
 
                     command.CommandText =
@@ -66,7 +66,7 @@ namespace DatabaseManagementOperationsLibrary
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText =
-                        string.Format("CREATE DATABASE {0} ON PRIMARY (NAME={0}, FILENAME='{1}') FOR ATTACH", databaseName, path);
+                        string.Format("CREATE DATABASE [{0}] ON PRIMARY (NAME=[{0}], FILENAME='{1}') FOR ATTACH", databaseName, path);
                     command.ExecuteNonQuery();
 
                     command.CommandText =
