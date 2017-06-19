@@ -257,15 +257,27 @@ namespace OfficeEquipMgmtApp
 
             if (e.CloseReason == CloseReason.UserClosing) // if the user clicked on the local X button 
             {
-                var close = MessageBox.Show("Do you want to discard changes?", "Unsaved Database", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                var close = MessageBox.Show("Do you want to save changes?", "Unsaved Database", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
-                if (close == DialogResult.Yes)
+                if (close == DialogResult.No) // drop the database
                 {
                     if (File.Exists(filepath) && isNewDB == true) // deletes temp files generated along with the mdf in case it exists
                     {
                         File.Delete(filepath);
                         File.Delete(dir + string.Format("temp_{0}_log.ldf", mainForm.fileCounter));
                     }
+
+                    e.Cancel = false;
+                }
+                else if (close == DialogResult.Yes)
+                {
+                    saveBtn_Click(sender, e);
+                    if (isNewDB)
+                    {
+                        Main tempform = Application.OpenForms[0] as Main;
+                        tempform.btnSaveAs_Click(sender, e);
+                    }
+
                     e.Cancel = false;
                 }
                 else
@@ -582,7 +594,6 @@ namespace OfficeEquipMgmtApp
             pagedTabs[tabIndex].currPage = 0;
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
             lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
-
         }
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
@@ -594,6 +605,7 @@ namespace OfficeEquipMgmtApp
         {
             // discard edits made by the user
             dtgrd_equipment.Rows[e.RowIndex].ErrorText = string.Empty;
+            dtgrd_equipment.Refresh();
 
             if (e.RowIndex != dtgrd_equipment.NewRowIndex)
             {
@@ -616,7 +628,6 @@ namespace OfficeEquipMgmtApp
                 {
                     dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.PaleVioletRed;
                 }
-
                 else
                 {
 
@@ -748,9 +759,9 @@ namespace OfficeEquipMgmtApp
 
             if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufName")
             {
-                if (e.FormattedValue.ToString().Length <= 2)
+                if (e.FormattedValue.ToString().Length < 2)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Item name must at least be 2 characters long!";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Manufacturer name must at least be 2 characters long!";
                     e.Cancel = true;
                 }
             }
@@ -759,7 +770,7 @@ namespace OfficeEquipMgmtApp
             {
                 if (e.FormattedValue.ToString().Length <= 2)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid e-mail address!";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Please enter a valid e-mail address!";
                     e.Cancel = true;
                 }
             }
@@ -768,7 +779,7 @@ namespace OfficeEquipMgmtApp
             {
                 if (e.FormattedValue.ToString().Length <= 1)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid phone number!";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Please enter a valid phone number!";
                     e.Cancel = true;
                 }
             }
@@ -777,7 +788,7 @@ namespace OfficeEquipMgmtApp
             {
                 if (e.FormattedValue.ToString().Length <= 1)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter the actual country name. Do not use abbriviations.";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Please enter the actual country name. Do not use abbriviations.";
                     e.Cancel = true;
                 }
             }
@@ -786,7 +797,7 @@ namespace OfficeEquipMgmtApp
             {
                 if (e.FormattedValue.ToString().Length <= 1)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter the actual city name. Do not use abbriviations.";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Please enter the actual city name. Do not use abbriviations.";
                     e.Cancel = true;
                 }
             }
@@ -795,7 +806,7 @@ namespace OfficeEquipMgmtApp
             {
                 if (e.FormattedValue.ToString().Length <= 2)
                 {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid zip code.";
+                    dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = "Please enter a valid zip code.";
                     e.Cancel = true;
                 }
             }
@@ -807,20 +818,12 @@ namespace OfficeEquipMgmtApp
         {
             // discard edits made by the user
             dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = string.Empty;
+            dtgrd_manufacturer.Refresh();
         }
 
         private void dtgrd_manufacturer_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            e.Control.KeyPress -= new KeyPressEventHandler(NumericColumn_KeyPress);
-            if (dtgrd_manufacturer.CurrentCell.ColumnIndex == 6)
-            {
-                TextBox tb = e.Control as TextBox;
-                if (tb != null)
-                {
-                    //Prevent user from entering non numeric values.
-                    tb.KeyPress += new KeyPressEventHandler(NumericColumn_KeyPress);
-                }
-            }
+
         }
 
         private void dtgrd_equipment_RowLeave(object sender, DataGridViewCellEventArgs e)
@@ -830,6 +833,7 @@ namespace OfficeEquipMgmtApp
 
         private void tab_Tables_SelectedIndexChanged(object sender, EventArgs e)
         {
+            saveBtn_Click(sender, e);
             tabIndex = tab_Tables.SelectedIndex;
             pagedTabs[tabIndex].pageSize = (int)itemPerPageUpDown.Value;
             pagedTabs[tabIndex].ReCount();
