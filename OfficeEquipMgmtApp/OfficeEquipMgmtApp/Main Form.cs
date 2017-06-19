@@ -25,7 +25,7 @@ namespace OfficeEquipMgmtApp
     {
         // this keeps track of how many times the "New" menu item has been pressed 
         public int fileCounter = 0;
-        string openFileName;
+        string openFileName, connectionString;
 
         public Main()
         {
@@ -323,6 +323,7 @@ namespace OfficeEquipMgmtApp
         private void viewTablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FRM_TableViewer tableViewer_frm = new FRM_TableViewer(openFileName);
+            tableViewer_frm.MdiParent = this;
             tableViewer_frm.Show();
         }
     }

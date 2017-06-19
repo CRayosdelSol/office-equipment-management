@@ -30,9 +30,10 @@ namespace EquipmentLibrary
 
         public EquipmentManufacturerBuilder(string connectionString, string manufName)
         {
+            Address address = new Address();
             connString = connectionString;
             this.manufName = manufName;
-            manufacturer = Manufacturer.CreateManufacturer(manufName);
+            manufacturer = Manufacturer.CreateManufacturer(manufName,address);
         }
 
         public void establishUserCommunicationMethods()
@@ -40,15 +41,14 @@ namespace EquipmentLibrary
             selectCommand = "SELECT * FROM Manufacturer WHERE Name= @name";
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 sqlComm = new SqlCommand(selectCommand, SqlConnection);
                 sqlComm.Parameters.AddWithValue("@name", manufName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        manufacturer.Contact_number = reader["Number"].ToString();
-                        manufacturer.Email_add = reader["Email"].ToString();
-                    }
+                    manufacturer.Contact_number = reader["Contact Number"].ToString();
+                    manufacturer.Email_add = reader["Email Address"].ToString();
                 }
             }
         }
@@ -58,16 +58,15 @@ namespace EquipmentLibrary
             selectCommand = "SELECT * FROM Manufacturer WHERE Name= @name";
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@name", manufName);
-                using (reader = sqlComm.ExecuteReader())
+                reader = sqlComm.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        manufacturer.MnfctrrAdd.City = reader["City"].ToString();
-                        manufacturer.MnfctrrAdd.Country = reader["Country"].ToString();
-                        manufacturer.MnfctrrAdd.Zipcode = Convert.ToInt32(reader["Zip"].ToString());
-                    }
+                    manufacturer.MnfctrrAdd.City = reader["City"].ToString();
+                    manufacturer.MnfctrrAdd.Country = reader["Country of Origin"].ToString();
+                    manufacturer.MnfctrrAdd.Zipcode = Convert.ToInt32(reader["Zip Code"].ToString());
                 }
             }
         }

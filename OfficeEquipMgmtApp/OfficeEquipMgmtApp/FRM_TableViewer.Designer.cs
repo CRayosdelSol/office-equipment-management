@@ -90,45 +90,45 @@
             this.lbl_totalNumberOfEquipmentOwned.AutoSize = true;
             this.lbl_totalNumberOfEquipmentOwned.Location = new System.Drawing.Point(6, 155);
             this.lbl_totalNumberOfEquipmentOwned.Name = "lbl_totalNumberOfEquipmentOwned";
-            this.lbl_totalNumberOfEquipmentOwned.Size = new System.Drawing.Size(236, 20);
+            this.lbl_totalNumberOfEquipmentOwned.Size = new System.Drawing.Size(231, 20);
             this.lbl_totalNumberOfEquipmentOwned.TabIndex = 4;
-            this.lbl_totalNumberOfEquipmentOwned.Text = "Number of Equipments owned: -";
+            this.lbl_totalNumberOfEquipmentOwned.Text = "Number of Equipments owned: ";
             // 
             // lbl_needsReplacement
             // 
             this.lbl_needsReplacement.AutoSize = true;
             this.lbl_needsReplacement.Location = new System.Drawing.Point(6, 123);
             this.lbl_needsReplacement.Name = "lbl_needsReplacement";
-            this.lbl_needsReplacement.Size = new System.Drawing.Size(167, 20);
+            this.lbl_needsReplacement.Size = new System.Drawing.Size(162, 20);
             this.lbl_needsReplacement.TabIndex = 3;
-            this.lbl_needsReplacement.Text = "Needs Replacement: -";
+            this.lbl_needsReplacement.Text = "Needs Replacement: ";
             // 
             // lbl_LostCondition
             // 
             this.lbl_LostCondition.AutoSize = true;
             this.lbl_LostCondition.Location = new System.Drawing.Point(6, 92);
             this.lbl_LostCondition.Name = "lbl_LostCondition";
-            this.lbl_LostCondition.Size = new System.Drawing.Size(53, 20);
+            this.lbl_LostCondition.Size = new System.Drawing.Size(48, 20);
             this.lbl_LostCondition.TabIndex = 2;
-            this.lbl_LostCondition.Text = "Lost: -";
+            this.lbl_LostCondition.Text = "Lost: ";
             // 
             // lbl_UnderRepairCondition
             // 
             this.lbl_UnderRepairCondition.AutoSize = true;
             this.lbl_UnderRepairCondition.Location = new System.Drawing.Point(6, 64);
             this.lbl_UnderRepairCondition.Name = "lbl_UnderRepairCondition";
-            this.lbl_UnderRepairCondition.Size = new System.Drawing.Size(117, 20);
+            this.lbl_UnderRepairCondition.Size = new System.Drawing.Size(112, 20);
             this.lbl_UnderRepairCondition.TabIndex = 1;
-            this.lbl_UnderRepairCondition.Text = "Under Repair: -";
+            this.lbl_UnderRepairCondition.Text = "Under Repair: ";
             // 
             // lbl_GoodCondition
             // 
             this.lbl_GoodCondition.AutoSize = true;
             this.lbl_GoodCondition.Location = new System.Drawing.Point(6, 33);
             this.lbl_GoodCondition.Name = "lbl_GoodCondition";
-            this.lbl_GoodCondition.Size = new System.Drawing.Size(126, 20);
+            this.lbl_GoodCondition.Size = new System.Drawing.Size(125, 20);
             this.lbl_GoodCondition.TabIndex = 0;
-            this.lbl_GoodCondition.Text = "Good Conditon -";
+            this.lbl_GoodCondition.Text = "Good Conditon: ";
             // 
             // grpbx_ManufacturerInfo
             // 
@@ -148,36 +148,36 @@
             this.lbl_CountryOfOrigin.AutoSize = true;
             this.lbl_CountryOfOrigin.Location = new System.Drawing.Point(5, 116);
             this.lbl_CountryOfOrigin.Name = "lbl_CountryOfOrigin";
-            this.lbl_CountryOfOrigin.Size = new System.Drawing.Size(140, 20);
+            this.lbl_CountryOfOrigin.Size = new System.Drawing.Size(135, 20);
             this.lbl_CountryOfOrigin.TabIndex = 9;
-            this.lbl_CountryOfOrigin.Text = "Country of Origin: -";
+            this.lbl_CountryOfOrigin.Text = "Country of Origin: ";
             // 
             // lbl_ManufContactNumber
             // 
             this.lbl_ManufContactNumber.AutoSize = true;
             this.lbl_ManufContactNumber.Location = new System.Drawing.Point(6, 87);
             this.lbl_ManufContactNumber.Name = "lbl_ManufContactNumber";
-            this.lbl_ManufContactNumber.Size = new System.Drawing.Size(138, 20);
+            this.lbl_ManufContactNumber.Size = new System.Drawing.Size(133, 20);
             this.lbl_ManufContactNumber.TabIndex = 8;
-            this.lbl_ManufContactNumber.Text = "Contact Number: -";
+            this.lbl_ManufContactNumber.Text = "Contact Number: ";
             // 
             // lbl_Manufemail
             // 
             this.lbl_Manufemail.AutoSize = true;
             this.lbl_Manufemail.Location = new System.Drawing.Point(6, 58);
             this.lbl_Manufemail.Name = "lbl_Manufemail";
-            this.lbl_Manufemail.Size = new System.Drawing.Size(129, 20);
+            this.lbl_Manufemail.Size = new System.Drawing.Size(124, 20);
             this.lbl_Manufemail.TabIndex = 7;
-            this.lbl_Manufemail.Text = "E-mail Address: -";
+            this.lbl_Manufemail.Text = "E-mail Address: ";
             // 
             // lbl_ManufName
             // 
             this.lbl_ManufName.AutoSize = true;
             this.lbl_ManufName.Location = new System.Drawing.Point(6, 28);
             this.lbl_ManufName.Name = "lbl_ManufName";
-            this.lbl_ManufName.Size = new System.Drawing.Size(64, 20);
+            this.lbl_ManufName.Size = new System.Drawing.Size(59, 20);
             this.lbl_ManufName.TabIndex = 6;
-            this.lbl_ManufName.Text = "Name: -";
+            this.lbl_ManufName.Text = "Name: ";
             // 
             // dtgrd_Tables
             // 
@@ -190,9 +190,11 @@
             this.dtgrd_Tables.Name = "dtgrd_Tables";
             this.dtgrd_Tables.ReadOnly = true;
             this.dtgrd_Tables.RowTemplate.Height = 28;
+            this.dtgrd_Tables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgrd_Tables.Size = new System.Drawing.Size(1039, 633);
             this.dtgrd_Tables.TabIndex = 2;
             this.dtgrd_Tables.SelectionChanged += new System.EventHandler(this.dtgrd_Tables_SelectionChanged);
+            this.dtgrd_Tables.Click += new System.EventHandler(this.dtgrd_Tables_Click);
             // 
             // statusStrip1
             // 
@@ -316,9 +318,9 @@
             this.lbl_GenNeedsReplacementCondition.AutoSize = true;
             this.lbl_GenNeedsReplacementCondition.Location = new System.Drawing.Point(6, 135);
             this.lbl_GenNeedsReplacementCondition.Name = "lbl_GenNeedsReplacementCondition";
-            this.lbl_GenNeedsReplacementCondition.Size = new System.Drawing.Size(167, 20);
+            this.lbl_GenNeedsReplacementCondition.Size = new System.Drawing.Size(162, 20);
             this.lbl_GenNeedsReplacementCondition.TabIndex = 8;
-            this.lbl_GenNeedsReplacementCondition.Text = "Needs Replacement: -";
+            this.lbl_GenNeedsReplacementCondition.Text = "Needs Replacement: ";
             // 
             // lbl_TotalNumberOfEquipments
             // 
@@ -334,27 +336,27 @@
             this.lbl_GenLostCondition.AutoSize = true;
             this.lbl_GenLostCondition.Location = new System.Drawing.Point(6, 108);
             this.lbl_GenLostCondition.Name = "lbl_GenLostCondition";
-            this.lbl_GenLostCondition.Size = new System.Drawing.Size(53, 20);
+            this.lbl_GenLostCondition.Size = new System.Drawing.Size(48, 20);
             this.lbl_GenLostCondition.TabIndex = 7;
-            this.lbl_GenLostCondition.Text = "Lost: -";
+            this.lbl_GenLostCondition.Text = "Lost: ";
             // 
             // lbl_GenGoodCondition
             // 
             this.lbl_GenGoodCondition.AutoSize = true;
-            this.lbl_GenGoodCondition.Location = new System.Drawing.Point(6, 52);
+            this.lbl_GenGoodCondition.Location = new System.Drawing.Point(6, 54);
             this.lbl_GenGoodCondition.Name = "lbl_GenGoodCondition";
-            this.lbl_GenGoodCondition.Size = new System.Drawing.Size(126, 20);
+            this.lbl_GenGoodCondition.Size = new System.Drawing.Size(125, 20);
             this.lbl_GenGoodCondition.TabIndex = 5;
-            this.lbl_GenGoodCondition.Text = "Good Conditon -";
+            this.lbl_GenGoodCondition.Text = "Good Conditon: ";
             // 
             // lbl_GenUnderRepairCondition
             // 
             this.lbl_GenUnderRepairCondition.AutoSize = true;
             this.lbl_GenUnderRepairCondition.Location = new System.Drawing.Point(6, 81);
             this.lbl_GenUnderRepairCondition.Name = "lbl_GenUnderRepairCondition";
-            this.lbl_GenUnderRepairCondition.Size = new System.Drawing.Size(117, 20);
+            this.lbl_GenUnderRepairCondition.Size = new System.Drawing.Size(112, 20);
             this.lbl_GenUnderRepairCondition.TabIndex = 6;
-            this.lbl_GenUnderRepairCondition.Text = "Under Repair: -";
+            this.lbl_GenUnderRepairCondition.Text = "Under Repair: ";
             // 
             // label7
             // 

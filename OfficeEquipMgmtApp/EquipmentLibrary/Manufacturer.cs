@@ -51,9 +51,10 @@
         /// Creates an instance of the manufacturer class
         /// </summary>
         /// <param name="name">The manufacturing company's name.</param>
-        public Manufacturer(string name)
+        public Manufacturer(string name, Address address)
         {
             this.Name = name;
+            this.mnfctrrAdd = address;
         }
 
         public static Manufacturer CreateManufacturer(string name, Address add, string email, string contact)
@@ -66,11 +67,11 @@
             return manufacturerInstance;
         }
 
-        public static Manufacturer CreateManufacturer(string name)
+        public static Manufacturer CreateManufacturer(string name,Address address)
         {
             if (manufacturerInstance == null)
             {
-                manufacturerInstance = new Manufacturer(name);
+                manufacturerInstance = new Manufacturer(name,address);
             }
 
             return manufacturerInstance;

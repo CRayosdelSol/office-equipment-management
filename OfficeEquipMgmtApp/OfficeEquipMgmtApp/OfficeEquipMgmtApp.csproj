@@ -67,6 +67,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FRM_AddDepartment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FRM_AddDepartment.Designer.cs">
+      <DependentUpon>FRM_AddDepartment.cs</DependentUpon>
+    </Compile>
     <Compile Include="FRM_EquipmentEditing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FRM_AddDepartment.resx">
+      <DependentUpon>FRM_AddDepartment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FRM_EquipmentEditing.resx">
       <DependentUpon>FRM_EquipmentEditing.cs</DependentUpon>
     </EmbeddedResource>
