@@ -23,11 +23,11 @@ namespace OfficeEquipMgmtApp
         DataSet ds;
         DatabaseOperations db;
         string dir;
-        string filepath;
+        protected string filepath;
         protected string connString;
 
         //DB Pagination
-        DBPagination equipmentPage, manufacturersPage;
+        DBPagination equipmentPage, manufacturerPage;
 
         #region Properties
         public DatabaseOperations Db
@@ -44,8 +44,8 @@ namespace OfficeEquipMgmtApp
 
         public DBPagination PageMnf
         {
-            get { return manufacturersPage; }
-            set { manufacturersPage = value; }
+            get { return manufacturerPage; }
+            set { manufacturerPage = value; }
         }
 
         public string Filepath
@@ -141,8 +141,8 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
-            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
-            manufacturersPage.currPage = 0;
+            manufacturerPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturerPage.currPage = 0;
 
 
             Text = Path.GetFileNameWithoutExtension(filepath);
@@ -157,7 +157,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
-                manufacturersPage.loadPage(); //database binding for manufacturers
+                manufacturerPage.loadPage(); //database binding for manufacturers
             }
             catch (Exception e)
             {
@@ -201,8 +201,8 @@ namespace OfficeEquipMgmtApp
             equipmentPage = new DBPagination(db, dtgrd_equipment, "Equipment", itemPerPageUpDown, pageSelector); // relinquish the DB to the page class
             equipmentPage.currPage = 0; // make sure the form shows the first page
 
-            manufacturersPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
-            manufacturersPage.currPage = 0;
+            manufacturerPage = new DBPagination(db, dtgrd_manufacturer, "Manufacturer", itemPerPageUpDown, pageSelector);
+            manufacturerPage.currPage = 0;
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
             Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
@@ -210,7 +210,8 @@ namespace OfficeEquipMgmtApp
             Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
 
 
-            DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
+            //DataGridViewComboBoxColumn conditionCol = (DataGridViewComboBoxColumn)grid.Columns[2];
+            DataGridViewComboBoxColumn conditionCol = dtgrd_equipment.Columns[2] as DataGridViewComboBoxColumn;
             conditionCol.DataSource = condList.conditionList.OrderBy(p => p.Priority).ToList();
             conditionCol.DefaultCellStyle.NullValue = condList.conditionList[0].Value;
             conditionCol.DisplayMember = "Value";
@@ -220,7 +221,7 @@ namespace OfficeEquipMgmtApp
             try
             {
                 equipmentPage.loadPage(); // database binding
-                manufacturersPage.loadPage();//database binding (manufacturer)
+                manufacturerPage.loadPage();//database binding (manufacturer)
             }
             catch (Exception e)
             {
@@ -338,56 +339,61 @@ namespace OfficeEquipMgmtApp
         private void btn_Delete_Click(object sender, EventArgs e)
         {
             // TODO: Add multiple row deletion dialog box
-            DialogResult dialogResult = DialogResult.No;
+            //DialogResult dialogResult = DialogResult.No;
+            DialogResult dialogResult;
 
-            try
-            {
-                dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            }
-            catch (Exception)
-            { }
-
-            if (dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabEquipment")
+            if (tab_Tables.SelectedTab.Name == "tabEquipment")
             {
                 try
                 {
-                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
+                        for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                        {
+                            equipmentPage.Ds.Tables["Equipment"].Rows[index].Delete();
+                        }
+
+                        scaleDatagrid(dtgrd_equipment);
+                        equipmentPage.Db.UpdateEquipDataSet(equipmentPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                        equipmentPage.Ds.Dispose();
+                        equipmentPage.Db.Dispose(true);
+                        equipmentPage.loadPage();
+                        colorRowsByCondition();
+
+
+                        lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
+                        lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
                     }
-
-                    scaleDatagrid(dtgrd_equipment);
-                    equipmentPage.Db.UpdateEquipDataSet(equipmentPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
-                    equipmentPage.Ds.Dispose();
-                    equipmentPage.Db.Dispose(true);
-                    equipmentPage.loadPage();
-
-                    lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = Page.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
                 {
                     MessageBox.Show(err.Message);
                 }
+
             }
 
-            else if(dialogResult == DialogResult.Yes && tab_Tables.SelectedTab.Name == "tabManufacturer")
+            else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
             {
                 try
                 {
-                    for (int index = 0; index <= dtgrd_equipment.SelectedRows.Count; index++) // deletes all selected row indices
+                    dialogResult = MessageBox.Show(string.Format("Are you sure you want to remove the item \"{0}\" from the table? This action cannot be undone.", dtgrd_manufacturer.Rows[dtgrd_manufacturer.CurrentCell.RowIndex].Cells[1].Value.ToString()), "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        manufacturersPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                        for (int index = 0; index <= dtgrd_manufacturer.SelectedRows.Count; index++) // deletes all selected row indices
+                        {
+                            manufacturerPage.Ds.Tables["Manufacturer"].Rows[index].Delete();
+                        }
+
+                        scaleDatagrid(dtgrd_manufacturer);
+                        manufacturerPage.Db.updateManufacturerDataSet(manufacturerPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                        manufacturerPage.Ds.Dispose();
+                        manufacturerPage.Db.Dispose(true);
+                        manufacturerPage.loadPage();
+
+                        lbl_Pages.Text = manufacturerPage.pageCount.ToString() + " Page(s) in total";
+                        lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
                     }
-
-                    scaleDatagrid(dtgrd_manufacturer);
-                    manufacturersPage.Db.UpdateEquipDataSet(manufacturersPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
-                    manufacturersPage.Ds.Dispose();
-                    manufacturersPage.Db.Dispose(true);
-                    manufacturersPage.loadPage();
-
-                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
-                    lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception err)
                 {
@@ -468,7 +474,6 @@ namespace OfficeEquipMgmtApp
                 }
             }
         }
-
 #endregion
 
 
@@ -549,22 +554,23 @@ namespace OfficeEquipMgmtApp
                     MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 equipmentPage.Db.Dispose(true);
+                colorRowsByCondition();
             }
 
             else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
             {
                 try
                 {
-                    manufacturersPage.Db.updateManufacturerDataSet((DataSet)dtgrd_manufacturer.DataSource);
+                    manufacturerPage.Db.updateManufacturerDataSet((DataSet)dtgrd_manufacturer.DataSource);
                     PageMnf.ReCount();
-                    lbl_Pages.Text = manufacturersPage.pageCount.ToString() + " Page(s) in total";
+                    lbl_Pages.Text = manufacturerPage.pageCount.ToString() + " Page(s) in total";
                     lbl_RecordCount.Text = PageMnf.totalRecords.ToString() + " Records present";
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                manufacturersPage.Db.Dispose(true);
+                manufacturerPage.Db.Dispose(true);
 
                 MessageBox.Show(dtgrd_manufacturer.Rows[0].Cells[6].Value.ToString()); 
             }
@@ -644,7 +650,72 @@ namespace OfficeEquipMgmtApp
         {
             // discard edits made by the user
             dtgrd_equipment.Rows[e.RowIndex].ErrorText = string.Empty;
+
+            if (e.RowIndex != dtgrd_equipment.NewRowIndex)
+            {
+                if (dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[2].Value.ToString().ToLower() == "good")
+                {
+                    dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+
+                else if (dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[2].Value.ToString().ToLower() == "needs replacement")
+                {
+                    dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                }
+
+                else if (dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[2].Value.ToString().ToLower() == "under repair")
+                {
+                    dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.LightYellow;
+                }
+
+                else if (dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[2].Value.ToString().ToLower() == "lost")
+                {
+                    dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                }
+
+                else
+                {
+
+                }
+            }
         }
+
+        public void colorRowsByCondition()
+        {
+            dtgrd_equipment.AllowUserToAddRows = false;
+            foreach(DataGridViewRow row in dtgrd_equipment.Rows) 
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ColumnIndex == 2 && row.Cells[2].Value.ToString().ToLower() == "good")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && row.Cells[2].Value.ToString().ToLower() == "needs replacement")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && row.Cells[2].Value.ToString().ToLower() == "under repair")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && row.Cells[2].Value.ToString().ToLower() == "lost")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+            dtgrd_equipment.AllowUserToAddRows = true;
+        }
+
 
         internal DataGridView getDGV()
         {
@@ -658,7 +729,159 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_manufacturer_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
+            //Draw only grid content cells not ColumnHeader cells nor RowHeader cells
+            if (e.ColumnIndex > -1 & e.RowIndex > -1)
+            {
+                //Pen for left and top borders
+                using (var backGroundPen = new Pen(e.CellStyle.BackColor, 1))
+                //Pen for bottom and right borders
+                using (var gridlinePen = new Pen(dtgrd_manufacturer.GridColor, 1))
+                //Pen for selected cell borders
+                using (var selectedPen = new Pen(Color.ForestGreen, 1))
+                {
+                    var topLeftPoint = new Point(e.CellBounds.Left, e.CellBounds.Top);
+                    var topRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Top);
+                    var bottomRightPoint = new Point(e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                    var bottomleftPoint = new Point(e.CellBounds.Left, e.CellBounds.Bottom - 1);
 
+                    //Draw selected cells here
+                    if (this.dtgrd_manufacturer[e.ColumnIndex, e.RowIndex].Selected)
+                    {
+                        //Paint all parts except borders.
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
+
+                        //Draw selected cells border here
+                        e.Graphics.DrawRectangle(selectedPen, new Rectangle(e.CellBounds.Left, e.CellBounds.Top, e.CellBounds.Width - 1, e.CellBounds.Height - 1));
+
+                        //Handled painting for this cell, Stop default rendering.
+                        e.Handled = true;
+                    }
+                    //Draw non-selected cells here
+                    else
+                    {
+                        //Paint all parts except borders.
+                        e.Paint(e.ClipBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
+
+                        //Top border of first row cells should be in background color
+                        if (e.RowIndex == 0)
+                            e.Graphics.DrawLine(backGroundPen, topLeftPoint, topRightPoint);
+
+                        //Left border of first column cells should be in background color
+                        if (e.ColumnIndex == 0)
+                            e.Graphics.DrawLine(backGroundPen, topLeftPoint, bottomleftPoint);
+
+                        //Bottom border of last row cells should be in gridLine color
+                        if (e.RowIndex == dtgrd_manufacturer.RowCount - 1)
+                            e.Graphics.DrawLine(gridlinePen, bottomRightPoint, bottomleftPoint);
+                        else  //Bottom border of non-last row cells should be in background color
+                            e.Graphics.DrawLine(backGroundPen, bottomRightPoint, bottomleftPoint);
+
+                        //Right border of last column cells should be in gridLine color
+                        if (e.ColumnIndex == dtgrd_manufacturer.ColumnCount - 1)
+                            e.Graphics.DrawLine(gridlinePen, bottomRightPoint, topRightPoint);
+                        else //Right border of non-last column cells should be in background color
+                            e.Graphics.DrawLine(backGroundPen, bottomRightPoint, topRightPoint);
+
+                        //Top border of non-first row cells should be in gridLine color, and they should be drawn here after right border
+                        if (e.RowIndex > 0)
+                            e.Graphics.DrawLine(gridlinePen, topLeftPoint, topRightPoint);
+
+                        //Left border of non-first column cells should be in gridLine color, and they should be drawn here after bottom border
+                        if (e.ColumnIndex > 0)
+                            e.Graphics.DrawLine(gridlinePen, topLeftPoint, bottomleftPoint);
+
+                        //We handled painting for this cell, Stop default rendering.
+                        e.Handled = true;
+                    }
+                }
+            }
+        }
+
+        private void dtgrd_manufacturer_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (e.RowIndex == dtgrd_manufacturer.NewRowIndex)
+                return;
+
+            if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufName")
+            {
+                if (e.FormattedValue.ToString().Length <= 2)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Item name must at least be 2 characters long!";
+                    e.Cancel = true;
+                }
+            }
+
+            else if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufEmailAdd")
+            {
+                if (e.FormattedValue.ToString().Length <= 2)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid e-mail address!";
+                    e.Cancel = true;
+                }
+            }
+
+            else if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufContactNumber")
+            {
+                if (e.FormattedValue.ToString().Length <= 1)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid phone number!";
+                    e.Cancel = true;
+                }
+            }
+
+            else if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufCountry")
+            {
+                if (e.FormattedValue.ToString().Length <= 1)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter the actual country name. Do not use abbriviations.";
+                    e.Cancel = true;
+                }
+            }
+
+            else if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufCity")
+            {
+                if (e.FormattedValue.ToString().Length <= 1)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter the actual city name. Do not use abbriviations.";
+                    e.Cancel = true;
+                }
+            }
+
+            else if (dtgrd_manufacturer.Columns[e.ColumnIndex].Name == "col_manufZip")
+            {
+                if (e.FormattedValue.ToString().Length <= 2)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please enter a valid zip code.";
+                    e.Cancel = true;
+                }
+            }
+
+            
+        }
+
+        private void dtgrd_manufacturer_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // discard edits made by the user
+            dtgrd_manufacturer.Rows[e.RowIndex].ErrorText = string.Empty;
+        }
+
+        private void dtgrd_manufacturer_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            e.Control.KeyPress -= new KeyPressEventHandler(NumericColumn_KeyPress);
+            if (dtgrd_manufacturer.CurrentCell.ColumnIndex == 6)
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    //Prevent user from entering non numeric values.
+                    tb.KeyPress += new KeyPressEventHandler(NumericColumn_KeyPress);
+                }
+            }
+        }
+
+        private void dtgrd_equipment_RowLeave(object sender, DataGridViewCellEventArgs e)
+        {
+         
         }
 
         private void btn_Last_Click(object sender, EventArgs e)

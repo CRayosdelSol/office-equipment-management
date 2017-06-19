@@ -34,6 +34,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
@@ -52,6 +53,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
@@ -70,6 +72,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
@@ -88,6 +91,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
@@ -106,6 +110,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);
@@ -124,6 +129,7 @@ namespace EquipmentLibrary
         {
             using (sqlConnection = new SqlConnection(connString))
             {
+                sqlConnection.Open();
                 selectCommand = "SELECT * FROM Equipment WHERE Condition= @condition";
                 sqlComm = new SqlCommand(selectCommand, sqlConnection);
                 sqlComm.Parameters.AddWithValue("@condition", condition);

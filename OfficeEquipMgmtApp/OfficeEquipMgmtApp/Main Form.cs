@@ -84,6 +84,7 @@ namespace OfficeEquipMgmtApp
                 FRM_EquipmentEditing frm = new FRM_EquipmentEditing(open.FileName);
                 frm.MdiParent = this;
                 frm.Show();
+                openFileName = open.FileName;
             }
 
         }
@@ -175,6 +176,7 @@ namespace OfficeEquipMgmtApp
             FRM_EquipmentEditing frm = new FRM_EquipmentEditing();
             frm.MdiParent = this;
             frm.Show();
+            openFileName = frm.Filepath;
         }
 
         /// <summary>
@@ -317,7 +319,8 @@ namespace OfficeEquipMgmtApp
 
         private void viewTablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FRM_TableViewer tableViewer_frm = new FRM_TableViewer();
+            FRM_TableViewer tableViewer_frm = new FRM_TableViewer(openFileName);
+            tableViewer_frm.Show();
         }
     }
 }
