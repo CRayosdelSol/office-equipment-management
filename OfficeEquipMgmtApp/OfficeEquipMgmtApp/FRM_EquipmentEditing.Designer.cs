@@ -31,9 +31,9 @@ namespace OfficeEquipMgmtApp
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStripA = new System.Windows.Forms.StatusStrip();
             this.lbl_Pages = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbl_RecordCount = new System.Windows.Forms.ToolStripStatusLabel();
@@ -42,7 +42,6 @@ namespace OfficeEquipMgmtApp
             this.btn_First = new System.Windows.Forms.Button();
             this.btn_back = new System.Windows.Forms.Button();
             this.btn_forward = new System.Windows.Forms.Button();
-            this.btn_Delete = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
             this.grpbx_Actions = new System.Windows.Forms.GroupBox();
             this.itemPerPageUpDown = new System.Windows.Forms.NumericUpDown();
@@ -59,13 +58,6 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment = new System.Windows.Forms.DataGridView();
             this.tabManufacturer = new System.Windows.Forms.TabPage();
             this.dtgrd_manufacturer = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufEmailAdd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufContactNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.col_manufZip = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,6 +79,13 @@ namespace OfficeEquipMgmtApp
             this.col_Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_Manufacturer = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.col_date_of_purchase = new DatabaseManagementOperationsLibrary.CalendarColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufEmailAdd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufContactNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufCountry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufCity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_manufZip = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStripA.SuspendLayout();
             this.grpbx_Actions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itemPerPageUpDown)).BeginInit();
@@ -173,18 +172,6 @@ namespace OfficeEquipMgmtApp
             this.btn_forward.UseVisualStyleBackColor = true;
             this.btn_forward.Click += new System.EventHandler(this.btn_forward_Click);
             // 
-            // btn_Delete
-            // 
-            this.btn_Delete.Image = global::OfficeEquipMgmtApp.Properties.Resources.DeleteTableRow_16x;
-            this.btn_Delete.Location = new System.Drawing.Point(56, 16);
-            this.btn_Delete.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_Delete.Name = "btn_Delete";
-            this.btn_Delete.Size = new System.Drawing.Size(40, 40);
-            this.btn_Delete.TabIndex = 9;
-            this.ttip_optionHints.SetToolTip(this.btn_Delete, "Delete the selected item from the table.");
-            this.btn_Delete.UseVisualStyleBackColor = true;
-            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
-            // 
             // saveBtn
             // 
             this.saveBtn.Image = global::OfficeEquipMgmtApp.Properties.Resources.Save_16x;
@@ -200,7 +187,6 @@ namespace OfficeEquipMgmtApp
             // grpbx_Actions
             // 
             this.grpbx_Actions.Controls.Add(this.saveBtn);
-            this.grpbx_Actions.Controls.Add(this.btn_Delete);
             this.grpbx_Actions.Location = new System.Drawing.Point(8, 8);
             this.grpbx_Actions.Margin = new System.Windows.Forms.Padding(2);
             this.grpbx_Actions.Name = "grpbx_Actions";
@@ -333,7 +319,7 @@ namespace OfficeEquipMgmtApp
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(80, 23);
             this.btnRefresh.TabIndex = 12;
-            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Text = "Refresh Page";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -366,14 +352,14 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_equipment.AllowUserToResizeColumns = false;
             this.dtgrd_equipment.AllowUserToResizeRows = false;
             this.dtgrd_equipment.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dtgrd_equipment.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgrd_equipment.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.col_ID,
@@ -384,26 +370,26 @@ namespace OfficeEquipMgmtApp
             this.col_Department,
             this.col_Manufacturer,
             this.col_date_of_purchase});
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dtgrd_equipment.DefaultCellStyle = dataGridViewCellStyle2;
             this.dtgrd_equipment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtgrd_equipment.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dtgrd_equipment.Location = new System.Drawing.Point(3, 3);
             this.dtgrd_equipment.Name = "dtgrd_equipment";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgrd_equipment.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgrd_equipment.RowTemplate.Height = 28;
             this.dtgrd_equipment.Size = new System.Drawing.Size(674, 368);
             this.dtgrd_equipment.TabIndex = 2;
@@ -448,62 +434,6 @@ namespace OfficeEquipMgmtApp
             this.dtgrd_manufacturer.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dtgrd_manufacturer_CellPainting);
             this.dtgrd_manufacturer.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dtgrd_manufacturer_CellValidating);
             this.dtgrd_manufacturer.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgrd_manufacturer_CellValueChanged);
-            // 
-            // ID
-            // 
-            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.ID.DataPropertyName = "ID";
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.Width = 43;
-            // 
-            // col_manufName
-            // 
-            this.col_manufName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufName.DataPropertyName = "Name";
-            this.col_manufName.HeaderText = "Name";
-            this.col_manufName.Name = "col_manufName";
-            this.col_manufName.Width = 60;
-            // 
-            // col_manufEmailAdd
-            // 
-            this.col_manufEmailAdd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufEmailAdd.DataPropertyName = "Email Address";
-            this.col_manufEmailAdd.HeaderText = "Email Address";
-            this.col_manufEmailAdd.Name = "col_manufEmailAdd";
-            this.col_manufEmailAdd.Width = 90;
-            // 
-            // col_manufContactNumber
-            // 
-            this.col_manufContactNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufContactNumber.DataPropertyName = "Contact Number";
-            this.col_manufContactNumber.HeaderText = "Contact Number";
-            this.col_manufContactNumber.Name = "col_manufContactNumber";
-            // 
-            // col_manufCountry
-            // 
-            this.col_manufCountry.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufCountry.DataPropertyName = "Country of Origin";
-            this.col_manufCountry.HeaderText = "Country of Origin";
-            this.col_manufCountry.Name = "col_manufCountry";
-            this.col_manufCountry.Width = 77;
-            // 
-            // col_manufCity
-            // 
-            this.col_manufCity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufCity.DataPropertyName = "City";
-            this.col_manufCity.HeaderText = "City";
-            this.col_manufCity.Name = "col_manufCity";
-            this.col_manufCity.Width = 49;
-            // 
-            // col_manufZip
-            // 
-            this.col_manufZip.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.col_manufZip.DataPropertyName = "Zip Code";
-            this.col_manufZip.HeaderText = "Zip Code";
-            this.col_manufZip.Name = "col_manufZip";
-            this.col_manufZip.Width = 69;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -662,11 +592,67 @@ namespace OfficeEquipMgmtApp
             // 
             // col_date_of_purchase
             // 
-            this.col_date_of_purchase.DataPropertyName = "Date of Purchase";
+            this.col_date_of_purchase.DataPropertyName = "Date_of_Purchase";
             this.col_date_of_purchase.HeaderText = "Date of Purchase";
             this.col_date_of_purchase.Name = "col_date_of_purchase";
             this.col_date_of_purchase.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.col_date_of_purchase.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // ID
+            // 
+            this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.ID.DataPropertyName = "ID";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Width = 43;
+            // 
+            // col_manufName
+            // 
+            this.col_manufName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufName.DataPropertyName = "Name";
+            this.col_manufName.HeaderText = "Name";
+            this.col_manufName.Name = "col_manufName";
+            this.col_manufName.Width = 60;
+            // 
+            // col_manufEmailAdd
+            // 
+            this.col_manufEmailAdd.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufEmailAdd.DataPropertyName = "Email_Address";
+            this.col_manufEmailAdd.HeaderText = "Email Address";
+            this.col_manufEmailAdd.Name = "col_manufEmailAdd";
+            this.col_manufEmailAdd.Width = 98;
+            // 
+            // col_manufContactNumber
+            // 
+            this.col_manufContactNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufContactNumber.DataPropertyName = "Contact_Number";
+            this.col_manufContactNumber.HeaderText = "Contact Number";
+            this.col_manufContactNumber.Name = "col_manufContactNumber";
+            // 
+            // col_manufCountry
+            // 
+            this.col_manufCountry.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufCountry.DataPropertyName = "Country_of_Origin";
+            this.col_manufCountry.HeaderText = "Country of Origin";
+            this.col_manufCountry.Name = "col_manufCountry";
+            this.col_manufCountry.Width = 77;
+            // 
+            // col_manufCity
+            // 
+            this.col_manufCity.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufCity.DataPropertyName = "City";
+            this.col_manufCity.HeaderText = "City";
+            this.col_manufCity.Name = "col_manufCity";
+            this.col_manufCity.Width = 49;
+            // 
+            // col_manufZip
+            // 
+            this.col_manufZip.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.col_manufZip.DataPropertyName = "Zip_Code";
+            this.col_manufZip.HeaderText = "Zip Code";
+            this.col_manufZip.Name = "col_manufZip";
+            this.col_manufZip.Width = 69;
             // 
             // FRM_EquipmentEditing
             // 
@@ -714,7 +700,6 @@ namespace OfficeEquipMgmtApp
         private NumericUpDown itemPerPageUpDown;
         private NumericUpDown pageSelector;
         private Label label2;
-        private Button btn_Delete;
         private Label label1;
         private GroupBox groupBox1;
         private TextBox textBox1;
@@ -729,13 +714,6 @@ namespace OfficeEquipMgmtApp
         private TabPage tabManufacturer;
         private DataGridView dtgrd_equipment;
         private DataGridView dtgrd_manufacturer;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn col_manufName;
-        private DataGridViewTextBoxColumn col_manufEmailAdd;
-        private DataGridViewTextBoxColumn col_manufContactNumber;
-        private DataGridViewTextBoxColumn col_manufCountry;
-        private DataGridViewTextBoxColumn col_manufCity;
-        private DataGridViewTextBoxColumn col_manufZip;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -756,5 +734,12 @@ namespace OfficeEquipMgmtApp
         private DataGridViewTextBoxColumn col_Department;
         private DataGridViewComboBoxColumn col_Manufacturer;
         private DatabaseManagementOperationsLibrary.CalendarColumn col_date_of_purchase;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn col_manufName;
+        private DataGridViewTextBoxColumn col_manufEmailAdd;
+        private DataGridViewTextBoxColumn col_manufContactNumber;
+        private DataGridViewTextBoxColumn col_manufCountry;
+        private DataGridViewTextBoxColumn col_manufCity;
+        private DataGridViewTextBoxColumn col_manufZip;
     }
 }

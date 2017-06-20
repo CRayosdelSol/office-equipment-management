@@ -90,8 +90,8 @@ namespace OfficeEquipMgmtApp
             var cmd = new SqlCommand("SELECT * FROM Manufacturer", conn);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             manufDS = new DataSet();
-            da.Fill(manufDS, "Manufacturer");            
-            manufCol.DataSource = manufDS.Tables[0];
+            da.Fill(manufDS, "Manufacturer");
+            manufCol.DataSource = manufDS.Tables[0];            
             manufCol.DisplayMember = "Name";
             manufCol.ValueMember = "Name";
         }
@@ -110,6 +110,7 @@ namespace OfficeEquipMgmtApp
         public void initalizeDataGrid(DataGridView grid)
         {
             isSaved = true;
+            isNewDB = false;
             mainForm = ((Main)MdiParent);
 
             // DB Connection Setup
@@ -192,9 +193,9 @@ namespace OfficeEquipMgmtApp
             manufacturerPage.currPage = 0;
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "Date_of_Purchase", "date");
 
-            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Email_Address", "varchar(255)", "Contact_Number", "varchar(255)", "Country_of_Origin", "varchar(255)", "City", "varchar(255)", "Zip_Code", "int");
 
             Db.CreateTable("Department", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)");
 
@@ -273,7 +274,7 @@ namespace OfficeEquipMgmtApp
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
         {
             Db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
-
+            SqlConnection.ClearAllPools();
             if (e.CloseReason == CloseReason.UserClosing && isSaved == false) // if the user clicked on the local X button 
             {
                 var close = MessageBox.Show("Do you want to save changes?", "Unsaved Database", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
@@ -525,14 +526,14 @@ namespace OfficeEquipMgmtApp
                 }
             }
 
-            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Manufacturer")
-            {
-                if (e.FormattedValue.ToString() == String.Empty)
-                {
-                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
-                    e.Cancel = true;
-                }
-            }
+            //else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Manufacturer")
+            //{
+            //    if (e.FormattedValue.ToString() == String.Empty)
+            //    {
+            //        dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
+            //        e.Cancel = true;
+            //    }
+            //}
 
             else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Quantity")
             {
@@ -566,7 +567,6 @@ namespace OfficeEquipMgmtApp
                 pagedTabs[tabIndex].ReCount();
                 lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
                 lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
-                refreshManufCol();
 
                 if (isNewDB)
                 {
@@ -576,11 +576,12 @@ namespace OfficeEquipMgmtApp
 
                 isSaved = true;
             }
-            catch (Exception)
+            catch (Exception err)
             {
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 isSaved = false;
             }
+            refreshManufCol();
             pagedTabs[tabIndex].Db.Dispose(true);
         }
 
@@ -630,7 +631,7 @@ namespace OfficeEquipMgmtApp
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
-        {
+        {            
             pagedTabs[tabIndex].ReCount();
             pagedTabs[tabIndex].currPage = 0;
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";

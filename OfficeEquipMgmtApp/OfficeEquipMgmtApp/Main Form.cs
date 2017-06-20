@@ -18,6 +18,7 @@
 using System;
 using System.Windows.Forms;
 using System.IO;
+using Report_Form;
 
 namespace OfficeEquipMgmtApp
 {
@@ -91,7 +92,7 @@ namespace OfficeEquipMgmtApp
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -153,14 +154,14 @@ namespace OfficeEquipMgmtApp
         }
 
         private void btnSave_Click(object sender, EventArgs e)
-        {            
+        {
             saveToolStripMenuItem_Click(sender, e);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 // get active MDI Form and determine if it is an EquipmentView Form
                 if (ActiveMdiChild.GetType() == typeof(FRM_EquipmentEditing))
                 {
@@ -169,7 +170,7 @@ namespace OfficeEquipMgmtApp
 
                     if (tempForm.PageEquip.getResultCount() == 0)
                     {
-                        MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);                        
+                        MessageBox.Show("Database table has no entries!", "Saving Failed", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
 
@@ -204,8 +205,10 @@ namespace OfficeEquipMgmtApp
                             tempForm.PageMnf.ReCount();
                             tempForm.PageMnf.loadPage();
                         }
-                        catch (Exception)
-                        { }
+                        catch (Exception err)
+                        {
+                            MessageBox.Show(err.Message);
+                        }
                     }
                     else if (result == DialogResult.OK && tempForm.IsNewDB == false)
                     {
@@ -249,6 +252,23 @@ namespace OfficeEquipMgmtApp
             FRM_TableViewer tableViewer_frm = new FRM_TableViewer(openFileName);
             tableViewer_frm.MdiParent = this;
             tableViewer_frm.Show();
+        }
+
+        private void byOfficeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveMdiChild.GetType() == typeof(FRM_EquipmentEditing))
+            {
+                // get the active mdi child and determine if it is an equipment form
+                FRM_EquipmentEditing tempForm = (FRM_EquipmentEditing)ActiveMdiChild;
+
+
+            }
+        }
+
+        private void byConditionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConditionReportForm frm = new ConditionReportForm();
+            frm.Show();
         }
     }
 }

@@ -227,6 +227,10 @@
       <Project>{86c2f309-42a8-4f07-b3c1-cc6493af2c01}</Project>
       <Name>EquipmentLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Report Form\Report Form.csproj">
+      <Project>{81E89FC8-2610-4893-B3AA-065ECB350CFB}</Project>
+      <Name>Report Form</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

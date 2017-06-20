@@ -43,6 +43,9 @@
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byOfficeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.byConditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.striplbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,9 +54,6 @@
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.btnSaveAs = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byOfficeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byConditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -196,6 +196,29 @@
             this.viewTablesToolStripMenuItem.Text = "&View Database";
             this.viewTablesToolStripMenuItem.Click += new System.EventHandler(this.viewTablesToolStripMenuItem_Click);
             // 
+            // reportToolStripMenuItem
+            // 
+            this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.byOfficeToolStripMenuItem,
+            this.byConditionToolStripMenuItem});
+            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+            this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.reportToolStripMenuItem.Text = "&Report";
+            // 
+            // byOfficeToolStripMenuItem
+            // 
+            this.byOfficeToolStripMenuItem.Name = "byOfficeToolStripMenuItem";
+            this.byOfficeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byOfficeToolStripMenuItem.Text = "By Office";
+            this.byOfficeToolStripMenuItem.Click += new System.EventHandler(this.byOfficeToolStripMenuItem_Click);
+            // 
+            // byConditionToolStripMenuItem
+            // 
+            this.byConditionToolStripMenuItem.Name = "byConditionToolStripMenuItem";
+            this.byConditionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.byConditionToolStripMenuItem.Text = "By Condition";
+            this.byConditionToolStripMenuItem.Click += new System.EventHandler(this.byConditionToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -281,27 +304,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // reportToolStripMenuItem
-            // 
-            this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byOfficeToolStripMenuItem,
-            this.byConditionToolStripMenuItem});
-            this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-            this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
-            this.reportToolStripMenuItem.Text = "&Report";
-            // 
-            // byOfficeToolStripMenuItem
-            // 
-            this.byOfficeToolStripMenuItem.Name = "byOfficeToolStripMenuItem";
-            this.byOfficeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.byOfficeToolStripMenuItem.Text = "By Office";
-            // 
-            // byConditionToolStripMenuItem
-            // 
-            this.byConditionToolStripMenuItem.Name = "byConditionToolStripMenuItem";
-            this.byConditionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.byConditionToolStripMenuItem.Text = "By Condition";
             // 
             // Main
             // 

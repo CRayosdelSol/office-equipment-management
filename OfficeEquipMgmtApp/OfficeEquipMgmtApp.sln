@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipmentLibrary", "Equipme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManagementOperationsLibrary", "DatabaseManagementOperations\DatabaseManagementOperationsLibrary.csproj", "{31DED398-74AB-40AD-B64E-189E654E341D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report Form", "Report Form\Report Form.csproj", "{81E89FC8-2610-4893-B3AA-065ECB350CFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{31DED398-74AB-40AD-B64E-189E654E341D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31DED398-74AB-40AD-B64E-189E654E341D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31DED398-74AB-40AD-B64E-189E654E341D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E89FC8-2610-4893-B3AA-065ECB350CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E89FC8-2610-4893-B3AA-065ECB350CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E89FC8-2610-4893-B3AA-065ECB350CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E89FC8-2610-4893-B3AA-065ECB350CFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
