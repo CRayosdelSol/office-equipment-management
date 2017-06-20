@@ -85,15 +85,32 @@ namespace OfficeEquipMgmtApp
 
         public void refreshManufCol()
         {
-            DataGridViewComboBoxColumn manufCol = (DataGridViewComboBoxColumn)dtgrd_equipment.Columns[6];
-            SqlConnection conn = new SqlConnection(db.StrConn);
-            var cmd = new SqlCommand("SELECT * FROM Manufacturer", conn);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            manufDS = new DataSet();
-            da.Fill(manufDS, "Manufacturer");
-            manufCol.DataSource = manufDS.Tables[0];            
-            manufCol.DisplayMember = "Name";
-            manufCol.ValueMember = "Name";
+            List<string> values = new List<string>();
+            DataGridViewComboBoxColumn manufCol = dtgrd_equipment.Columns[6] as DataGridViewComboBoxColumn;
+            values.Add("Select Manufacturer");
+
+            using (SqlConnection conn = new SqlConnection(db.StrConn))
+            {
+                conn.Open();
+                var cmd = new SqlCommand("SELECT * FROM Manufacturer", conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    values.Add(reader["Name"].ToString());
+                }
+            }
+
+            manufCol.DataSource = values;
+            manufCol.DefaultCellStyle.NullValue = values[0];
+            manufCol.SortMode = DataGridViewColumnSortMode.Automatic;
+
+            //SqlDataAdapter da = new SqlDataAdapter(cmd);
+            //manufDS = new DataSet();
+            //da.Fill(manufDS, "Manufacturer");
+            //manufCol.DataSource = manufDS.Tables[0];
+            //manufCol.DisplayMember = "Name";
+            //manufCol.ValueMember = "Name";
+
         }
 
         public void scaleDatagrid(DataGridView grid)
@@ -110,7 +127,6 @@ namespace OfficeEquipMgmtApp
         public void initalizeDataGrid(DataGridView grid)
         {
             isSaved = true;
-            isNewDB = false;
             mainForm = ((Main)MdiParent);
 
             // DB Connection Setup
@@ -138,17 +154,17 @@ namespace OfficeEquipMgmtApp
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
 
-            refreshManufCol();
-
             try
             {
-                equipmentPage.loadPage(); // database binding
                 manufacturerPage.loadPage(); //database binding for manufacturers
+                equipmentPage.loadPage(); // database binding
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
+
+            refreshManufCol();
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
@@ -193,9 +209,9 @@ namespace OfficeEquipMgmtApp
             manufacturerPage.currPage = 0;
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "Date_of_Purchase", "date");
+            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
 
-            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Email_Address", "varchar(255)", "Contact_Number", "varchar(255)", "Country_of_Origin", "varchar(255)", "City", "varchar(255)", "Zip_Code", "int");
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
 
             Db.CreateTable("Department", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)");
 
@@ -209,8 +225,8 @@ namespace OfficeEquipMgmtApp
 
             try
             {
-                equipmentPage.loadPage(); // database binding
                 manufacturerPage.loadPage();//database binding (manufacturer)
+                equipmentPage.loadPage(); // database binding
             }
             catch (Exception e)
             {
@@ -249,6 +265,7 @@ namespace OfficeEquipMgmtApp
             else
             {
                 initalizeDataGrid(dtgrd_equipment);
+                colorRowsByCondition();
                 //initializeDefGrid(dtgrd_manufacturer);
             }
 
@@ -274,7 +291,7 @@ namespace OfficeEquipMgmtApp
         private void frm_EquipmentView_FormClosing(object sender, FormClosingEventArgs e)
         {
             Db.Dispose(true); // equivalent to clearing all Connection Pools to the current db
-            SqlConnection.ClearAllPools();
+
             if (e.CloseReason == CloseReason.UserClosing && isSaved == false) // if the user clicked on the local X button 
             {
                 var close = MessageBox.Show("Do you want to save changes?", "Unsaved Database", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
@@ -352,7 +369,7 @@ namespace OfficeEquipMgmtApp
 
             if (!isSaved)
             {
-                MessageBox.Show("Can't proceed with deletion, attempting to save changes instead", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please save any unsaved changes before proceeding with deletion.", "Unsaved Changes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 saveBtn_Click(sender, e);
                 return;
             }
@@ -376,7 +393,7 @@ namespace OfficeEquipMgmtApp
                         equipmentPage.loadPage();
                         colorRowsByCondition();
 
-                        refreshManufCol();
+                        //refreshManufCol();
 
                         lbl_Pages.Text = equipmentPage.pageCount.ToString() + " Page(s) in total";
                         lbl_RecordCount.Text = equipmentPage.totalRecords.ToString() + " Records present";
@@ -387,34 +404,58 @@ namespace OfficeEquipMgmtApp
                     MessageBox.Show(err.Message);
                 }
 
+                colorRowsByCondition();
             }
 
             else if (tab_Tables.SelectedTab.Name == "tabManufacturer")
             {
-                try
+                List<String> presentValues = new List<string>();
+                bool exist = false;
+                foreach (DataGridViewRow row in dtgrd_manufacturer.SelectedRows)
                 {
-                    dialogResult = MessageBox.Show("Are you sure you want to remove the selected item(s) from the table? This action cannot be undone.", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes)
+                    if (db.checkIfManufacturerIsInUse(row.Cells[1].Value.ToString()))
                     {
-
-                        foreach (DataGridViewRow row in dtgrd_manufacturer.SelectedRows)
-                        {
-                            manufacturerPage.Ds.Tables["Manufacturer"].Rows[row.Index].Delete();
-                        }
-
-                        scaleDatagrid(dtgrd_manufacturer);
-                        manufacturerPage.Db.updateManufacturerDataSet(manufacturerPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
-                        manufacturerPage.Ds.Dispose();
-                        manufacturerPage.Db.Dispose(true);
-                        manufacturerPage.loadPage();
-
-                        lbl_Pages.Text = manufacturerPage.pageCount.ToString() + " Page(s) in total";
-                        lbl_RecordCount.Text = manufacturerPage.totalRecords.ToString() + " Records present";
+                        presentValues.Add(row.Cells[1].Value.ToString());
                     }
                 }
-                catch (Exception err)
+                
+                if(presentValues.Count > 0)
                 {
-                    MessageBox.Show(err.Message);
+                    exist = true;
+                }
+
+                if (exist)
+                {
+                    var message = string.Join(Environment.NewLine, presentValues);
+                    MessageBox.Show(string.Format("The following selected Manufacturer(s) is/are currently assigned to an Equipment and cannot be deleted. " + Environment.NewLine + "{0}" + Environment.NewLine + "Please un-select them then try again.", message),"Cannot Delete",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    try
+                    {
+                        dialogResult = MessageBox.Show("Are you sure you want to remove the selected item(s) from the table? This action cannot be undone.", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+
+                            foreach (DataGridViewRow row in dtgrd_manufacturer.SelectedRows)
+                            {
+                                manufacturerPage.Ds.Tables["Manufacturer"].Rows[row.Index].Delete();
+                            }
+
+                            scaleDatagrid(dtgrd_manufacturer);
+                            manufacturerPage.Db.updateManufacturerDataSet(manufacturerPage.Ds); // perform necessarry operations to the DB based on the changes in the DS
+                            manufacturerPage.Ds.Dispose();
+                            manufacturerPage.Db.Dispose(true);
+                            manufacturerPage.loadPage();
+
+                            lbl_Pages.Text = manufacturerPage.pageCount.ToString() + " Page(s) in total";
+                            lbl_RecordCount.Text = manufacturerPage.totalRecords.ToString() + " Records present";
+                        }
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message);
+                    }
                 }
             }
         }
@@ -526,14 +567,14 @@ namespace OfficeEquipMgmtApp
                 }
             }
 
-            //else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Manufacturer")
-            //{
-            //    if (e.FormattedValue.ToString() == String.Empty)
-            //    {
-            //        dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
-            //        e.Cancel = true;
-            //    }
-            //}
+            else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Manufacturer")
+            {
+                if (e.FormattedValue.ToString() == String.Empty)
+                {
+                    dtgrd_equipment.Rows[e.RowIndex].ErrorText = "Please select an item from the list!";
+                    e.Cancel = true;
+                }
+            }
 
             else if (dtgrd_equipment.Columns[e.ColumnIndex].Name == "col_Quantity")
             {
@@ -564,9 +605,11 @@ namespace OfficeEquipMgmtApp
                 else
                     pagedTabs[tabIndex].Db.updateManufacturerDataSet(pagedTabs[tabIndex].Ds);
 
+                colorRowsByCondition();
                 pagedTabs[tabIndex].ReCount();
                 lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
                 lbl_RecordCount.Text = pagedTabs[tabIndex].totalRecords.ToString() + " Records present";
+                refreshManufCol();
 
                 if (isNewDB)
                 {
@@ -576,12 +619,11 @@ namespace OfficeEquipMgmtApp
 
                 isSaved = true;
             }
-            catch (Exception err)
+            catch (Exception)
             {
                 MessageBox.Show("There were no modifications done to the data table.", "Unecessesary Commit", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 isSaved = false;
             }
-            refreshManufCol();
             pagedTabs[tabIndex].Db.Dispose(true);
         }
 
@@ -631,7 +673,7 @@ namespace OfficeEquipMgmtApp
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
-        {            
+        {
             pagedTabs[tabIndex].ReCount();
             pagedTabs[tabIndex].currPage = 0;
             lbl_Pages.Text = pagedTabs[tabIndex].pageCount.ToString() + " Page(s) in total";
@@ -640,7 +682,17 @@ namespace OfficeEquipMgmtApp
 
         private void NumericColumn_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                //dtgrd_equipment.Rows[dtgrd_equipment.CurrentCell.RowIndex].Cells[4].ErrorText = "Letters and special characters are not allowed.";
+                groupBox1.Visible = true;
+            }
+            else
+            {
+                e.Handled = false;
+                groupBox1.Visible = false;
+            }
         }
 
         private void dtgrd_equipment_CellEndEdit(object sender, DataGridViewCellEventArgs e)

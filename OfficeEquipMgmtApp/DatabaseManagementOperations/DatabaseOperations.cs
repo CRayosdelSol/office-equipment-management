@@ -145,6 +145,31 @@ namespace DatabaseManagementOperationsLibrary
             }
         }
 
+
+        public void updateDeptTable(string tableName,string valA,string valB,string valC,string valD,string valE,string valF,string valG)
+        {
+            using (SqlConnection conn = new SqlConnection(strConn))
+            {
+                conn.Open();
+                string command = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values (@p1,@p2,@p3,@p4,@p5,@p6,@p7)";
+                SqlCommand sqlcomm = new SqlCommand(command, conn);
+                SqlParameter[] pInsert = new SqlParameter[7];
+
+                pInsert[0] = new SqlParameter("@p1",valA);
+                pInsert[1] = new SqlParameter("@p2",valB);
+                pInsert[2] = new SqlParameter("@p3",valC);
+                pInsert[3] = new SqlParameter("@p4",valD);
+                pInsert[4] = new SqlParameter("@p5",valE);
+                pInsert[5] = new SqlParameter("@p6",valF);
+                pInsert[6] = new SqlParameter("@p7",valG);
+
+                sqlcomm.Parameters.AddRange(pInsert);
+
+                sqlcomm.ExecuteNonQuery();
+            }
+        }
+
+
         public void CreateTable(string tableName, string attributeA, string dataTypeA, string attributeB, string dataTypeB, string attributeC, string dataTypeC, string attributeD, string dataTypeD, string attributeE, string dataTypeE, string attributeF, string dataTypeF, string attributeG, string dataTypeG)
         {
             using (SqlConnection connectionString = new SqlConnection(StrConn))
@@ -269,6 +294,90 @@ namespace DatabaseManagementOperationsLibrary
             da.DeleteCommand = cmdDelete;
             da.Update(ds, "Equipment");
             ds.AcceptChanges();
+        }
+
+        public void UpdateDeptDataSet(DataTable dt, string tableName)
+        {
+            
+
+            string sInsert;
+
+            sInsert = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+
+            SqlParameter[] pInsert = new SqlParameter[7];
+
+            
+            var name = string.Empty;
+            var condition = string.Empty;
+            var quantity = 0;
+            var price = 0.00m;
+            var dept = string.Empty;
+            var manuf = string.Empty;
+            var dop = string.Empty;
+
+            foreach(DataRow row in dt.Rows)
+            {
+                name = row["Name"].ToString();
+                condition = row["Condition"].ToString();
+                quantity = Convert.ToInt32(row["Quantity"].ToString());
+                price = Convert.ToDecimal(row["Price"].ToString());
+                manuf = row["Manufacturer"].ToString();
+                dept = row["Department"].ToString();
+                dop = row["Date of Purchase"].ToString();
+            }
+
+
+            pInsert[0] = new SqlParameter("@p2", name);
+            pInsert[1] = new SqlParameter("@p3", condition);
+            pInsert[2] = new SqlParameter("@p4", quantity);
+            pInsert[3] = new SqlParameter("@p5", price);
+            pInsert[4] = new SqlParameter("@p6", dept);
+            pInsert[5] = new SqlParameter("@p7", manuf);
+            pInsert[6] = new SqlParameter("@p8", dop);
+          
+            using (SqlConnection conn = new SqlConnection(StrConn))
+            {
+                conn.Open();
+                var cmdInsert = new SqlCommand(sInsert, conn);
+                cmdInsert.Parameters.AddRange(pInsert);
+                cmdInsert.ExecuteNonQuery();
+            }
+        }
+
+        public bool checkIfManufacturerIsInUse(string record)
+        {
+            using(SqlConnection sqlConn = new SqlConnection(strConn))
+            {
+                sqlConn.Open();
+                string command = "SELECT COUNT(*) FROM Equipment WHERE Manufacturer LIKE '" + record + "'";
+                SqlCommand sqlComm = new SqlCommand(command, sqlConn);
+                int matches = int.Parse(sqlComm.ExecuteScalar().ToString());
+                if(matches > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public bool checkIfTableHasContent()
+        {
+            using(SqlConnection sqlConn = new SqlConnection(strConn))
+            {
+                sqlConn.Open();
+                string command = "SELECT COUNT(*) FROM Manufacturer";
+                SqlCommand sqlComm = new SqlCommand(command, sqlConn);
+                int rowCount = int.Parse(sqlComm.ExecuteScalar().ToString());
+                if(rowCount == 0)
+                {
+                    return false;
+                }
+
+                return true;
+
+            }
         }
 
         public void updateManufacturerDataSet(DataSet ds)

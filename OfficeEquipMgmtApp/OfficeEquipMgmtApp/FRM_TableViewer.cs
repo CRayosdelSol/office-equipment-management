@@ -25,11 +25,19 @@ namespace OfficeEquipMgmtApp
         DatabaseOperations db;
 
         Department department;
+        DBPagination tablePage;
+
+        public DBPagination pageTable
+        {
+            get { return tablePage; }
+            set { tablePage = value; }
+        }
 
         string file;
         string connString;
         bool isEquipmentTable;
-        List<string> labeltext = new List<string>();
+
+
 
         public FRM_TableViewer()
         {
@@ -71,8 +79,8 @@ namespace OfficeEquipMgmtApp
             // DB Connection Setup
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
             db = new DatabaseOperations(connString);
-
             displayTable("Equipment", connString, dtgrd_Tables);
+
         }
 
         public void displayTable(string tableName, string connString, DataGridView grid)
@@ -97,6 +105,7 @@ namespace OfficeEquipMgmtApp
             }
 
             scaleDatagrid(dtgrd_Tables);
+            colorRowsByCondition();
         }
         public void scaleDatagrid(DataGridView grid)
         {
@@ -105,31 +114,75 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_Tables.RowHeadersWidth : 0) + 3;
         }
 
+        public void colorRowsByCondition()
+        {
+            foreach (DataGridViewRow row in this.dtgrd_Tables.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "good")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "needs replacement")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "under repair")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "lost")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+        }
+
         public void summarizeEquipmentPerDepartment()
         {
             List<string> DepartmentList = new List<string>();
-
+            ds = new DataSet();
+            DataTable dt;
             using (SqlConnection sqlConnection = new SqlConnection(connString))
             {
                 sqlConnection.Open();
-                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM departments", sqlConnection);
+                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Equipment", sqlConnection);
                 SqlDataReader dataReader = sqlCommand.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    department = new Department(dataReader["Name"].ToString());
-                    DepartmentList.Add(department.DepartmentID);
+                    department = new Department(dataReader["Department"].ToString());
+                    if (!DepartmentList.Exists(x => string.Equals(x, department.DepartmentID, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        DepartmentList.Add(department.DepartmentID);
+                    }
                 }
+                dataReader.Close();
 
                 foreach (string departmentName in DepartmentList)
                 {
                     db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
-                    string selectCommand = "SELECT * FROM Equipment WHERE Department= " + departmentName;
+                    string selectCommand = "SELECT * FROM Equipment WHERE Department=@p1";
                     sqlCommand = new SqlCommand(selectCommand, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("@p1", departmentName);
                     SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
-                    ds = new DataSet();
-                    da.Fill(ds, departmentName);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    db.UpdateDeptDataSet(dt,departmentName);
+                    
+                    
                 }
             }
+
         }
 
         public void DisplayEquipmentCondtionSummary()
@@ -259,9 +312,9 @@ namespace OfficeEquipMgmtApp
             isEquipmentTable = true;
 
             //Scale the form so that all of its contents are shown properly.
-            //this.MinimumSize = new Size(this.Width, this.Height);
-            //this.AutoSize = true;
-            //this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.MinimumSize = new Size(this.Width, this.Height);
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         private void dtgrd_Tables_Click(object sender, EventArgs e)
