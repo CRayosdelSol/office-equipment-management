@@ -85,16 +85,12 @@ namespace OfficeEquipMgmtApp
 
         public void displayTable(string tableName, string connString, DataGridView grid)
         {
-            tablePage = new DBPagination(db, dtgrd_Tables, tableName, itemPerPageUpDown, pageSelector);
-            tablePage.currPage = 0;
-
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 string selectCommand = string.Format("SELECT * FROM {0}", tableName);
 
                 try // database binding happens here
                 {
-                    tablePage.loadPage();
                     dataAdapter = new SqlDataAdapter(selectCommand, connString);
                     ds = new DataSet();
                     dataAdapter.Fill(ds, tableName);
