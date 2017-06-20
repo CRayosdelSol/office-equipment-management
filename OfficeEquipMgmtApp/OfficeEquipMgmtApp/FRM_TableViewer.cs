@@ -105,6 +105,7 @@ namespace OfficeEquipMgmtApp
             }
 
             scaleDatagrid(dtgrd_Tables);
+            colorRowsByCondition();
         }
         public void scaleDatagrid(DataGridView grid)
         {
@@ -113,23 +114,42 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_Tables.RowHeadersWidth : 0) + 3;
         }
 
+        public void colorRowsByCondition()
+        {
+            foreach (DataGridViewRow row in this.dtgrd_Tables.Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "good")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "needs replacement")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "under repair")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightYellow;
+                    }
+
+                    else if (cell.ColumnIndex == 2 && cell.Value.ToString().ToLower() == "lost")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.PaleVioletRed;
+                    }
+
+                    else
+                    {
+
+                    }
+                }
+            }
+        }
+
         public void summarizeEquipmentPerDepartment()
         {
-            //using (SqlConnection sqlConnection = new SqlConnection(connString))
-            //{
-            //    sqlConnection.Open();
-
-            //    db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
-            //    string selectCommand = "SELECT * FROM Equipment WHERE Department=" + departmentName;
-            //    SqlCommand sqlCommand = new SqlCommand(selectCommand, sqlConnection);
-            //    SqlDataReader reader = sqlCommand.ExecuteReader();
-            //    while (reader.Read())
-            //    {
-            //        db.updateDeptTable(departmentName, reader["Name"].ToString(), reader["Condition"].ToString(), reader["Quantity"].ToString(), reader["Price"].ToString(), reader["Department"].ToString(), reader["Manufacturer"].ToString(), reader["Date of Purchase"].ToString());
-            //    }
-
-            //}
-
             List<string> DepartmentList = new List<string>();
             ds = new DataSet();
             DataTable dt;
