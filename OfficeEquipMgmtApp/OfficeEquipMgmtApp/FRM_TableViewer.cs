@@ -79,7 +79,6 @@ namespace OfficeEquipMgmtApp
             // DB Connection Setup
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + file + "; Integrated Security=True;Connect Timeout=30";
             db = new DatabaseOperations(connString);
-
             displayTable("Equipment", connString, dtgrd_Tables);
 
         }
@@ -118,22 +117,56 @@ namespace OfficeEquipMgmtApp
             (grid.RowHeadersVisible ? dtgrd_Tables.RowHeadersWidth : 0) + 3;
         }
 
-        public void summarizeEquipmentPerDepartment(string departmentName)
+        public void summarizeEquipmentPerDepartment()
         {
+            //using (SqlConnection sqlConnection = new SqlConnection(connString))
+            //{
+            //    sqlConnection.Open();
+
+            //    db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+            //    string selectCommand = "SELECT * FROM Equipment WHERE Department=" + departmentName;
+            //    SqlCommand sqlCommand = new SqlCommand(selectCommand, sqlConnection);
+            //    SqlDataReader reader = sqlCommand.ExecuteReader();
+            //    while (reader.Read())
+            //    {
+            //        db.updateDeptTable(departmentName, reader["Name"].ToString(), reader["Condition"].ToString(), reader["Quantity"].ToString(), reader["Price"].ToString(), reader["Department"].ToString(), reader["Manufacturer"].ToString(), reader["Date of Purchase"].ToString());
+            //    }
+
+            //}
+
+            List<string> DepartmentList = new List<string>();
+            ds = new DataSet();
+            DataTable dt;
             using (SqlConnection sqlConnection = new SqlConnection(connString))
             {
                 sqlConnection.Open();
-
-                db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
-                string selectCommand = "SELECT * FROM Equipment WHERE Department=" + departmentName;
-                SqlCommand sqlCommand = new SqlCommand(selectCommand, sqlConnection);
-                SqlDataReader reader = sqlCommand.ExecuteReader();
-                while (reader.Read())
+                SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Equipment", sqlConnection);
+                SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    db.updateDeptTable(departmentName, reader["Name"].ToString(), reader["Condition"].ToString(), reader["Quantity"].ToString(), reader["Price"].ToString(), reader["Department"].ToString(), reader["Manufacturer"].ToString(), reader["Date of Purchase"].ToString());
+                    department = new Department(dataReader["Department"].ToString());
+                    if (!DepartmentList.Exists(x => string.Equals(x, department.DepartmentID, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        DepartmentList.Add(department.DepartmentID);
+                    }
                 }
-                
+                dataReader.Close();
+
+                foreach (string departmentName in DepartmentList)
+                {
+                    db.CreateTable(departmentName, "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+                    string selectCommand = "SELECT * FROM Equipment WHERE Department=@p1";
+                    sqlCommand = new SqlCommand(selectCommand, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("@p1", departmentName);
+                    SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    db.UpdateDeptDataSet(dt,departmentName);
+                    
+                    
+                }
             }
+
         }
 
         public void DisplayEquipmentCondtionSummary()
@@ -252,10 +285,7 @@ namespace OfficeEquipMgmtApp
 
         private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dtgrd_Tables.Rows)
-            {
-                summarizeEquipmentPerDepartment(row.Cells[5].Value.ToString());
-            }
+            summarizeEquipmentPerDepartment();
         }
 
         private void FRM_TableViewer_Load(object sender, EventArgs e)

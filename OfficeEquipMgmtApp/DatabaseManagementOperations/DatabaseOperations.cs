@@ -296,6 +296,53 @@ namespace DatabaseManagementOperationsLibrary
             ds.AcceptChanges();
         }
 
+        public void UpdateDeptDataSet(DataTable dt, string tableName)
+        {
+            
+
+            string sInsert;
+
+            sInsert = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+
+            SqlParameter[] pInsert = new SqlParameter[7];
+
+            
+            var name = string.Empty;
+            var condition = string.Empty;
+            var quantity = 0;
+            var price = 0.00m;
+            var dept = string.Empty;
+            var manuf = string.Empty;
+            var dop = string.Empty;
+
+            foreach(DataRow row in dt.Rows)
+            {
+                name = row["Name"].ToString();
+                condition = row["Condition"].ToString();
+                quantity = Convert.ToInt32(row["Quantity"].ToString());
+                price = Convert.ToDecimal(row["Price"].ToString());
+                manuf = row["Manufacturer"].ToString();
+                dept = row["Department"].ToString();
+                dop = row["Date of Purchase"].ToString();
+            }
+
+
+            pInsert[0] = new SqlParameter("@p2", name);
+            pInsert[1] = new SqlParameter("@p3", condition);
+            pInsert[2] = new SqlParameter("@p4", quantity);
+            pInsert[3] = new SqlParameter("@p5", price);
+            pInsert[4] = new SqlParameter("@p6", dept);
+            pInsert[5] = new SqlParameter("@p7", manuf);
+            pInsert[6] = new SqlParameter("@p8", dop);
+          
+            using (SqlConnection conn = new SqlConnection(StrConn))
+            {
+                conn.Open();
+                var cmdInsert = new SqlCommand(sInsert, conn);
+                cmdInsert.Parameters.AddRange(pInsert);
+                cmdInsert.ExecuteNonQuery();
+            }
+        }
 
         public bool checkIfManufacturerIsInUse(string record)
         {
