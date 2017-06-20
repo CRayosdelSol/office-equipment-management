@@ -85,6 +85,25 @@ namespace OfficeEquipMgmtApp
 
         public void refreshManufCol()
         {
+            string strSql = "SELECT rows FROM sys.sysindexes " +
+                              "WHERE id = OBJECT_ID('Manufacturer') AND indid < 2";
+            int intCount = 0;
+
+            SqlConnection sqlPage = new SqlConnection(db.StrConn);
+
+            var cmda = new SqlCommand(strSql, sqlPage);
+
+            using (SqlDataAdapter da = new SqlDataAdapter(cmda))
+            {
+                sqlPage.Open();
+                intCount = (int)cmda.ExecuteScalar();
+                cmda.Dispose();
+                sqlPage.Close();                
+            }
+
+            if (intCount == 0)
+                return;
+
             List<string> values = new List<string>();
             DataGridViewComboBoxColumn manufCol = dtgrd_equipment.Columns[6] as DataGridViewComboBoxColumn;
             values.Add("Select Manufacturer");
@@ -99,7 +118,7 @@ namespace OfficeEquipMgmtApp
                     values.Add(reader["Name"].ToString());
                 }
             }
-
+                       
             manufCol.DataSource = values;
             manufCol.DefaultCellStyle.NullValue = values[0];
             manufCol.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -154,6 +173,7 @@ namespace OfficeEquipMgmtApp
             conditionCol.ValueMember = "Value";
             conditionCol.SortMode = DataGridViewColumnSortMode.Automatic;
 
+            refreshManufCol();
             try
             {
                 manufacturerPage.loadPage(); //database binding for manufacturers
@@ -164,7 +184,7 @@ namespace OfficeEquipMgmtApp
                 MessageBox.Show(e.Message);
             }
 
-            refreshManufCol();
+
 
             grid.AllowUserToAddRows = true;
             grid.AllowUserToDeleteRows = true;
@@ -209,9 +229,9 @@ namespace OfficeEquipMgmtApp
             manufacturerPage.currPage = 0;
 
             //Identity allows the 'ID' Attribute to be auto incremented. Its value does not have to specified when inserting to the table.
-            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date of Purchase]", "date");
+            Db.CreateTable("Equipment", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "Condition", "varchar(255)", "Quantity", "int", "Price", "decimal(19,2)", "Department", "varchar(255)", "Manufacturer", "varchar(255)", "[Date_of_Purchase]", "date");
 
-            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email Address]", "varchar(255)", "[Contact Number]", "varchar(255)", "[Country of Origin]", "varchar(255)", "City", "varchar(255)", "[Zip Code]", "int");
+            Db.CreateTable("Manufacturer", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)", "[Email_Address]", "varchar(255)", "[Contact_Number]", "varchar(255)", "[Country_of_Origin]", "varchar(255)", "City", "varchar(255)", "[Zip_Code]", "int");
 
             Db.CreateTable("Department", "ID", "int IDENTITY(1,1) not null PRIMARY KEY", "Name", "varchar(255)");
 

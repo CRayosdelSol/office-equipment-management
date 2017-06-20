@@ -302,7 +302,7 @@ namespace DatabaseManagementOperationsLibrary
 
             string sInsert;
 
-            sInsert = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase]) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
+            sInsert = "INSERT INTO " + tableName + "(Name,Condition,Quantity,Price,Department,Manufacturer,[Date of Purchase) values(@p2,@p3,@p4,@p5,@p6,@p7,@p8)";
 
             SqlParameter[] pInsert = new SqlParameter[7];
 

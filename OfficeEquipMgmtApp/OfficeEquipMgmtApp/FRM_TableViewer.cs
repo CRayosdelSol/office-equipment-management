@@ -100,7 +100,7 @@ namespace OfficeEquipMgmtApp
 
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                   
                 }
             }
 
@@ -296,7 +296,8 @@ namespace OfficeEquipMgmtApp
 
         private void dtgrd_Tables_SelectionChanged(object sender, EventArgs e)
         {
-
+            displayManufacturerInformation();
+            DisplayDepartmentEquipmentConditionSummary();
         }
 
         private void generateReportToolStripMenuItem_Click(object sender, EventArgs e)

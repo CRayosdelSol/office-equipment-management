@@ -47,8 +47,8 @@ namespace EquipmentLibrary
                 reader = sqlComm.ExecuteReader();
                 while (reader.Read())
                 {
-                    manufacturer.Contact_number = reader["Contact Number"].ToString();
-                    manufacturer.Email_add = reader["Email Address"].ToString();
+                    manufacturer.Contact_number = reader["Contact_Number"].ToString();
+                    manufacturer.Email_add = reader["Email_Address"].ToString();
                 }
             }
         }
@@ -65,8 +65,8 @@ namespace EquipmentLibrary
                 while (reader.Read())
                 {
                     manufacturer.MnfctrrAdd.City = reader["City"].ToString();
-                    manufacturer.MnfctrrAdd.Country = reader["Country of Origin"].ToString();
-                    manufacturer.MnfctrrAdd.Zipcode = Convert.ToInt32(reader["Zip Code"].ToString());
+                    manufacturer.MnfctrrAdd.Country = reader["Country_of_Origin"].ToString();
+                    manufacturer.MnfctrrAdd.Zipcode = Convert.ToInt32(reader["Zip_Code"].ToString());
                 }
             }
         }
