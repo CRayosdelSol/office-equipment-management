@@ -44,8 +44,6 @@
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byOfficeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.byConditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.striplbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -198,26 +196,10 @@
             // 
             // reportToolStripMenuItem
             // 
-            this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.byOfficeToolStripMenuItem,
-            this.byConditionToolStripMenuItem});
             this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
             this.reportToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.reportToolStripMenuItem.Text = "&Report";
-            // 
-            // byOfficeToolStripMenuItem
-            // 
-            this.byOfficeToolStripMenuItem.Name = "byOfficeToolStripMenuItem";
-            this.byOfficeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.byOfficeToolStripMenuItem.Text = "By Office";
-            this.byOfficeToolStripMenuItem.Click += new System.EventHandler(this.byOfficeToolStripMenuItem_Click);
-            // 
-            // byConditionToolStripMenuItem
-            // 
-            this.byConditionToolStripMenuItem.Name = "byConditionToolStripMenuItem";
-            this.byConditionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.byConditionToolStripMenuItem.Text = "By Condition";
-            this.byConditionToolStripMenuItem.Click += new System.EventHandler(this.byConditionToolStripMenuItem_Click);
+            this.reportToolStripMenuItem.Click += new System.EventHandler(this.reportToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -309,6 +291,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::OfficeEquipMgmtApp.Properties.Resources.subapp;
             this.ClientSize = new System.Drawing.Size(543, 361);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -358,8 +341,6 @@
         private System.Windows.Forms.ToolStripButton btnSaveAs;
         private System.Windows.Forms.ToolStripMenuItem viewTablesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byOfficeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem byConditionToolStripMenuItem;
     }
 }
 

@@ -147,7 +147,7 @@ namespace OfficeEquipMgmtApp
         {
             isSaved = true;
             mainForm = ((Main)MdiParent);
-
+            
             // DB Connection Setup
             connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + filepath + "; Integrated Security=True;Connect Timeout=30";
             Db = new DatabaseOperations(connString);
@@ -195,7 +195,7 @@ namespace OfficeEquipMgmtApp
             grid.Columns[0].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
             grid.Columns[2].DefaultCellStyle.SelectionBackColor = Color.LightGray;
             grid.Columns[2].DefaultCellStyle.SelectionForeColor = Color.DarkGray;
-
+            colorRowsByCondition();
             Db.Dispose(true);
         }
 
@@ -285,7 +285,7 @@ namespace OfficeEquipMgmtApp
             else
             {
                 initalizeDataGrid(dtgrd_equipment);
-                colorRowsByCondition();
+
                 //initializeDefGrid(dtgrd_manufacturer);
             }
 
@@ -355,6 +355,7 @@ namespace OfficeEquipMgmtApp
                     gridRow.Cells[7].Value = DateTime.Now;
                 }
             }
+            colorRowsByCondition();
         }
 
         #region Page Navigation

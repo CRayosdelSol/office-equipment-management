@@ -226,7 +226,9 @@ namespace OfficeEquipMgmtApp
             foreach (DataGridViewRow row in dtgrd_Tables.Rows)
             {
                 IEquipmentBuilder equipmentBuilder = new DepartmentEquipmentBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[5].Value.ToString());
+
                 buildDepartmentSpecificEquipment(equipmentBuilder);
+
                 if (equipmentBuilder.Equip.Condition == "Good")
                 {
                     good++;
@@ -286,6 +288,7 @@ namespace OfficeEquipMgmtApp
         public void displayManufacturerInformation()
         {
             IManufacturerBuilder manufacturerBuilder = new EquipmentManufacturerBuilder(connString, dtgrd_Tables.SelectedRows[0].Cells[6].Value.ToString());
+
             establishManufacturingCompany(manufacturerBuilder);
 
             lbl_ManufName.Text = "Name: " + manufacturerBuilder.Manufacturer.Name;

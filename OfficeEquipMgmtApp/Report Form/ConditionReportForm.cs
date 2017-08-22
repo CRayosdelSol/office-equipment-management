@@ -58,6 +58,8 @@ namespace Report_Form
 
                 this.reporter.RefreshReport();
             }
+            else
+                this.Close();
         }
 
         private void ConditionReportForm_FormClosing(object sender, FormClosingEventArgs e)

@@ -125,6 +125,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="codemap.dgml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -203,6 +204,7 @@
   <ItemGroup>
     <Content Include="checklist.ico" />
     <Content Include="Database.ico" />
+    <None Include="Resources\subapp.png" />
     <None Include="Resources\DeleteTableRow_16x.png" />
     <None Include="Resources\SaveAs_16x.png" />
   </ItemGroup>

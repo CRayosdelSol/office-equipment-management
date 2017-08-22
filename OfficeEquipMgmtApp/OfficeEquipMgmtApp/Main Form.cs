@@ -267,6 +267,11 @@ namespace OfficeEquipMgmtApp
 
         private void byConditionToolStripMenuItem_Click(object sender, EventArgs e)
         {
+    
+        }
+
+        private void reportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             ConditionReportForm frm = new ConditionReportForm();
             frm.Show();
         }
